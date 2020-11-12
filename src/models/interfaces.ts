@@ -17,7 +17,7 @@ export interface List {
   name: string;
   isCurrent: boolean;
   createdAt: Date;
-  curItems: curItem;
+  curItems: curItem[];
 }
 
 export interface Item {
