@@ -8,9 +8,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './custom.css';
 import './fresca.css';
 
-import shoppingListReducer from './reducers';
+import { rootReducer } from './store';
 import App from './components/App';
-require ('bootstrap')
+require('bootstrap')
 
 
 // const logger = store => next => action => {
@@ -26,12 +26,12 @@ const middlewares = [thunk];
 //   middlewares.push(logger);    
 // }
 
-const store : Store & {
-  dispatch: DispatchType
-} = createStore(
-  shoppingListReducer,
-  applyMiddleware(...middlewares)
-)
+function configureStore(): Store<AppState> {
+  const store = createStore(
+    rootReducer,
+    applyMiddleware(...middlewares)
+  )
+}
 
 ReactDOM.render(
   <Provider store={store}>
