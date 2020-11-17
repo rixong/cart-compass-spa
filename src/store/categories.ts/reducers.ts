@@ -1,3 +1,5 @@
+export {}
+
 /* export default function categoryReducer(state, action) {
     case 'REORDERED_CATEGORIES':
   let reorder = action.payload.map((ele, idx) => {

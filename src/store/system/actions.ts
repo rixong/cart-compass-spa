@@ -1,16 +1,29 @@
 import { instance } from '../../api/axios';
-import { IUser, ILogin } from './types';
-import {useDispatch} from 'react-redux';
-import { config } from '../../const';
-import {ThunkAction} from 'redux-thunk';
-import {RootState} from '../index';
-import {Action} from 'redux';
+import { IUser, ILogin, ADDED_CURRENT_USER, SystemActionTypes } from './types';
+// import {useDispatch} from 'react-redux';
+// import { config } from '../../const';
+import { ThunkAction } from 'redux-thunk';
+import { RootState } from '../index';
+import { Action } from 'redux';
 
-const baseURL = config.url.API_URL
 
-export const doLogin = (logonInfo: ILogin): ThunkAction<void, RootState,unknown, Action<any>>  => async dispatch => {
-    const response = await instance.post(`${baseURL}/users`,logonInfo)
-    console.log(response.data);
+export const doLogin = (logonInfo: ILogin): ThunkAction<void, RootState, unknown, Action<any>> => async dispatch => {
+  console.log('From login action');
+  let response
+  try {
+    response = await instance.post(`/login`, logonInfo)
+    console.log(response.data)
+    localStorage.setItem('token', response.data.token)
+    const user: IUser = {
+      id: response.data.user._id,
+      name: response.data.user.name,
+      email: response.data.user.email,
+      currentList: response.data.user.currentList
+    }
+    dispatch(addCurrentUser(user));
+  } catch (e) {
+    console.log('server error', e.message)
+  }
 }
 
 /* export const doLogin = (user: <ILogin>) => {
@@ -65,6 +78,13 @@ export const doLogin = (logonInfo: ILogin): ThunkAction<void, RootState,unknown,
 export const doLogoutUser = () => {
   return {
     type: "USER_CLEARED",
+  }
+}
+
+export const addCurrentUser = (user: IUser): SystemActionTypes => {
+  return {
+    type: ADDED_CURRENT_USER,
+    payload: user
   }
 }
 

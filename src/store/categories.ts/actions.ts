@@ -1,13 +1,15 @@
-/* import axios from 'axios';
-import { config } from '../../const';
-import {instance} from '../../api/axios';
+export {}
 
-export const doReorderCategories = (userId, newOrder) => async dispatch => {
-  // console.log('from action', newOrder)
-  await instance.post('/categories', { user_id: userId, order: newOrder.join(',') })
+// import axios from 'axios';
+// import { config } from '../../const';
+// import {instance} from '../../api/axios';
 
-  dispatch({
-    type: 'REORDERED_CATEGORIES',
-    payload: newOrder
-  })
-} */
+// export const doReorderCategories = (userId, newOrder) => async dispatch => {
+//   // console.log('from action', newOrder)
+//   await instance.post('/categories', { user_id: userId, order: newOrder.join(',') })
+
+//   dispatch({
+//     type: 'REORDERED_CATEGORIES',
+//     payload: newOrder
+//   })
+// }

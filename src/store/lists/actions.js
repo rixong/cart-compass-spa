@@ -1,3 +1,5 @@
+export {}
+
 /* import axios from 'axios';
 import { config } from '../../const';
 import {instance} from '../../api/axios';
