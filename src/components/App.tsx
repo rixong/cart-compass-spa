@@ -1,26 +1,28 @@
 import React, {useEffect} from 'react';
-import { useDispatch } from 'react-redux';
-import {doLogin} from '../store/system/actions'
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../store';
 import Login from './Login'
+import { doAutoLogin } from '../store/system/actions';
+
 
 const App: React.FC = () => {
-
-  const dispatch = useDispatch()
+  
+  const dispatch = useDispatch();
+  
+  const selectSystem = (state: RootState) => state.system;
+  const system = useSelector(selectSystem)
 
   useEffect(() => {
-    function login() {
-      dispatch(doLogin({email: 'wally@gmail.com', password:'1234'}))
-      // dispatch(doLogin({name: 'Wally', email: 'wally@gmail.com', password:'1234', passwordConfirmation: '1234'}))
-      // console.log("here");
+    if (localStorage.getItem('token') && !system.curUser.id) {
+      dispatch(doAutoLogin())
     }
-    login();
+  }, [dispatch, system.curUser.id ]);
 
-  }, [dispatch])
-
-
+  
   return (
     <div className="App">
       <h1>Hello App</h1>
+  <h3>Hi, {system.curUser.name}</h3>
       <Login/>
     </div>
   );

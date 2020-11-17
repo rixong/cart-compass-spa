@@ -1,5 +1,15 @@
 import { instance } from '../../api/axios';
-import { IUser, ILogin, ADDED_CURRENT_USER, SystemActionTypes } from './types';
+import { 
+  IUser, 
+  ILogin, 
+  ADDED_CURRENT_USER,
+  USER_CLEARED,
+  STARTED_LOADING,
+  FINISHED_LOADING,
+  ADDED_NOTIFICATION,
+  CLEARED_NOTIFICATION, 
+  SystemActionTypes 
+} from './types';
 // import {useDispatch} from 'react-redux';
 // import { config } from '../../const';
 import { ThunkAction } from 'redux-thunk';
@@ -14,55 +24,30 @@ export const doLogin = (logonInfo: ILogin): ThunkAction<void, RootState, unknown
     if(logonInfo.passwordConfirmation){
       // Create New User
       response = await instance.post(`/users`, logonInfo)
-      console.log('Login',response.data)
-    } else {
+      console.log('New',response)
       // Login User
+    } else {
       response = await instance.post(`/login`, logonInfo)
-      console.log('New',response.data)
+      console.log('Login',response)
     }
-    localStorage.setItem('token', response.data.token)
-    const user: IUser = {
-      id: response.data.user._id,
-      name: response.data.user.name,
-      email: response.data.user.email,
-      currentList: response.data.user.currentList
+    if(response.statusText === 'OK'){
+      localStorage.setItem('token', response.data.token)
+      const user: IUser = {
+        id: response.data.user._id,
+        name: response.data.user.name,
+        email: response.data.user.email,
+        currentList: response.data.user.currentList
+      }
+      dispatch(addCurrentUser(user));
     }
-    dispatch(addCurrentUser(user));
   } catch (e) {
     console.log('server error', e.message)
   }
+  dispatch({ type: FINISHED_LOADING });
+  
 }
 
-/* export const doLogin = (user: <ILogin>) => {
-    async (dispatch) => {
-      dispatch();
-      let response;
-      try {
-        if (user.password_confirmation) {
-        // console.log('New user')
-        response = (await axios.post(`${baseURL}/users`, user)).data
-      } else {
-        // console.log('Login')
-        response = (await axios.post(`${baseURL}/login`, user)).data
-      }
-    if (response.status === 'ok') {
-      localStorage.setItem('jwt', response.jwt);
-      dispatch({
-        type: "ADDED_CURRENT_USER",
-        payload: response.user
-      })
-    } else {
-      dispatch(addNotification(response.message));
-    }
-  }
-  catch (e) {
-    console.log('server error', e.message)
-  }
-  dispatch({ type: 'FINISHED_LOADING' });
-}
- */
-
-/* export const doAutoLogin = (token) => async dispatch => {
+export const doAutoLogin = (): ThunkAction<void, RootState, unknown, Action<any>> => async dispatch => {
   dispatch({ type: 'STARTED_LOADING' });
   try {
     const response = (await instance.get('/profile')).data;
@@ -80,7 +65,7 @@ export const doLogin = (logonInfo: ILogin): ThunkAction<void, RootState, unknown
   }
     dispatch({ type: 'FINISHED_LOADING' });
 }
- */
+
 
 export const doLogoutUser = () => {
   return {

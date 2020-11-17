@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { ILogin } from '../store/system/types';
 
-import { doLogin} from '../store/system/actions'
+import { doLogin, clearNotification, addNotification } from '../store/system/actions'
 
 // import { doLogin, clearNotification } from '../actions';
 // import Alert from './Alert';
@@ -13,26 +13,26 @@ import { doLogin} from '../store/system/actions'
 //{ notification, loading, doLogin, clearNotification }
 
 const Login: React.FC = () => {
-  
+
   const dispatch = useDispatch()
 
   const inputTextDefault: ILogin = { name: '', email: '', password: '', passwordConfirmation: '' }
 
-  const [passwordError, setPasswordError] = React.useState<string>('')
-  const [emailError, setEmailError] = React.useState('')
-  const [formType, setFormType] = React.useState('login');
-  const [inputText, setInputText] = React.useState(inputTextDefault)
+  const [passwordError, setPasswordError] = useState<string>('')
+  const [emailError, setEmailError] = useState('')
+  const [isNewUser, setIsNewUser] = useState(false);
+  const [inputText, setInputText] = useState(inputTextDefault)
 
-  // const message = {
-  //   login: "Don't have an account?",
-  //   newUser: "Already have an account?"
-  // }
+  const message = [
+    "Don't have an account?",
+    "Already have an account?"
+  ]
 
   const onHandleChange = (e: React.FormEvent<HTMLInputElement>) => {
+
     setPasswordError('');
     setEmailError('');
-    // setInputText({ ...inputText, [e.target.name]: e.target.value })
-    setInputText({ ...inputText, [e.currentTarget.id]: e.currentTarget.value})
+    setInputText({ ...inputText, [e.currentTarget.name]: e.currentTarget.value })
   }
 
   const onHandleSubmit = (e: React.FormEvent) => {
@@ -46,7 +46,8 @@ const Login: React.FC = () => {
       setPasswordError('Please enter a valid password')
     }
     else {
-      doLogin(inputText)
+      console.log('submit')
+      dispatch(doLogin(inputText))
       setInputText(inputTextDefault)
       // return <Redirect to="/" />
     }
@@ -75,7 +76,7 @@ const Login: React.FC = () => {
             placeholder="Email"
             value={inputText.email}
             onChange={onHandleChange}
-            // onFocus={() => clearNotification()}
+          // onFocus={() => clearNotification()}
           ></input>
           <div
             className={
@@ -98,7 +99,7 @@ const Login: React.FC = () => {
             placeholder="Password"
             value={inputText.password}
             onChange={onHandleChange}
-            // onFocus={() => clearNotification()}
+          // onFocus={() => clearNotification()}
           ></input>
 
           <div
@@ -110,21 +111,34 @@ const Login: React.FC = () => {
           </div>
 
 
-          {formType === 'newUser' ?
-            <input
-              type="password"
-              name="password_confirmation"
-              className={
-                passwordError
-                  ? "form-control form-control-lg mt-3 is-invalid"
-                  : "form-control form-control-lg mt-3"
-              }
-              aria-describedby="passwordHelp"
-              placeholder="Confirm password"
-              value={inputText.passwordConfirmation}
-              onChange={onHandleChange}
+          {isNewUser ?
+            <div>
+              <input
+                type="password"
+                name="passwordConfirmation"
+                className={
+                  passwordError
+                    ? "form-control form-control-lg mt-3 is-invalid"
+                    : "form-control form-control-lg mt-3"
+                }
+                aria-describedby="passwordHelp"
+                placeholder="Confirm password"
+                value={inputText.passwordConfirmation}
+                onChange={onHandleChange}
               // onFocus={() => clearNotification()}
-            ></input>
+              ></input>
+
+              <input
+                type="text"
+                name="name"
+                className="form-control form-control-lg mt-3"
+                aria-describedby="your name"
+                placeholder="Your name"
+                value={inputText.name}
+                onChange={onHandleChange}
+              // onFocus={() => clearNotification()}
+              ></input>
+            </div>
 
             : null
           }
@@ -135,11 +149,11 @@ const Login: React.FC = () => {
           { loading ? <Spinner/> : null } */}
 
       <div className="login-switch d-block">
-        {/* <p className="text-center">{message[formType]}</p> */}
-        {formType === 'login' ?
-          <div className="text-center text-primary h5" onClick={() => setFormType('newUser')} role="button">Create account</div>
+        <p className="text-center">{isNewUser ? message[1]: message[0]}</p>
+        {!isNewUser ?
+          <div className="text-center text-primary h5" onClick={() => setIsNewUser(true)} role="button">Create account</div>
           :
-          <div className="text-center text-primary h5" onClick={() => setFormType('login')} role="button">Login</div>
+          <div className="text-center text-primary h5" onClick={() => setIsNewUser(false)} role="button">Login</div>
         }
       </div>
 
