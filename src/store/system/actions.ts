@@ -11,8 +11,15 @@ export const doLogin = (logonInfo: ILogin): ThunkAction<void, RootState, unknown
   console.log('From login action');
   let response
   try {
-    response = await instance.post(`/login`, logonInfo)
-    console.log(response.data)
+    if(logonInfo.passwordConfirmation){
+      // Create New User
+      response = await instance.post(`/users`, logonInfo)
+      console.log('Login',response.data)
+    } else {
+      // Login User
+      response = await instance.post(`/login`, logonInfo)
+      console.log('New',response.data)
+    }
     localStorage.setItem('token', response.data.token)
     const user: IUser = {
       id: response.data.user._id,

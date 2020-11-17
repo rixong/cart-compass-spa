@@ -6,6 +6,7 @@ export interface IUser {
 }
 
 export interface ILogin {
+  name?: string;
   email: string;
   password: string;
   passwordConfirmation?: string;
@@ -59,7 +60,6 @@ interface ClearNotificationAction {
   payload: INotification;
 }
 
-export type SystemActionTypes = 
-  AddCurrentUserAction | UserClearAction | StartLoadingAction | 
+export type SystemActionTypes =
+  AddCurrentUserAction | UserClearAction | StartLoadingAction |
   FinishLoadingAction | AddNotificationAction | ClearNotificationAction
-  
