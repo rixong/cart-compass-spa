@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './custom.css';
 import './fresca.css';
 
-import { rootReducer } from './store';
+import { rootReducer, ApplicationState } from './store';
 import App from './components/App';
 require('bootstrap')
 
@@ -25,16 +25,16 @@ const middlewares = [thunk];
 // if ( process.env.NODE_ENV === 'development') {    
 //   middlewares.push(logger);    
 // }
-
-function configureStore(): Store<AppState> {
+function configureStore(): Store<ApplicationState> {
   const store = createStore(
     rootReducer,
     applyMiddleware(...middlewares)
   )
+  return store
 }
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={configureStore()}>
     <App />
   </Provider>,
   document.getElementById('root')

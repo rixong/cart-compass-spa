@@ -1,8 +1,14 @@
 export interface IUser {
-  userId: string;
+  id: string;
+  name: string;
+  email: string;
+  currentList: string;
+}
+
+export interface ILogin {
   email: string;
   password: string;
-  currentList: string;
+  passwordConfirmation?: string;
 }
 
 export interface INotification {
@@ -10,10 +16,10 @@ export interface INotification {
   message: string;
 }
 
-export type UserState = {
-  curUser: IUser;
-  notification: INotification;
-  loading: boolean;
+export type SystemState = {
+  readonly curUser: IUser;
+  readonly notification: INotification;
+  readonly loading: boolean;
 }
 
 export const ADDED_CURRENT_USER = "ADDED_CURRENT_USER"
@@ -35,22 +41,22 @@ interface UserClearAction {
 
 interface StartLoadingAction {
   type: typeof STARTED_LOADING;
-  payload: IUser;
+  // payload: INotification;
 }
 
 interface FinishLoadingAction {
   type: typeof FINISHED_LOADING;
-  payload: IUser;
+  // payload: INotification;
 }
 
 interface AddNotificationAction {
   type: typeof ADDED_NOTIFICATION;
-  payload: IUser;
+  payload: INotification;
 }
 
 interface ClearNotificationAction {
   type: typeof CLEARED_NOTIFICATION;
-  payload: IUser;
+  payload: INotification;
 }
 
 export type SystemActionTypes = 
