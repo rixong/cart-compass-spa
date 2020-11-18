@@ -15,3 +15,5 @@ const Alert: React.FC = () => {
     </div>
   )
 }
+
+export default Alert

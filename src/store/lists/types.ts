@@ -4,7 +4,7 @@ export interface IList {
   name: string;
   dateCreated: Date;
   sharedWith: [];
-  curItems: IListItem[];
+  listItems: IListItem[];
 }
 
 export interface IListItem {
@@ -29,6 +29,7 @@ export const CHANGED_ITEMS_STATUS = 'CHANGED_ITEMS_STATUS'
 
 interface AddNewListAction {
   type: typeof ADDED_NEW_LIST
+  payload: IList
 }
 
 interface ChangeCurrentListAction {
@@ -55,7 +56,7 @@ interface ChangeItemStatusAction {
   type: typeof CHANGED_ITEMS_STATUS
 }
 
-export type ListActions = 
+export type ListsActions = 
   AddNewListAction | ChangeCurrentListAction | RemoveListAction | RetreiveListItemsAction |
   AddToCurrentListAction | RemoveFromCurrentListAction |  ChangeItemStatusAction
 

@@ -1,33 +1,51 @@
-import React, {useEffect} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import { RootState } from '../store';
-import Login from './Login'
 import { doAutoLogin } from '../store/system/actions';
 
+import Navbar from './Navbar';
+import Login from './Login';
+import Spinner from './Spinner';
+import Footer from './Footer';
+import SplitPanels from './SplitPanels'
+import ListHome from './ListHome'
 
 const App: React.FC = () => {
-  
+
   const dispatch = useDispatch();
-  
+
   const selectSystem = (state: RootState) => state.system;
   const system = useSelector(selectSystem)
 
   useEffect(() => {
+    // console.log(localStorage.getItem('token'), system.curUser.id);
     
     if (localStorage.getItem('token') && !system.curUser.id) {
       console.log('here');
       dispatch(doAutoLogin());
     }
-  }, [dispatch, system.curUser.id ]);
+  }, [dispatch, system.curUser.id]);
 
-  
   return (
-    <div className="App">
-      <h1>Hello App</h1>
-  <h3>Hi, {system.curUser.name}</h3>
-      <Login/>
-    </div>
-  );
+    <Router>
+      {!system.curUser.id && !localStorage.getItem('token') ? <Login /> :
+        <div className="container shadow bg-dark">
+          <Navbar />
+          {!system.curUser.id || system.loading ?
+            <Spinner />
+            :
+            <Switch>
+              <Route exact path="/" component={ListHome}></Route>
+              <SplitPanels />
+            </Switch>
+          }
+          <Footer />
+        </div>
+      }
+    </Router>
+  )
 }
 
-export default App;
+export default App

@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
-// import { Redirect } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
+import {RootState} from '../store';
 import { ILogin } from '../store/system/types';
 
 import { doLogin, clearNotification, addNotification } from '../store/system/actions'
 
-// import Alert from './Alert';
-// import Spinner from './Spinner';
+import Alert from './Alert';
+import Spinner from './Spinner';
 
 const Login: React.FC = () => {
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+  const selectSystem = (state: RootState) => state.system;
+  const system = useSelector(selectSystem)
 
   const inputTextDefault: ILogin = { name: '', email: '', password: '', passwordConfirmation: '' }
 
@@ -46,7 +50,7 @@ const Login: React.FC = () => {
       console.log('submit')
       dispatch(doLogin(inputText))
       setInputText(inputTextDefault)
-      // return <Redirect to="/" />
+      return <Redirect to="/" />
     }
   }
 
@@ -142,8 +146,8 @@ const Login: React.FC = () => {
           <button className="btn btn-primary btn-lg mt-3 w-100" type="submit" onClick={onHandleSubmit}>Continue</button>
         </div>
       </form>
-      {/* { notification.error ? <Alert/> : null }
-          { loading ? <Spinner/> : null } */}
+      { system.notification.error ? <Alert/> : null }
+          { system.loading ? <Spinner/> : null }
 
       <div className="login-switch d-block">
         <p className="text-center">{isNewUser ? message[1] : message[0]}</p>
@@ -157,12 +161,4 @@ const Login: React.FC = () => {
   )
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     notification: state.notification,
-//     loading: state.loading
-//   }
-// };
-
 export default Login
-// export default connect(mapStateToProps, { doLogin, clearNotification })(Login);
