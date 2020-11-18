@@ -6,11 +6,8 @@ import { ILogin } from '../store/system/types';
 
 import { doLogin, clearNotification, addNotification } from '../store/system/actions'
 
-// import { doLogin, clearNotification } from '../actions';
 // import Alert from './Alert';
 // import Spinner from './Spinner';
-
-//{ notification, loading, doLogin, clearNotification }
 
 const Login: React.FC = () => {
 
@@ -18,7 +15,7 @@ const Login: React.FC = () => {
 
   const inputTextDefault: ILogin = { name: '', email: '', password: '', passwordConfirmation: '' }
 
-  const [passwordError, setPasswordError] = useState<string>('')
+  const [passwordError, setPasswordError] = useState('')
   const [emailError, setEmailError] = useState('')
   const [isNewUser, setIsNewUser] = useState(false);
   const [inputText, setInputText] = useState(inputTextDefault)
@@ -76,7 +73,7 @@ const Login: React.FC = () => {
             placeholder="Email"
             value={inputText.email}
             onChange={onHandleChange}
-          // onFocus={() => clearNotification()}
+            onFocus={() => clearNotification()}
           ></input>
           <div
             className={
@@ -99,7 +96,7 @@ const Login: React.FC = () => {
             placeholder="Password"
             value={inputText.password}
             onChange={onHandleChange}
-          // onFocus={() => clearNotification()}
+            onFocus={() => clearNotification()}
           ></input>
 
           <div
@@ -125,7 +122,7 @@ const Login: React.FC = () => {
                 placeholder="Confirm password"
                 value={inputText.passwordConfirmation}
                 onChange={onHandleChange}
-              // onFocus={() => clearNotification()}
+                onFocus={() => clearNotification()}
               ></input>
 
               <input
@@ -136,7 +133,7 @@ const Login: React.FC = () => {
                 placeholder="Your name"
                 value={inputText.name}
                 onChange={onHandleChange}
-              // onFocus={() => clearNotification()}
+                onFocus={() => clearNotification()}
               ></input>
             </div>
 
@@ -149,12 +146,10 @@ const Login: React.FC = () => {
           { loading ? <Spinner/> : null } */}
 
       <div className="login-switch d-block">
-        <p className="text-center">{isNewUser ? message[1]: message[0]}</p>
-        {!isNewUser ?
-          <div className="text-center text-primary h5" onClick={() => setIsNewUser(true)} role="button">Create account</div>
-          :
-          <div className="text-center text-primary h5" onClick={() => setIsNewUser(false)} role="button">Login</div>
-        }
+        <p className="text-center">{isNewUser ? message[1] : message[0]}</p>
+        <div className="text-center text-primary h5" onClick={() => setIsNewUser(!isNewUser)} role="button">
+          {!isNewUser ? 'Create account' : 'Login'}
+        </div>
       </div>
 
 

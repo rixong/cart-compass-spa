@@ -13,8 +13,10 @@ const App: React.FC = () => {
   const system = useSelector(selectSystem)
 
   useEffect(() => {
+    
     if (localStorage.getItem('token') && !system.curUser.id) {
-      dispatch(doAutoLogin())
+      console.log('here');
+      dispatch(doAutoLogin());
     }
   }, [dispatch, system.curUser.id ]);
 

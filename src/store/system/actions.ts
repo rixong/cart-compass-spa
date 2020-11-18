@@ -47,17 +47,14 @@ export const doLogin = (logonInfo: ILogin): ThunkAction<void, RootState, unknown
   
 }
 
+// Token is included in header as Axios interceptor (see API/axios.ts).
 export const doAutoLogin = (): ThunkAction<void, RootState, unknown, Action<any>> => async dispatch => {
   dispatch({ type: 'STARTED_LOADING' });
   try {
     const response = (await instance.get('/profile')).data;
-    if (response.status === 'ok') {
-      dispatch({
-        type: "ADDED_CURRENT_USER",
-        payload: response.user
-      })
-    } else {
-      console.log(response.message)
+    console.log(response)
+    if (response.user) {
+      dispatch(addCurrentUser(response.user))
     }
   }
   catch (e) {
