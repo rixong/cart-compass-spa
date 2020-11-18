@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
-import {doLogoutUser} from '../actions';
+import {doLogoutUser} from '../store/system/actions';
 
-const Navbar = ({doLogoutUser}) => {
+const Navbar = () => {
 
+  const dispatch =  useDispatch()
   const onLogout = () => {
-    doLogoutUser()
+    dispatch(doLogoutUser())
     localStorage.removeItem('jwt')
   }
 
@@ -43,4 +44,3 @@ const Navbar = ({doLogoutUser}) => {
     </nav>
   )
 }
-export default connect (null, {doLogoutUser})(Navbar);

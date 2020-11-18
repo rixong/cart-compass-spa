@@ -11,7 +11,6 @@ import {
   SystemActionTypes 
 } from './types';
 // import {useDispatch} from 'react-redux';
-// import { config } from '../../const';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../index';
 import { Action } from 'redux';
@@ -49,7 +48,7 @@ export const doLogin = (logonInfo: ILogin): ThunkAction<void, RootState, unknown
 
 // Token is included in header as Axios interceptor (see API/axios.ts).
 export const doAutoLogin = (): ThunkAction<void, RootState, unknown, Action<any>> => async dispatch => {
-  dispatch({ type: 'STARTED_LOADING' });
+  dispatch({ type: STARTED_LOADING });
   try {
     const response = (await instance.get('/profile')).data;
     console.log(response)
@@ -60,13 +59,13 @@ export const doAutoLogin = (): ThunkAction<void, RootState, unknown, Action<any>
   catch (e) {
     console.log('server error', e.message)
   }
-    dispatch({ type: 'FINISHED_LOADING' });
+    dispatch({ type: FINISHED_LOADING });
 }
 
 
 export const doLogoutUser = () => {
   return {
-    type: "USER_CLEARED",
+    type: USER_CLEARED,
   }
 }
 
@@ -80,14 +79,14 @@ export const addCurrentUser = (user: IUser): SystemActionTypes => {
 /// UTLITIES
 export const addNotification = (message: string) => {
   return {
-    type: 'ADDED_NOTIFICATION',
+    type: ADDED_NOTIFICATION,
     payload: { error: true, message }
   }
 }
 
 export const clearNotification = () => {
   return {
-    type: 'CLEARED_NOTIFICATION',
+    type: CLEARED_NOTIFICATION,
     payload: { error: false, message: '' }
   }
 }
