@@ -1,10 +1,10 @@
 export interface IList {
-  id: string;
+  _id: string;
   userId: string;
   name: string;
   dateCreated: Date;
-  sharedWith?: [];
-  listItems?: IListItem[];
+  sharedWith: [];
+  listItems: IListItem[];
 }
 
 export interface IListItem {
@@ -17,7 +17,6 @@ export interface IListItem {
 
 export type ListsState = {
   lists: IList[];
-  currentListItems: IListItem[];
 }
 
 export const ADDED_NEW_LIST = 'ADDED_NEW_LIST'
@@ -39,6 +38,7 @@ interface ChangeCurrentListAction {
 
 interface RemoveListAction {
   type: typeof REMOVED_LIST
+  payload: string
 }
 
 interface RetreiveListItemsAction {

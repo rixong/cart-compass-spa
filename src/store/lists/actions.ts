@@ -5,26 +5,19 @@ import { Action } from 'redux';
 import {
   IList,
   // IListItem,
-  ADDED_NEW_LIST
+  ADDED_NEW_LIST, 
+  REMOVED_LIST
 } from './types'
 
 export const doCreateNewList = (name: string): ThunkAction<void, RootState, unknown, Action<any>> => async dispatch => {
-      console.log('Create List');
+  console.log('Create List');
 
   try {
     const response = (await instance.post('/lists', { name })).data
     console.log(response);
-    const newList: IList = {
-      id: response._id,
-      userId: response.userId,
-      name: response.name,
-      dateCreated: new Date(response.dateCreated),
-      sharedWith: [],
-      listItems: [],
-    }
     dispatch({
       type: ADDED_NEW_LIST,
-      payload: newList
+      payload: response,
     });
   }
   catch (e) {
@@ -50,18 +43,18 @@ export const doCreateNewList = (name: string): ThunkAction<void, RootState, unkn
 //   }
 // }
 
-// export const doRemoveList = (listId) => async dispatch => {
-//   try {
-//     await instance.delete(`/lists/${listId}`)
-//     dispatch({
-//       type: 'REMOVED_LIST',
-//       payload: listId
-//     })
-//   }
-//   catch (e) {
-//     console.log('Remove list - server error', e.message)
-//   }
-// }
+export const doRemoveList = (listId: string): ThunkAction<void, RootState, unknown, Action<any>> => async dispatch => {
+  try {
+    await instance.delete(`/lists/${listId}`)
+    dispatch({
+      type: REMOVED_LIST,
+      payload: listId
+    })
+  }
+  catch (e) {
+    console.log('Remove list - server error', e.message)
+  }
+}
 
 // CURRENT LIST_ITEM REQUESTS
 // export const doGetCurrentListItems = (list_id) => async dispatch => {

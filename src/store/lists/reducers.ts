@@ -5,7 +5,7 @@ import {
   ListsState,
   ADDED_NEW_LIST,
   // CHANGED_CURRENT_LIST,
-  // REMOVED_LIST,
+  REMOVED_LIST,
   // RETRIEVED_LIST_ITEMS,
   // ADDED_ITEM_TO_CUR_LIST,
   // REMOVED_ITEMS_FROM_CUR_LIST,
@@ -15,7 +15,6 @@ import {
 
 const intitalState: ListsState = {
   lists: [],
-  currentListItems: [],
 };
 
 export default function listReducer(
@@ -25,9 +24,9 @@ export default function listReducer(
   switch (action.type) {
     case ADDED_NEW_LIST:
       return { ...state, lists: state.lists.concat(action.payload)}
-    // case 'REMOVED_LIST':
-    //   idx = state.lists.findIndex(list => list.id === action.payload)
-    //   return { ...state, lists: state.lists.slice(0, idx).concat(state.lists.slice(idx + 1)) }
+    case REMOVED_LIST:
+      idx = state.lists.findIndex(list => list._id === action.payload)
+      return { ...state, lists: state.lists.slice(0, idx).concat(state.lists.slice(idx + 1)) }
     // case 'CHANGED_CURRENT_LIST':
     //   const tempUser = Object.assign({}, state.curUser)
     //   tempUser.currentList = action.payload

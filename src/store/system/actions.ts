@@ -1,15 +1,17 @@
 import { instance } from '../../api/axios';
-import { 
-  IUser, 
-  ILogin, 
+import {
+  IUser,
+  ILogin,
   ADDED_CURRENT_USER,
   USER_CLEARED,
   STARTED_LOADING,
   FINISHED_LOADING,
   ADDED_NOTIFICATION,
-  CLEARED_NOTIFICATION, 
-  SystemActionTypes 
+  CLEARED_NOTIFICATION,
+  SystemActionTypes
 } from './types';
+
+import { IList, ADDED_NEW_LIST } from '../lists/types';
 // import {useDispatch} from 'react-redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../index';
@@ -20,16 +22,16 @@ export const doLogin = (logonInfo: ILogin): ThunkAction<void, RootState, unknown
   console.log('From login action');
   let response
   try {
-    if(logonInfo.passwordConfirmation){
+    if (logonInfo.passwordConfirmation) {
       // Create New User
       response = await instance.post(`/users`, logonInfo)
-      console.log('New',response)
+      console.log('New', response)
       // Login User
     } else {
       response = await instance.post(`/login`, logonInfo)
-      console.log('Login',response)
+      console.log('Login', response)
     }
-    if(response.statusText === 'OK'){
+    if (response.statusText === 'OK') {
       localStorage.setItem('token', response.data.token)
       const user: IUser = {
         id: response.data.user._id,
@@ -38,12 +40,16 @@ export const doLogin = (logonInfo: ILogin): ThunkAction<void, RootState, unknown
         currentList: response.data.user.currentList
       }
       dispatch(addCurrentUser(user));
+      dispatch({
+        type: ADDED_NEW_LIST,
+        payload: response.data.user.lists,
+      })
     }
   } catch (e) {
     console.log('server error', e.message)
   }
   dispatch({ type: FINISHED_LOADING });
-  
+
 }
 
 // Token is included in header as Axios interceptor (see API/axios.ts).
@@ -52,7 +58,7 @@ export const doAutoLogin = (): ThunkAction<void, RootState, unknown, Action<any>
   try {
     const response = await instance.get('/profile');
     console.log(response)
-    if(response.data.user){
+    if (response.data.user) {
       const user: IUser = {
         id: response.data.user._id,
         name: response.data.user.name,
@@ -60,12 +66,16 @@ export const doAutoLogin = (): ThunkAction<void, RootState, unknown, Action<any>
         currentList: response.data.user.currentList
       }
       dispatch(addCurrentUser(user))
+        dispatch({
+          type: ADDED_NEW_LIST,
+          payload: response.data.user.lists,
+        })
     }
   }
   catch (e) {
     console.log('server error', e.message)
   }
-    dispatch({ type: FINISHED_LOADING });
+  dispatch({ type: FINISHED_LOADING });
 }
 
 
