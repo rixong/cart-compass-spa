@@ -20,9 +20,8 @@ export type ListsState = {
 }
 
 export const ADDED_NEW_LIST = 'ADDED_NEW_LIST'
-export const CHANGED_CURRENT_LIST = 'CHANGED_CURRENT_LIST'
 export const REMOVED_LIST = 'REMOVED_LIST'
-export const RETRIEVED_LIST_ITEMS = 'RETRIEVED_LIST_ITEMS'
+// export const RETRIEVED_LIST_ITEMS = 'RETRIEVED_LIST_ITEMS'
 export const ADDED_ITEM_TO_CUR_LIST = 'ADDED_ITEM_TO_CUR_LIST'
 export const REMOVED_ITEMS_FROM_CUR_LIST = 'REMOVED_ITEMS_FROM_CUR_LIST'
 export const CHANGED_ITEMS_STATUS = 'CHANGED_ITEMS_STATUS'
@@ -32,18 +31,14 @@ interface AddNewListAction {
   payload: IList
 }
 
-interface ChangeCurrentListAction {
-  type: typeof CHANGED_CURRENT_LIST
-}
-
 interface RemoveListAction {
   type: typeof REMOVED_LIST
   payload: string
 }
 
-interface RetreiveListItemsAction {
-  type: typeof RETRIEVED_LIST_ITEMS
-}
+// interface RetreiveListItemsAction {
+//   type: typeof RETRIEVED_LIST_ITEMS
+// }
 
 interface AddToCurrentListAction {
   type: typeof ADDED_ITEM_TO_CUR_LIST
@@ -58,7 +53,7 @@ interface ChangeItemStatusAction {
 }
 
 export type ListsActions = 
-  AddNewListAction | ChangeCurrentListAction | RemoveListAction | RetreiveListItemsAction |
+  AddNewListAction | RemoveListAction |
   AddToCurrentListAction | RemoveFromCurrentListAction |  ChangeItemStatusAction
 
 

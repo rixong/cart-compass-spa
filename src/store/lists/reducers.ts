@@ -27,10 +27,6 @@ export default function listReducer(
     case REMOVED_LIST:
       idx = state.lists.findIndex(list => list._id === action.payload)
       return { ...state, lists: state.lists.slice(0, idx).concat(state.lists.slice(idx + 1)) }
-    // case 'CHANGED_CURRENT_LIST':
-    //   const tempUser = Object.assign({}, state.curUser)
-    //   tempUser.currentList = action.payload
-    //   return { ...state, curUser: tempUser }
     // case 'RETRIEVED_LIST_ITEMS':
     //   return { ...state, curListItems: action.payload }
     // case 'ADDED_ITEM_TO_CUR_LIST':

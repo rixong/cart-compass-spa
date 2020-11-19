@@ -86,6 +86,13 @@ export const doLogoutUser = () => {
   }
 }
 
+export const addCurrentUser = (user: IUser): SystemActionTypes => {
+  return {
+    type: ADDED_CURRENT_USER,
+    payload: user
+  }
+}
+
 export const doSetCurrentList = (listId: string): ThunkAction<void, RootState, unknown, Action<any>> => async dispatch => {
   const response = await instance.post(`/lists/current/${listId}`);
   console.log('From Action');
@@ -93,13 +100,6 @@ export const doSetCurrentList = (listId: string): ThunkAction<void, RootState, u
     type: SET_CURRENT_LIST,
     payload: listId,
   })
-}
-
-export const addCurrentUser = (user: IUser): SystemActionTypes => {
-  return {
-    type: ADDED_CURRENT_USER,
-    payload: user
-  }
 }
 
 /// UTLITIES

@@ -25,24 +25,6 @@ export const doCreateNewList = (name: string): ThunkAction<void, RootState, unkn
   }
 }
 
-// export const doChangeCurrentList = (list_id) => async dispatch => {
-//   // console.log('From action')
-//   try {
-//     const response = (await instance.patch('/users', {list_id})).data
-//     if (response.status === 'ok') {
-//       dispatch({
-//         type: "CHANGED_CURRENT_LIST",
-//         payload: list_id
-//       })
-//     } else {
-//       // dispatch(addNotification(response.message))
-//     }
-//   }
-//   catch (e) {
-//     console.log('server error', e.message)
-//   }
-// }
-
 export const doRemoveList = (listId: string): ThunkAction<void, RootState, unknown, Action<any>> => async dispatch => {
   try {
     await instance.delete(`/lists/${listId}`)
