@@ -1,21 +1,21 @@
 
 import { instance } from '../../api/axios';
-import { IMasterListItem, ADDED_ITEM_TO_MASTERLIST, REMOVED_FROM_MASTER_LIST, MasterlistActions } from './types'
+import { AppThunk } from '../index';
 
-export const AddItemToMasterList = (item :IMasterListItem): MasterlistActions => async dispatch => {
+import { IMasterListItem, ADDED_ITEM_TO_MASTERLIST, REMOVED_FROM_MASTER_LIST, MasterListActions } from './types'
+
+export const addItemToMasterList = (item: IMasterListItem): AppThunk => async dispatch => {
   try {
-    const response = (await instance.post('/items', {
-      user_id: user_id,
-      name: item.name,
-      category_id: item.category_id
-    })).data
+    console.log("Master item");
+    
+    const response = (await instance.post('/items',item)).data
     console.log(response)
-    if (response.status !== 'exists') {
+    // if (response.status !== 'exists') {
       dispatch({
         type: 'ADDED_ITEM_TO_MASTERLIST',
-        payload: response.item
+        payload: response,
       })
-    }
+    // }
     // dispatch(doAddItemToCurrentList({ item_id: response.item.id, list_id, quantity: item.quantity }))
   }
   catch (e) {

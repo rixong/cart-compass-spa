@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
@@ -5,6 +6,7 @@ import { RootState } from '../store';
 // import CurrentList from './CurrentList.txt';
 import { doCreateNewList, doRemoveList } from '../store/lists/actions';
 import { doSetCurrentList} from '../store/system/actions';
+import {addItemToMasterList} from '../store/masterlist/actions'
 
 const ListHome = () => {
 
@@ -24,6 +26,14 @@ const ListHome = () => {
   //   dispatch(doSetCurrentList('5fb684eb86b05273f7d1a817'))
   //   //dispatch(doSetCurrentList('5fb60a3e00fd686750f54b1a'))
   // }, [dispatch])
+
+  useEffect(() => {
+    const item = {
+      name: 'broccoli',
+      categoryId: "5fb5f7b264f62d5c13bdce3a"
+    }
+    dispatch(addItemToMasterList(item))
+  }, [dispatch])
 
 
   return (

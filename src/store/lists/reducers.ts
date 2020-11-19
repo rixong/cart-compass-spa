@@ -12,7 +12,6 @@ import {
   // CHANGED_ITEMS_STATUS,
 } from './types';
 
-
 const intitalState: ListsState = {
   lists: [],
 };
