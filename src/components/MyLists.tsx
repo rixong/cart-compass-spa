@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { XCircleFillIcon } from '@primer/octicons-react'
 
 import {RootState} from '../store';
 // import { doCreateNewList, doRemoveList, doChangeCurrentList } from '../store/lists/actions';
-import {addNotification, clearNotification} from '../store/system/actions';
+import { doCreateNewList } from '../store/lists/actions';
+import { addNotification, clearNotification} from '../store/system/actions';
 
 const MyLists = () => {
 
@@ -16,6 +17,12 @@ const MyLists = () => {
   
   const selectLists = (state: RootState) => state.lists;
   const lists = useSelector(selectLists)
+
+  // useEffect(()=> {
+  //   console.log('Effect');
+    
+  //   dispatch(doCreateNewList('Target'))
+  // }, [dispatch])
 
   // const sortedLists = [...lists].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
   // const [queryTerm, setQueryTerm] = useState('');
@@ -53,7 +60,7 @@ const MyLists = () => {
   return (
     <React.Fragment>
 
-<h3>MiyLists</h3>
+<h3>MyLists</h3>
     </React.Fragment>
   )
 }

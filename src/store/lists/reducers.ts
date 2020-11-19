@@ -24,7 +24,7 @@ export default function listReducer(
   let idx;
   switch (action.type) {
     case ADDED_NEW_LIST:
-      return { ...state, lists: []}
+      return { ...state, lists: state.lists.concat(action.payload)}
     // case 'REMOVED_LIST':
     //   idx = state.lists.findIndex(list => list.id === action.payload)
     //   return { ...state, lists: state.lists.slice(0, idx).concat(state.lists.slice(idx + 1)) }

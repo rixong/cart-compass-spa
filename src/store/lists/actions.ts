@@ -5,24 +5,30 @@ import { Action } from 'redux';
 import {
   IList,
   // IListItem,
-  ListsActions,
   ADDED_NEW_LIST
 } from './types'
 
 export const doCreateNewList = (name: string): ThunkAction<void, RootState, unknown, Action<any>> => async dispatch => {
+      console.log('Create List');
+
   try {
     const response = (await instance.post('/lists', { name })).data
-    dispatch(AddNewListAction(response.list));
+    console.log(response);
+    const newList: IList = {
+      id: response._id,
+      userId: response.userId,
+      name: response.name,
+      dateCreated: new Date(response.dateCreated),
+      sharedWith: [],
+      listItems: [],
+    }
+    dispatch({
+      type: ADDED_NEW_LIST,
+      payload: newList
+    });
   }
   catch (e) {
     console.log('server error', e.message)
-  }
-}
-
-const AddNewListAction = (list: IList): ListsActions => {
-  return {
-    type: ADDED_NEW_LIST,
-    payload: list
   }
 }
 

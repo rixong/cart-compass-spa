@@ -23,7 +23,6 @@ const App: React.FC = () => {
     // console.log(localStorage.getItem('token'), system.curUser.id);
     
     if (localStorage.getItem('token') && !system.curUser.id) {
-      console.log('here');
       dispatch(doAutoLogin());
     }
   }, [dispatch, system.curUser.id]);

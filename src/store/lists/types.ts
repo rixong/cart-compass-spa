@@ -1,13 +1,14 @@
 export interface IList {
-  listId: string;
+  id: string;
   userId: string;
   name: string;
   dateCreated: Date;
-  sharedWith: [];
-  listItems: IListItem[];
+  sharedWith?: [];
+  listItems?: IListItem[];
 }
 
 export interface IListItem {
+  id: string;
   masterItemId: string;
   categoryId: string;
   quantity: string;

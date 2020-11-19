@@ -50,10 +50,16 @@ export const doLogin = (logonInfo: ILogin): ThunkAction<void, RootState, unknown
 export const doAutoLogin = (): ThunkAction<void, RootState, unknown, Action<any>> => async dispatch => {
   dispatch({ type: STARTED_LOADING });
   try {
-    const response = (await instance.get('/profile')).data;
+    const response = await instance.get('/profile');
     console.log(response)
-    if (response.user) {
-      dispatch(addCurrentUser(response.user))
+    if(response.data.user){
+      const user: IUser = {
+        id: response.data.user._id,
+        name: response.data.user.name,
+        email: response.data.user.email,
+        currentList: response.data.user.currentList
+      }
+      dispatch(addCurrentUser(user))
     }
   }
   catch (e) {

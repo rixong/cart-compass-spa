@@ -1,10 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {doLogoutUser} from '../store/system/actions';
+import { RootState } from '../store';
+import systemReducer from '../store/system/reducers';
 
 const Navbar = () => {
+
+  const selectSystem = (state: RootState) => state.system;
+  const system = useSelector(selectSystem);
 
   const dispatch =  useDispatch()
   const onLogout = () => {
@@ -37,7 +42,7 @@ const Navbar = () => {
             <Link className="nav-link" to="/mylists">My Lists</Link>
           </li> */}
           <li className="nav-item ">
-            <div className="nav-link" role='button' onClick={onLogout}>Logout</div>
+        <div className="nav-link" role='button' onClick={onLogout}>Logout {system.curUser.name}</div>
           </li>
         </ul>
       </div>
