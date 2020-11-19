@@ -4,6 +4,7 @@ import {
   ILogin,
   ADDED_CURRENT_USER,
   USER_CLEARED,
+  SET_CURRENT_LIST,
   STARTED_LOADING,
   FINISHED_LOADING,
   ADDED_NOTIFICATION,
@@ -85,6 +86,15 @@ export const doLogoutUser = () => {
   }
 }
 
+export const doSetCurrentList = (listId: string): ThunkAction<void, RootState, unknown, Action<any>> => async dispatch => {
+  const response = await instance.post(`/lists/current/${listId}`);
+  console.log('From Action');
+  dispatch ({
+    type: SET_CURRENT_LIST,
+    payload: listId,
+  })
+}
+
 export const addCurrentUser = (user: IUser): SystemActionTypes => {
   return {
     type: ADDED_CURRENT_USER,
@@ -106,3 +116,6 @@ export const clearNotification = () => {
     payload: { error: false, message: '' }
   }
 }
+
+
+//  (): ThunkAction<void, RootState, unknown, Action<any>>

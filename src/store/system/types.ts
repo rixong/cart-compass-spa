@@ -25,6 +25,7 @@ export type SystemState = {
 
 export const ADDED_CURRENT_USER = "ADDED_CURRENT_USER"
 export const USER_CLEARED = "USER_CLEARED"
+export const SET_CURRENT_LIST = "SET_CURRENT_LIST"
 export const STARTED_LOADING = "STARTED_LOADING"
 export const FINISHED_LOADING = "FINISHED_LOADING"
 export const ADDED_NOTIFICATION = "ADDED_NOTIFICATION"
@@ -38,6 +39,11 @@ interface AddCurrentUserAction {
 interface UserClearAction {
   type: typeof USER_CLEARED;
   payload: IUser;
+}
+
+interface doSetCurrentList {
+  type: typeof SET_CURRENT_LIST;
+  payload: string;
 }
 
 interface StartLoadingAction {
@@ -61,5 +67,5 @@ interface ClearNotificationAction {
 }
 
 export type SystemActionTypes =
-  AddCurrentUserAction | UserClearAction | StartLoadingAction |
+  AddCurrentUserAction | UserClearAction | doSetCurrentList | StartLoadingAction |
   FinishLoadingAction | AddNotificationAction | ClearNotificationAction

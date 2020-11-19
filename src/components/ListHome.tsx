@@ -4,6 +4,8 @@ import { RootState } from '../store';
 
 // import CurrentList from './CurrentList.txt';
 import { doCreateNewList, doRemoveList } from '../store/lists/actions';
+import { doSetCurrentList} from '../store/system/actions';
+
 const ListHome = () => {
 
   const dispatch = useDispatch();
@@ -15,7 +17,12 @@ const ListHome = () => {
   // }, [dispatch])
 
   // useEffect(() => {
-  //   dispatch(doRemoveList('5fb60a4400fd686750f54b1c'))
+  //   dispatch(doRemoveList('5fb6783019078568b9d5d89a'))
+  // }, [dispatch])
+
+  // useEffect(() => {
+  //   dispatch(doSetCurrentList('5fb684eb86b05273f7d1a817'))
+  //   //dispatch(doSetCurrentList('5fb60a3e00fd686750f54b1a'))
   // }, [dispatch])
 
 

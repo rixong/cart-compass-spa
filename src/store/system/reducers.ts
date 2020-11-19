@@ -1,9 +1,10 @@
 import {
-  SystemState, 
-  SystemActionTypes, 
-  ADDED_CURRENT_USER, 
-  USER_CLEARED, 
-  STARTED_LOADING, 
+  SystemState,
+  SystemActionTypes,
+  ADDED_CURRENT_USER,
+  SET_CURRENT_LIST,
+  USER_CLEARED,
+  STARTED_LOADING,
   FINISHED_LOADING,
   ADDED_NOTIFICATION,
   CLEARED_NOTIFICATION
@@ -24,7 +25,7 @@ const initialState = {
 }
 
 export default function systemReducer(
-  state = initialState, 
+  state = initialState,
   action: SystemActionTypes
 ): SystemState {
   // console.log('From reducer', action.payload)
@@ -34,8 +35,12 @@ export default function systemReducer(
         ...state, curUser: action.payload, loading: false
       }
     case USER_CLEARED:
-      console.log('Logout in reducer')
       return { ...state, ...initialState }
+    case SET_CURRENT_LIST:
+      console.log('Set List in reducer')
+      const tempUser = Object.assign({}, state.curUser)
+      tempUser.currentList = action.payload
+      return { ...state, curUser: tempUser }
     case ADDED_NOTIFICATION:
       return { ...state, notification: action.payload }
     case CLEARED_NOTIFICATION:
