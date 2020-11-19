@@ -6,19 +6,19 @@ import { IMasterListItem, ADDED_ITEM_TO_MASTERLIST, REMOVED_FROM_MASTER_LIST, Ma
 
 export const addItemToMasterList = (item: IMasterListItem): AppThunk => async dispatch => {
   try {
-    console.log("Master item");
     
-    const response = (await instance.post('/items',item)).data
-    console.log(response)
-    // if (response.status !== 'exists') {
+    const response = await instance.post('/items',item)
+    console.log(response.data);
+    if (!response.data.error) {
       dispatch({
-        type: 'ADDED_ITEM_TO_MASTERLIST',
-        payload: response,
+        type: ADDED_ITEM_TO_MASTERLIST,
+        payload: response.data,
       })
-    // }
-    // dispatch(doAddItemToCurrentList({ item_id: response.item.id, list_id, quantity: item.quantity }))
+    }
   }
   catch (e) {
+    console.log(e);
+    
     // dispatch(addNotification(e.message))
   }
 }

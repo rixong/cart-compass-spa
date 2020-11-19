@@ -22,9 +22,7 @@ export default function categoryReducer(
       // })
       // return { ...state, categories: reorder }
       return state;
-      case ADD_CATEGORIES:
-        console.log('From reducer');
-        
+      case ADD_CATEGORIES:        
         return {...state, categories: action.payload}
     default:
       return state

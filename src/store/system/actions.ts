@@ -17,7 +17,7 @@ import {
 
 import { ADDED_NEW_LIST } from '../lists/types';
 import { ADD_CATEGORIES } from '../categories/types';
-import { ADD_MASTERLIST_ITEMS } from '../masterlist/types';
+import { ADDED_ITEM_TO_MASTERLIST } from '../masterlist/types';
 import { AppThunk } from '../index';
 
 export const doLogin = (logonInfo: ILogin): AppThunk => async dispatch => {
@@ -50,6 +50,10 @@ export const doLogin = (logonInfo: ILogin): AppThunk => async dispatch => {
         type: ADD_CATEGORIES,
         payload: response.data.user.categories,
       })
+      dispatch({
+        type: ADDED_ITEM_TO_MASTERLIST,
+        payload: response.data.user.masterList,
+      })
     }
   } catch (e) {
     console.log('server error', e.message)
@@ -81,7 +85,7 @@ export const doAutoLogin = (): AppThunk => async dispatch => {
         payload: response.data.user.categories,
       })
       dispatch({
-        type: ADD_MASTERLIST_ITEMS,
+        type: ADDED_ITEM_TO_MASTERLIST,
         payload: response.data.user.masterList,
       })
     }

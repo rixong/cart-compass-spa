@@ -29,7 +29,7 @@ const ListHome = () => {
 
   useEffect(() => {
     const item = {
-      name: 'broccoli',
+      name: 'radish',
       categoryId: "5fb5f7b264f62d5c13bdce3a"
     }
     dispatch(addItemToMasterList(item))
