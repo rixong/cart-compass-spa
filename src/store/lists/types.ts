@@ -8,11 +8,16 @@ export interface IList {
 }
 
 export interface IListItem {
-  _id: string;
+  _id?: string;
   masterItemId: string;
-  categoryId: string;
   quantity: string;
   active: boolean;
+}
+
+export interface INewItem {
+  name: string;
+  categoryId: string;
+  quantity: string;
 }
 
 export type ListsState = {

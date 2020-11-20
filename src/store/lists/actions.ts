@@ -1,10 +1,13 @@
 import { instance } from '../../api/axios';
 import { AppThunk } from '../index';
 import {
-  ADDED_NEW_LIST,
   IListItem,
+  INewItem,
+  ADDED_NEW_LIST,
   REMOVED_LIST
 } from './types'
+// import { doAddItemToMasterList } from '../masterlist/actions';
+import { IMasterListItem } from '../masterlist/types';
 
 export const doCreateNewList = (name: string): AppThunk => async dispatch => {
   console.log('Create List');
@@ -49,23 +52,35 @@ export const doRemoveList = (listId: string): AppThunk => async dispatch => {
 //   }
 // }
 
-export const doAddItemToCurrentList = (listItem: IListItem): AppThunk => async dispatch => {
+export const doAddItemToCurrentList = (item: IMasterListItem, quantity: string): AppThunk => async dispatch => {
+  // Check if name exists in local? current list - yes: stop
+  console.log("XXXX");
+  
   try {
-    const response = (await instance.post('/list_items', listItem))
+    // Create new list Item using returned master Item and quantity
+    const newCurrentListItem: IListItem = {
+      masterItemId: item._id,
+      quantity,
+      active: true
+    }
+    // Add item to DB and local current lists
+
+    const response = (await instance.post('/list/items', newCurrentListItem))
     console.log(response.data)
     if (response.status === 200) {
       // dispatch(addNotification(response.message))
     } else {
-      dispatch({
-        type: 'ADDED_ITEM_TO_CUR_LIST',
-        payload: response.data
-      })
+      // dispatch({
+      //   type: 'ADDED_ITEM_TO_CUR_LIST',
+      //   payload: response.data
+      // })
     }
   }
   catch (e) {
     // dispatch(addNotification(e.message))
   }
 }
+
 
 // export const doRemoveItemFromCurList = (itemId) => {
 //   return {

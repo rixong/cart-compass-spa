@@ -4,11 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 
 // import CurrentList from './CurrentList.txt';
-import { doCreateNewList, doRemoveList } from '../store/lists/actions';
-import { doSetCurrentList} from '../store/system/actions';
-import {doAddItemToMasterList, doRemoveFromMasterList} from '../store/masterlist/actions'
+import { doCreateNewList, doRemoveList, doAddItemToCurrentList } from '../store/lists/actions';
+import { INewItem } from '../store/lists/types';
+import { doSetCurrentList } from '../store/system/actions';
+import { doAddItemToMasterList, doRemoveFromMasterList } from '../store/masterlist/actions'
 
 const ListHome = () => {
+
+  const selectSystem = (state: RootState) => state.system;
+  const system = useSelector(selectSystem)
+
+  const selectLists = (state: RootState) => state.lists;
+  const lists = useSelector(selectLists)
 
   const dispatch = useDispatch();
   // const selectSystem = (state: RootState) => state.system;
@@ -32,12 +39,23 @@ const ListHome = () => {
   //     name: 'radish',
   //     categoryId: "5fb5f7b264f62d5c13bdce3a"
   //   }
-  //   dispatch(addItemToMasterList(item))
+  //   // dispatch(doAddItemToMasterList(item))
   // }, [dispatch])
+  
+    //   useEffect(() => {
+    //   dispatch(doRemoveFromMasterList("5fb6e7bd2394261ce7ddf6a1"))
+    // }, [dispatch])
 
-  //   useEffect(() => {
-  //   dispatch(doRemoveFromMasterList("5fb6e7bd2394261ce7ddf6a1"))
-  // }, [dispatch])
+  useEffect(() => {
+    const item: INewItem = {
+      name: 'cilantro',
+      categoryId: "5fb5f7b264f62d5c13bdce3a",
+      quantity: '1 bunch'
+    }
+    dispatch(doAddItemToMasterList(item))
+  }, [dispatch])
+
+
 
   return (
     <div className="container bg-light rounded list-home">

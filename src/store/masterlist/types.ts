@@ -1,5 +1,5 @@
 export interface IMasterListItem {
-  _id?: string;
+  _id: string;
   name: string;
   categoryId: string;
 }
