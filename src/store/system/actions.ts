@@ -1,5 +1,3 @@
-import { Action } from 'redux';
-import { ThunkAction } from 'redux-thunk';
 
 import { instance } from '../../api/axios';
 import {
@@ -18,6 +16,7 @@ import {
 import { ADDED_NEW_LIST } from '../lists/types';
 import { ADD_CATEGORIES } from '../categories/types';
 import { ADDED_ITEM_TO_MASTERLIST } from '../masterlist/types';
+
 import { AppThunk } from '../index';
 
 export const doLogin = (logonInfo: ILogin): AppThunk => async dispatch => {
@@ -111,12 +110,18 @@ export const addCurrentUser = (user: IUser): SystemActionTypes => {
 }
 
 export const doSetCurrentList = (listId: string): AppThunk => async dispatch => {
-  const response = await instance.post(`/lists/current/${listId}`);
-  console.log('From Action');
-  dispatch({
-    type: SET_CURRENT_LIST,
-    payload: listId,
-  })
+  try{
+    const response = await instance.post(`/lists/current/${listId}`);
+    console.log(response);
+    if (response.status === 204){
+      dispatch({
+        type: SET_CURRENT_LIST,
+        payload: listId,
+      })
+    }
+  } catch(e){
+    console.log('server error', e.message)
+  }
 }
 
 /// UTLITIES
@@ -133,6 +138,3 @@ export const clearNotification = () => {
     payload: { error: false, message: '' }
   }
 }
-
-
-//  (): ThunkAction<void, RootState, unknown, Action<any>>

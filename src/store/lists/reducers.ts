@@ -1,6 +1,4 @@
 import {
-  IList,
-  IListItem,
   ListsActions,
   ListsState,
   ADDED_NEW_LIST,

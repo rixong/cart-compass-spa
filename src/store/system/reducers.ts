@@ -37,7 +37,6 @@ export default function systemReducer(
     case USER_CLEARED:
       return { ...state, ...initialState }
     case SET_CURRENT_LIST:
-      console.log('Set List in reducer')
       const tempUser = Object.assign({}, state.curUser)
       tempUser.currentList = action.payload
       return { ...state, curUser: tempUser }
