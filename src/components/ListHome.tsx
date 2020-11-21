@@ -46,20 +46,32 @@ const ListHome = () => {
     //   dispatch(doRemoveFromMasterList("5fb6e7bd2394261ce7ddf6a1"))
     // }, [dispatch])
 
-  useEffect(() => {
+
+  // useEffect(() => {
+  //   const item: INewItem = {
+  //     name: 'cilantro',
+  //     categoryId: "5fb5f7b264f62d5c13bdce3a",
+  //     quantity: '1 bunch'
+  //   }
+  //   dispatch(doAddItemToMasterList(item))
+  // }, [dispatch])
+
+  const handleClick = (e: React.FormEvent) => {
+    e.preventDefault();
     const item: INewItem = {
-      name: 'cilantro',
+      name: 'pears',
       categoryId: "5fb5f7b264f62d5c13bdce3a",
       quantity: '1 bunch'
     }
     dispatch(doAddItemToMasterList(item))
-  }, [dispatch])
+  }
 
 
 
   return (
     <div className="container bg-light rounded list-home">
       <h3>Temp list home</h3>
+      <button onClick={handleClick}>Submit</button>
       {/* <CurrentList/> */}
     </div>
   )

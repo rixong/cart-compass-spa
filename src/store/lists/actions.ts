@@ -52,29 +52,24 @@ export const doRemoveList = (listId: string): AppThunk => async dispatch => {
 //   }
 // }
 
-export const doAddItemToCurrentList = (item: IMasterListItem, quantity: string): AppThunk => async dispatch => {
-  // Check if name exists in local? current list - yes: stop
-  console.log("XXXX");
-  
+export const doAddItemToCurrentList = (masterItemId: string, quantity: string): AppThunk => async (dispatch, getState) => {
+  // Check if name exists in local? current list - yes: stop  
   try {
     // Create new list Item using returned master Item and quantity
     const newCurrentListItem: IListItem = {
-      masterItemId: item._id,
+      masterItemId,
       quantity,
       active: true
     }
     // Add item to DB and local current lists
-
-    const response = (await instance.post('/list/items', newCurrentListItem))
+    console.log('here');
+    const response = await instance.post('/lists/items', newCurrentListItem)
     console.log(response.data)
-    if (response.status === 200) {
-      // dispatch(addNotification(response.message))
-    } else {
-      // dispatch({
-      //   type: 'ADDED_ITEM_TO_CUR_LIST',
-      //   payload: response.data
-      // })
-    }
+    const curList: string = getState().system.curUser.currentList;
+      dispatch({
+        type: 'ADDED_ITEM_TO_CUR_LIST',
+        payload: {item: response.data, curList}
+      })
   }
   catch (e) {
     // dispatch(addNotification(e.message))

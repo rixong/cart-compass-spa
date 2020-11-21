@@ -11,7 +11,7 @@ export interface IListItem {
   _id?: string;
   masterItemId: string;
   quantity: string;
-  active: boolean;
+  active?: boolean;
 }
 
 export interface INewItem {
@@ -47,7 +47,7 @@ interface RemoveListAction {
 
 interface AddToCurrentListAction {
   type: typeof ADDED_ITEM_TO_CUR_LIST
-  payload: IListItem
+  payload: {item: IListItem, curList: string}
 }
 
 interface RemoveFromCurrentListAction {
