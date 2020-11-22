@@ -11,7 +11,7 @@ import {
   IList,
   IListItem,
   // REMOVED_ITEMS_FROM_CUR_LIST,
-  // CHANGED_ITEMS_STATUS,
+  CHANGED_ITEMS_STATUS,
 } from './types';
 
 const intitalState: ListsState = {
@@ -22,6 +22,7 @@ export default function listReducer(
   state = intitalState, action: ListsActions
 ): ListsState {
   let idx;
+  let currentList;
   switch (action.type) {
     case ADDED_NEW_LIST:
       return { ...state, lists: state.lists.concat(action.payload) }
@@ -33,20 +34,23 @@ export default function listReducer(
     //   return { ...state, curListItems: action.payload }
 
     case ADDED_ITEM_TO_CUR_LIST:
-      idx = state.lists.findIndex(list => list._id === action.payload.curList)
-      const currentList: IList = Object.assign({}, state.lists.find(list => list._id = action.payload.curList))
-      const items: IListItem[] = [...currentList.listItems, action.payload.item];
-      return { ...state,  }
-    // case 'REMOVED_ITEMS_FROM_CUR_LIST':
+      idx = state.lists.findIndex((list) => list._id === action.payload.curList);
+      currentList = { ...state.lists[idx] }
+      currentList.listItems = action.payload.items
+      return { ...state, lists: [...state.lists.slice(0, idx), currentList, ...state.lists.slice(idx + 1)] };
+    case CHANGED_ITEMS_STATUS:
+      idx = state.lists.findIndex((list) => list._id === action.payload.curList);
+      currentList = { ...state.lists[idx] }
+      let items = [...currentList.listItems];
+      let itemIdx = items.findIndex((ele) => ele._id === action.payload.item._id)
+      items = [...items.slice(0, itemIdx), action.payload.item, ...items.slice(itemIdx + 1)]
+      currentList.listItems = items;
+      return { ...state, lists: [...state.lists.slice(0, idx), currentList, ...state.lists.slice(idx + 1)] };
+    
+      // case 'REMOVED_ITEMS_FROM_CUR_LIST':
     //   let tempItem = [...state.curListItems].filter(item => item.item_id !== action.payload)
     //   return { ...state, curListItems: tempItem }
-    // case 'CHANGED_ITEMS_STATUS':
-    //   idx = state.curListItems.findIndex(item => item.item_id === action.payload.item_id)
-    //   return {
-    //     ...state, curListItems:
-    //       [...state.curListItems.slice(0, idx), action.payload, ...state.curListItems.slice(idx + 1)]
-    //   }
-
+    
     default:
       return state
   }

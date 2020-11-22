@@ -47,7 +47,7 @@ interface RemoveListAction {
 
 interface AddToCurrentListAction {
   type: typeof ADDED_ITEM_TO_CUR_LIST
-  payload: {item: IListItem, curList: string}
+  payload: {items: IListItem[], curList: string}
 }
 
 interface RemoveFromCurrentListAction {
@@ -55,7 +55,8 @@ interface RemoveFromCurrentListAction {
 }
 
 interface ChangeItemStatusAction {
-  type: typeof CHANGED_ITEMS_STATUS
+  type: typeof CHANGED_ITEMS_STATUS,
+  payload: {item: IListItem, curList: string}
 }
 
 export type ListsActions = 

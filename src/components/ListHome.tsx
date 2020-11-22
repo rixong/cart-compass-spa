@@ -6,8 +6,9 @@ import { RootState } from '../store';
 // import CurrentList from './CurrentList.txt';
 import { doCreateNewList, doRemoveList, doAddItemToCurrentList } from '../store/lists/actions';
 import { INewItem } from '../store/lists/types';
-import { doSetCurrentList } from '../store/system/actions';
-import { doAddItemToMasterList, doRemoveFromMasterList } from '../store/masterlist/actions'
+import { doSetCurrentList,  } from '../store/system/actions';
+import { doAddItemToMasterList } from '../store/masterlist/actions';
+import { doChangeItemStatus } from '../store/lists/actions';
 
 const ListHome = () => {
 
@@ -18,8 +19,6 @@ const ListHome = () => {
   const lists = useSelector(selectLists)
 
   const dispatch = useDispatch();
-  // const selectSystem = (state: RootState) => state.system;
-  // const system = useSelector(selectSystem)
 
   // useEffect(() => {
   //   dispatch(doCreateNewList('Costco'))
@@ -31,7 +30,7 @@ const ListHome = () => {
 
   // useEffect(() => {
   //   //dispatch(doSetCurrentList('5fb684eb86b05273f7d1a817'))
-  //   dispatch(doSetCurrentList('5fb60a3e00fd686750f54b1a'))
+  //   dispatch(doSetCurrentList('5fb9ad226b07828ad3ed96f0'))
   // }, [dispatch])
 
   // useEffect(() => {
@@ -58,12 +57,12 @@ const ListHome = () => {
 
   const handleClick = (e: React.FormEvent) => {
     e.preventDefault();
-    const item: INewItem = {
-      name: 'pears',
-      categoryId: "5fb5f7b264f62d5c13bdce3a",
-      quantity: '1 bunch'
-    }
-    dispatch(doAddItemToMasterList(item))
+    // const item: INewItem = {
+    //   name: 'pigs',
+    //   categoryId: "5fb5f7b264f62d5c13bdce3a",
+    //   quantity: 'pigs'
+    // }
+    dispatch(doChangeItemStatus('5fbaa43ffbcbc50dc5874424'))
   }
 
 
