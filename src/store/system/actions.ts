@@ -13,8 +13,8 @@ import {
   SystemActionTypes
 } from './types';
 
-import { FETCHED_INITIAL_LISTS_AND_SORT_ORDER } from '../lists/types';
-import {doAddCategories} from '../categories/actions'
+import { FETCHED_INITIAL_LISTS_AND_SORT_ORDER, CLEARED_ALL_LISTS } from '../lists/types';
+import { doAddCategories } from '../categories/actions'
 import { ADDED_ITEM_TO_MASTERLIST } from '../masterlist/types';
 
 import { AppThunk } from '../index';
@@ -53,7 +53,7 @@ export const doLogin = (logonInfo: ILogin): AppThunk => async dispatch => {
         type: ADDED_ITEM_TO_MASTERLIST,
         payload: response.data.user.masterList,
       })
-      dispatch(doAddCategories);
+      dispatch(doAddCategories());
     }
   } catch (e) {
     console.log('server error', e.message)
@@ -87,7 +87,7 @@ export const doAutoLogin = (): AppThunk => async dispatch => {
         type: ADDED_ITEM_TO_MASTERLIST,
         payload: response.data.user.masterList,
       })
-      dispatch(doAddCategories);
+      dispatch(doAddCategories());
     }
   }
   catch (e) {
@@ -99,8 +99,11 @@ export const doAutoLogin = (): AppThunk => async dispatch => {
 
 export const doLogoutUser = () => {
   return {
-    type: USER_CLEARED,
-  }
+    type: USER_CLEARED
+  };
+  // dispatch ({
+  //   type: CLEARED_ALL_LISTS
+  // })
 }
 
 export const addCurrentUser = (user: IUser): SystemActionTypes => {
@@ -111,16 +114,16 @@ export const addCurrentUser = (user: IUser): SystemActionTypes => {
 }
 
 export const doSetCurrentList = (listId: string): AppThunk => async dispatch => {
-  try{
+  try {
     const response = await instance.post(`/lists/current/${listId}`);
     console.log(response);
-    if (response.status === 204){
+    if (response.status === 204) {
       dispatch({
         type: SET_CURRENT_LIST,
         payload: listId,
       })
     }
-  } catch(e){
+  } catch (e) {
     console.log('server error', e.message)
   }
 }

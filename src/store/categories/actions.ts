@@ -7,6 +7,8 @@ import { ADD_CATEGORIES } from './types';
 export const doAddCategories = (): AppThunk => async dispatch => {
   try {
     const response = await instance.get('/categories');
+    console.log(response.data);
+    
     dispatch ({
       type:ADD_CATEGORIES,
       payload: response.data

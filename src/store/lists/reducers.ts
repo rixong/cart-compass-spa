@@ -7,6 +7,7 @@ import {
   FETCHED_INITIAL_LISTS_AND_SORT_ORDER,
   ADDED_NEW_LIST,
   REMOVED_LIST,
+  CLEARED_ALL_LISTS,
   ADDED_ITEM_TO_CUR_LIST,
   CHANGED_ITEMS_STATUS,
   // RETRIEVED_LIST_ITEMS,
@@ -32,7 +33,9 @@ export default function listReducer(
     case REMOVED_LIST:
       idx = state.lists.findIndex(list => list._id === action.payload)
       return { ...state, lists: state.lists.slice(0, idx).concat(state.lists.slice(idx + 1)) }
-
+    case CLEARED_ALL_LISTS:
+      return intitalState
+    
     // case 'RETRIEVED_LIST_ITEMS':
     //   return { ...state, curListItems: action.payload }
 
