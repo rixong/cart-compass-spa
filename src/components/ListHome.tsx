@@ -57,12 +57,17 @@ const ListHome = () => {
 
   const handleClick = (e: React.FormEvent) => {
     e.preventDefault();
-    // const item: INewItem = {
-    //   name: 'pigs',
-    //   categoryId: "5fb5f7b264f62d5c13bdce3a",
-    //   quantity: 'pigs'
-    // }
-    dispatch(doChangeItemStatus('5fbaa43ffbcbc50dc5874424'))
+    // dispatch(doSetCurrentList("5fbc14d4d966e36964e8c441"));
+
+      const item: INewItem = {
+        name: 'ground beef',
+        categoryId: "5fbb13947ad1bd44b1a4dda0",
+        quantity: '1 lb.'
+      }
+      dispatch(doAddItemToMasterList(item))
+
+    // dispatch(doCreateNewList('Costco'))
+    // dispatch(doChangeItemStatus('5fbaa43ffbcbc50dc5874424'))
   }
 
 

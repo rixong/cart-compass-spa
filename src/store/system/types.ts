@@ -3,6 +3,7 @@ export interface IUser {
   name: string;
   email: string;
   currentList: string;
+  sharedWithMe: string[];
 }
 
 export interface ILogin {

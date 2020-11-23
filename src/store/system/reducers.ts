@@ -10,12 +10,13 @@ import {
   CLEARED_NOTIFICATION
 } from './types'
 
-const initialState = {
+const initialState: SystemState = {
   curUser: {
     name: '',
     email: '',
     currentList: '',
-    id: ''
+    id: '',
+    sharedWithMe: [],
   },
   notification: {
     error: false,
@@ -35,7 +36,7 @@ export default function systemReducer(
         ...state, curUser: action.payload, loading: false
       }
     case USER_CLEARED:
-      return { ...state, ...initialState }
+      return initialState
     case SET_CURRENT_LIST:
       const tempUser = Object.assign({}, state.curUser)
       tempUser.currentList = action.payload

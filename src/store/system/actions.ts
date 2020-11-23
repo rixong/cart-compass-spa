@@ -38,7 +38,8 @@ export const doLogin = (logonInfo: ILogin): AppThunk => async dispatch => {
         id: response.data.user._id,
         name: response.data.user.name,
         email: response.data.user.email,
-        currentList: response.data.user.currentList
+        currentList: response.data.user.currentList,
+        sharedWithMe: response.data.user.sharedWithMe
       }
       dispatch(addCurrentUser(user));
       dispatch({
@@ -72,7 +73,8 @@ export const doAutoLogin = (): AppThunk => async dispatch => {
         id: response.data.user._id,
         name: response.data.user.name,
         email: response.data.user.email,
-        currentList: response.data.user.currentList
+        currentList: response.data.user.currentList,
+        sharedWithMe: response.data.user.sharedWithMe
       }
       dispatch(addCurrentUser(user));
       dispatch({
