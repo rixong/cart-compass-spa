@@ -2,14 +2,15 @@ import { instance } from '../../api/axios';
 import { AppThunk } from '../index';
 import {
   IListItem,
-  INewItem,
+  // INewItem,
   ADDED_NEW_LIST,
   REMOVED_LIST,
+  // CLEARED_ALL_LISTS,
   CHANGED_ITEMS_STATUS
   
 } from './types'
 // import { doAddItemToMasterList } from '../masterlist/actions';
-import { IMasterListItem } from '../masterlist/types';
+// import { IMasterListItem } from '../masterlist/types';
 
 export const doCreateNewList = (name: string): AppThunk => async dispatch => {
   console.log('Create List');
@@ -39,6 +40,12 @@ export const doRemoveList = (listId: string): AppThunk => async dispatch => {
     console.log('Remove list - server error', e.message)
   }
 }
+
+// export const doClearLists = () => {
+//   return {
+//     type: CLEARED_ALL_LISTS
+//   }
+// }
 
 // CURRENT LIST_ITEM REQUESTS
 // export const doGetCurrentListItems = (list_id) => async dispatch => {

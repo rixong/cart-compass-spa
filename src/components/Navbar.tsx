@@ -1,10 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {doLogoutUser} from '../store/system/actions';
 import { RootState } from '../store';
-import systemReducer from '../store/system/reducers';
 
 const Navbar = () => {
 

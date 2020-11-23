@@ -15,8 +15,7 @@ import {
 
 import { FETCHED_INITIAL_LISTS_AND_SORT_ORDER, CLEARED_ALL_LISTS } from '../lists/types';
 import { doAddCategories } from '../categories/actions'
-import { ADDED_ITEM_TO_MASTERLIST } from '../masterlist/types';
-
+import { ADDED_ITEM_TO_MASTERLIST, CLEARED_MASTERLIST } from '../masterlist/types';
 import { AppThunk } from '../index';
 
 // New User OR Login Existing User
@@ -97,13 +96,16 @@ export const doAutoLogin = (): AppThunk => async dispatch => {
 }
 
 
-export const doLogoutUser = () => {
-  return {
+export const doLogoutUser = (): AppThunk => async dispatch => {
+  dispatch({
+    type: CLEARED_ALL_LISTS
+  })
+  dispatch({
     type: USER_CLEARED
-  };
-  // dispatch ({
-  //   type: CLEARED_ALL_LISTS
-  // })
+  });
+  dispatch({
+    type: CLEARED_MASTERLIST
+  })
 }
 
 export const addCurrentUser = (user: IUser): SystemActionTypes => {

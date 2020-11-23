@@ -9,6 +9,7 @@ export type MasterListState = {
 }
 
 export const ADD_MASTERLIST_ITEMS = 'ADD_MASTERLIST_ITEMS'
+export const CLEARED_MASTERLIST = 'CLEARED_MASTERLIST'
 export const ADDED_ITEM_TO_MASTERLIST = 'ADDED_ITEM_TO_MASTERLIST'
 export const REMOVED_FROM_MASTER_LIST = 'REMOVED_FROM_MASTER_LIST'
 
@@ -22,5 +23,11 @@ interface RemoveItemToMasterListAction {
   payload: string
 }
 
+interface ClearMasterListAction {
+  type: typeof CLEARED_MASTERLIST
+  payload: string
+}
+
+
 export type MasterListActions = AddItemToMasterListAction | RemoveItemToMasterListAction
-            | AddItemToMasterListAction
+            | AddItemToMasterListAction | ClearMasterListAction
