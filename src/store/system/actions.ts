@@ -13,12 +13,13 @@ import {
   SystemActionTypes
 } from './types';
 
-import { ADDED_NEW_LIST } from '../lists/types';
-import { ADD_CATEGORIES } from '../categories/types';
+import { FETCHED_INITIAL_LISTS_AND_SORT_ORDER } from '../lists/types';
+import {doAddCategories} from '../categories/actions'
 import { ADDED_ITEM_TO_MASTERLIST } from '../masterlist/types';
 
 import { AppThunk } from '../index';
 
+// New User OR Login Existing User
 export const doLogin = (logonInfo: ILogin): AppThunk => async dispatch => {
   console.log('From login action');
   let response
@@ -42,25 +43,25 @@ export const doLogin = (logonInfo: ILogin): AppThunk => async dispatch => {
       }
       dispatch(addCurrentUser(user));
       dispatch({
-        type: ADDED_NEW_LIST,
-        payload: response.data.user.lists,
-      })
-      dispatch({
-        type: ADD_CATEGORIES,
-        payload: response.data.user.categories,
+        type: FETCHED_INITIAL_LISTS_AND_SORT_ORDER,
+        payload: {
+          lists: response.data.user.lists,
+          sortOrder: response.data.user.sortOrder,
+        },
       })
       dispatch({
         type: ADDED_ITEM_TO_MASTERLIST,
         payload: response.data.user.masterList,
       })
+      dispatch(doAddCategories);
     }
   } catch (e) {
     console.log('server error', e.message)
   }
   dispatch({ type: FINISHED_LOADING });
-
 }
 
+//Profile - Renew session
 // Token is included in header as Axios interceptor (see API/axios.ts).
 export const doAutoLogin = (): AppThunk => async dispatch => {
   dispatch({ type: STARTED_LOADING });
@@ -74,19 +75,19 @@ export const doAutoLogin = (): AppThunk => async dispatch => {
         email: response.data.user.email,
         currentList: response.data.user.currentList
       }
-      dispatch(addCurrentUser(user))
+      dispatch(addCurrentUser(user));
       dispatch({
-        type: ADDED_NEW_LIST,
-        payload: response.data.user.lists,
-      })
-      dispatch({
-        type: ADD_CATEGORIES,
-        payload: response.data.user.categories,
+        type: FETCHED_INITIAL_LISTS_AND_SORT_ORDER,
+        payload: {
+          lists: response.data.user.lists,
+          sortOrder: response.data.user.sortOrder,
+        },
       })
       dispatch({
         type: ADDED_ITEM_TO_MASTERLIST,
         payload: response.data.user.masterList,
       })
+      dispatch(doAddCategories);
     }
   }
   catch (e) {

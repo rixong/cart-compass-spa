@@ -4,6 +4,7 @@ import {
   ListsState,
   // IList,
   // IListItem,
+  FETCHED_INITIAL_LISTS_AND_SORT_ORDER,
   ADDED_NEW_LIST,
   REMOVED_LIST,
   ADDED_ITEM_TO_CUR_LIST,
@@ -13,15 +14,19 @@ import {
 } from './types';
 
 const intitalState: ListsState = {
-  lists: []
+  lists: [],
+  sortOrder: [],
 };
 
 export default function listReducer(
-  state = intitalState, action: ListsActions
-): ListsState {
+  state = intitalState, 
+  action: ListsActions
+) {
   let idx;
   let currentList;
   switch (action.type) {
+    case FETCHED_INITIAL_LISTS_AND_SORT_ORDER:
+      return {...state, lists: action.payload.lists, sortOrder: action.payload.sortOrder}
     case ADDED_NEW_LIST:
       return { ...state, lists: state.lists.concat(action.payload) }
     case REMOVED_LIST:
