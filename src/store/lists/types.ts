@@ -26,6 +26,14 @@ export interface INewItem {
   quantity: string;
 }
 
+export interface ICompleteItem {
+  name: string;
+  quantity: string;
+  active: boolean;
+  category: string;
+  sortOrder: number;
+}
+
 export type ListsState = {
   lists: IList[];
   sortOrder: ISortOrder[];

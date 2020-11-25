@@ -3,14 +3,11 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 
-import { IListItem, IList, ISortOrder } from '../store/lists/types';
+import { IListItem, IList, ISortOrder, ICompleteItem } from '../store/lists/types';
 import { IMasterListItem } from '../store/masterlist/types';
-import { Interface } from 'readline';
 
 // import { doGetCurrentListItems } from '../store/lists/actions';
 // import ListGroup from './ListGroup'
-
-//{ curUser, lists, curListItems, masterList, categories, doGetCurrentListItems }
 
 const CurrentList: React.FC = () => {
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
@@ -27,6 +24,7 @@ const CurrentList: React.FC = () => {
   const selectCategories = (state: RootState) => state.categories;
   const { categories } = useSelector(selectCategories)
 
+  const curCategories = new Set();
   useEffect(() => {
 
     // let curListItems: IListItem[];
@@ -34,10 +32,12 @@ const CurrentList: React.FC = () => {
       const curList: any = lists.find((list: IList) => list._id === system.curUser.currentList);
       const curListItems: IListItem[] = curList.listItems;
       const categoryHash = makeCategoryHash()
+      // console.log(categoryHash);
+      const items = makeItems(categoryHash, curListItems);
+      console.log(divideListByCategory(items));
 
-      console.log(makeListOfItems(categoryHash, curListItems));
     }
-  }, [lists, system.curUser.currentList])
+  }, [lists, system.curUser.currentList, categories])
 
   const makeCategoryHash = () => {
     const hashMap: any = {};
@@ -53,7 +53,7 @@ const CurrentList: React.FC = () => {
     return hashMap;
   }
 
-  const makeListOfItems = (categoryHash: any, listItems: any) => {
+  const makeItems = (categoryHash: any, listItems: any) => {
     let itemsFromHash: any = listItems.map((item: any) => {
       let masteritem: any = masterList.find((ele) => ele._id === item.masterItemId)
       if (masteritem) {
@@ -66,32 +66,30 @@ const CurrentList: React.FC = () => {
         }
       }
     })
-    return itemsFromHash;
+    return itemsFromHash.sort((a:any , b: any) => a.sortOrder - b.sortOrder);
   }
 
-  // const divideListByCategory = () => {
+  const divideListByCategory = (curListItems: ICompleteItem[]) => {
 
-  //   const divided = {};
-  //   let divs: HTMLElement[] = [];
+    const divided: any = {};
+    let divs: HTMLElement[] = [];
 
-  //   curListItems.forEach(listItem => {
-  //     let item = masterList.masterList.find(el => listItem.masterItemId === el._id)
+    curListItems.forEach((listItem: ICompleteItem) => {
+      // let item = masterList.masterList.find(el => listItem.masterItemId === el._id)
+      if (!divided[listItem.category]) {
+        divided[listItem.category] = [listItem];
+      } else {
+        divided[listItem.category].push(listItem);
+      }
+    })
 
-  //     if (!divided[item.categoryId]) {
-  //       divided[item.categoryId] = [listItem];
-  //     } else {
-  //       divided[item.categoryId].push(listItem);
-  //     }
-  //   })
-
-  //   categories.sort((a, b) => a.sort_order - b.sort_order);
+    const currentCategories = 
   //   categories.forEach(cat => {
   //     if (divided[cat.id]) {
   //       divs.push(<ListGroup categoryName={cat.name} items={divided[cat.id]} key={cat.id} />)
   //     }
-  //   })
-  //   return divs;
-  // }
+    return divided;
+  }
 
   return (
     <div className="col-md overflow-auto bg-light" style={{ height: vh }}>
