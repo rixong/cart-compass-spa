@@ -30,7 +30,7 @@ export interface ICompleteItem {
   name: string;
   quantity: string;
   active: boolean;
-  category: string;
+  categoryId: string;
   sortOrder: number;
 }
 

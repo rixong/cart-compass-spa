@@ -7,9 +7,10 @@ import { IListItem, IList, ISortOrder, ICompleteItem } from '../store/lists/type
 import { IMasterListItem } from '../store/masterlist/types';
 
 // import { doGetCurrentListItems } from '../store/lists/actions';
-// import ListGroup from './ListGroup'
+import ListGroup from './ListGroup'
 
 const CurrentList: React.FC = () => {
+
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
 
   const selectSystem = (state: RootState) => state.system;
@@ -24,71 +25,82 @@ const CurrentList: React.FC = () => {
   const selectCategories = (state: RootState) => state.categories;
   const { categories } = useSelector(selectCategories)
 
-  const curCategories = new Set();
+  // const curCategories = new Set();
+
   useEffect(() => {
 
+console.log(categories);
+
+
     // let curListItems: IListItem[];
-    if (lists && lists.length) {
+    if (lists && lists.length && categories.length) {
       const curList: any = lists.find((list: IList) => list._id === system.curUser.currentList);
       const curListItems: IListItem[] = curList.listItems;
-      const categoryHash = makeCategoryHash()
+      // const categoryHash = makeCategoryHash()
       // console.log(categoryHash);
-      const items = makeItems(categoryHash, curListItems);
+      const items = makeItems(curListItems);
+      console.log(items);
       console.log(divideListByCategory(items));
-
     }
   }, [lists, system.curUser.currentList, categories])
 
-  const makeCategoryHash = () => {
-    const hashMap: any = {};
-    categories.forEach(cat => {
-      const orderObj = sortOrder.find((order) => order.categoryId === cat._id)
-      if (orderObj) {
-        hashMap[cat._id] = {
-          name: cat.name,
-          order: orderObj.order
-        }
-      }
-    })
-    return hashMap;
-  }
+  // const makeCategoryHash = () => {
+  //   const hashMap: any = {};
+  //   categories.forEach(cat => {
+  //     const orderObj = sortOrder.find((order) => order.categoryId === cat._id)
+  //     if (orderObj) {
+  //       hashMap[cat._id] = {
+  //         name: cat.name,
+  //         order: orderObj.order
+  //       }
+  //     }
+  //   })
+  //   return hashMap;
+  // }
 
-  const makeItems = (categoryHash: any, listItems: any) => {
-    let itemsFromHash: any = listItems.map((item: any) => {
-      let masteritem: any = masterList.find((ele) => ele._id === item.masterItemId)
-      if (masteritem) {
+  const makeItems = (listItems: any) => {
+
+    let items: any = listItems.map((item: any) => {
+      let curMasteritem: any = masterList.find((ele) => ele._id === item.masterItemId);
+      let curSortOrder: any = sortOrder.find((ele) => ele.categoryId === curMasteritem.categoryId);
+      if (curMasteritem && curSortOrder) {
         return {
-          name: masteritem.name,
+          name: curMasteritem.name,
           quantity: item.quantity,
           active: item.active,
-          category: categoryHash[masteritem.categoryId].name,
-          sortOrder: categoryHash[masteritem.categoryId].order,
+          categoryId: curMasteritem.categoryId,
+          sortOrder: curSortOrder.order,
         }
       }
     })
-    return itemsFromHash.sort((a:any , b: any) => a.sortOrder - b.sortOrder);
+    return items.sort((a: any, b: any) => a.sortOrder - b.sortOrder);
   }
 
   const divideListByCategory = (curListItems: ICompleteItem[]) => {
 
     const divided: any = {};
-    let divs: HTMLElement[] = [];
+    let divs: any = [];
 
     curListItems.forEach((listItem: ICompleteItem) => {
-      // let item = masterList.masterList.find(el => listItem.masterItemId === el._id)
-      if (!divided[listItem.category]) {
-        divided[listItem.category] = [listItem];
+      if (!divided[listItem.categoryId]) {
+        divided[listItem.categoryId] = [listItem];
       } else {
-        divided[listItem.category].push(listItem);
+        divided[listItem.categoryId].push(listItem);
       }
     })
 
-    const currentCategories = 
-  //   categories.forEach(cat => {
-  //     if (divided[cat.id]) {
-  //       divs.push(<ListGroup categoryName={cat.name} items={divided[cat.id]} key={cat.id} />)
-  //     }
-    return divided;
+
+    for (const key in divided) {
+      const curCategories = categories.find((el) => el._id === key)
+      
+      if (curCategories) {
+        console.log(curCategories.name);
+        divs.push(<ListGroup categoryName={curCategories.name} items={divided[key]} key={key} />)
+      }
+    }
+
+    return divs;
+    // }
   }
 
   return (
@@ -103,5 +115,4 @@ const CurrentList: React.FC = () => {
     </div>
   )
 }
-
 export default CurrentList;

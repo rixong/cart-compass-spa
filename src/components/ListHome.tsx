@@ -6,7 +6,7 @@ import { RootState } from '../store';
 import CurrentList from './CurrentList';
 import { doCreateNewList, doRemoveList, doAddItemToCurrentList } from '../store/lists/actions';
 import { INewItem } from '../store/lists/types';
-import { doSetCurrentList,  } from '../store/system/actions';
+import { doSetCurrentList, } from '../store/system/actions';
 import { doAddItemToMasterList } from '../store/masterlist/actions';
 import { doChangeItemStatus } from '../store/lists/actions';
 
@@ -40,10 +40,10 @@ const ListHome = () => {
   //   }
   //   // dispatch(doAddItemToMasterList(item))
   // }, [dispatch])
-  
-    //   useEffect(() => {
-    //   dispatch(doRemoveFromMasterList("5fb6e7bd2394261ce7ddf6a1"))
-    // }, [dispatch])
+
+  //   useEffect(() => {
+  //   dispatch(doRemoveFromMasterList("5fb6e7bd2394261ce7ddf6a1"))
+  // }, [dispatch])
 
 
   // useEffect(() => {
@@ -59,12 +59,12 @@ const ListHome = () => {
     e.preventDefault();
     // dispatch(doSetCurrentList("5fbc14d4d966e36964e8c441"));
 
-      const item: INewItem = {
-        name: 'ground beef',
-        categoryId: "5fbb13947ad1bd44b1a4dda0",
-        quantity: '1 lb.'
-      }
-      dispatch(doAddItemToMasterList(item))
+    const item: INewItem = {
+      name: 'yogurt',
+      categoryId: "5fbb13947ad1bd44b1a4dda1",
+      quantity: '32 ozs.'
+    }
+    dispatch(doAddItemToMasterList(item))
 
     // dispatch(doCreateNewList('Costco'))
     // dispatch(doChangeItemStatus('5fbaa43ffbcbc50dc5874424'))
@@ -76,7 +76,7 @@ const ListHome = () => {
     <div className="container bg-light rounded list-home">
       <h3>Temp list home</h3>
       <button onClick={handleClick}>Submit</button>
-      <CurrentList/>
+      <CurrentList />
     </div>
   )
 }
