@@ -66,6 +66,7 @@ export const doAddItemToCurrentList = (masterItemId: string, quantity: string): 
   try {
     // Create new list Item using returned master Item and quantity
     const newCurrentListItem: IListItem = {
+      _id: '',
       masterItemId,
       quantity,
       active: true

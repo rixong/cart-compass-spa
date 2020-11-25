@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 
-// import CurrentList from './CurrentList.txt';
+import CurrentList from './CurrentList';
 import { doCreateNewList, doRemoveList, doAddItemToCurrentList } from '../store/lists/actions';
 import { INewItem } from '../store/lists/types';
 import { doSetCurrentList,  } from '../store/system/actions';
@@ -76,7 +76,7 @@ const ListHome = () => {
     <div className="container bg-light rounded list-home">
       <h3>Temp list home</h3>
       <button onClick={handleClick}>Submit</button>
-      {/* <CurrentList/> */}
+      <CurrentList/>
     </div>
   )
 }

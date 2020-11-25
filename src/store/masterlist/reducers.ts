@@ -13,7 +13,7 @@ const intitialState: MasterListState = {
 export default function masterListReducer(
   state = intitialState,
   action: MasterListActions
-) {
+): MasterListState {
   switch (action.type) {
     case ADDED_ITEM_TO_MASTERLIST:
       return { ...state, masterList: state.masterList.concat(action.payload) }

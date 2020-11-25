@@ -8,7 +8,7 @@ export interface IList {
 }
 
 export interface IListItem {
-  _id?: string;
+  _id: string;
   masterItemId: string;
   quantity: string;
   active?: boolean;

@@ -12,7 +12,7 @@ const initialState: CategoriesState = {
 export default function categoryReducer(
   state = initialState, 
   action: categoryActions
-  ) {
+  ): CategoriesState {
   switch (action.type) {
     case REORDERED_CATEGORIES:
       // let reorder = action.payload.map((ele, idx) => {

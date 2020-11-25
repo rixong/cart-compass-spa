@@ -8,6 +8,7 @@ import {
   ADDED_NEW_LIST,
   REMOVED_LIST,
   CLEARED_ALL_LISTS,
+  // RETRIEVED_CURRENT_LIST_ITEMS,
   ADDED_ITEM_TO_CUR_LIST,
   CHANGED_ITEMS_STATUS,
   // RETRIEVED_LIST_ITEMS,
@@ -22,7 +23,7 @@ const intitalState: ListsState = {
 export default function listReducer(
   state = intitalState, 
   action: ListsActions
-) {
+): ListsState {
   let idx;
   let currentList;
   switch (action.type) {
@@ -36,8 +37,9 @@ export default function listReducer(
     case CLEARED_ALL_LISTS:
       return intitalState
     
-    // case 'RETRIEVED_LIST_ITEMS':
-    //   return { ...state, curListItems: action.payload }
+    // case RETRIEVED_CURRENT_LIST_ITEMS:
+    //   let currentList = state.lists.find((list) => list._id === action.payload.currentListId)
+    //   return { ...state, curListItems: action.payload.cuurentListId }
 
     case ADDED_ITEM_TO_CUR_LIST:
       idx = state.lists.findIndex((list) => list._id === action.payload.curList);
