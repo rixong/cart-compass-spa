@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 
 import { IListItem, IList, ISortOrder, ICompleteItem } from '../store/lists/types';
-import { IMasterListItem } from '../store/masterlist/types';
 
 // import { doGetCurrentListItems } from '../store/lists/actions';
+
 import ListGroup from './ListGroup'
 
 const CurrentList: React.FC = () => {
@@ -25,41 +25,20 @@ const CurrentList: React.FC = () => {
   const selectCategories = (state: RootState) => state.categories;
   const { categories } = useSelector(selectCategories)
 
-  // const curCategories = new Set();
+  const [currentList, setCurrentList] = useState<IList>();
 
   useEffect(() => {
-
-console.log(categories);
-
-
-    // let curListItems: IListItem[];
     if (lists && lists.length && categories.length) {
-      const curList: any = lists.find((list: IList) => list._id === system.curUser.currentList);
-      const curListItems: IListItem[] = curList.listItems;
-      // const categoryHash = makeCategoryHash()
-      // console.log(categoryHash);
-      const items = makeItems(curListItems);
-      console.log(items);
-      console.log(divideListByCategory(items));
+      const curList = lists.find((list: IList) => list._id === system.curUser.currentList);
+      setCurrentList(curList);
+      // const curListItems: IListItem[] = curList.listItems;
+      // const items = makeItems(curListItems);
+      // console.log(items);
+      // console.log(divideListByCategory(items));
     }
   }, [lists, system.curUser.currentList, categories])
 
-  // const makeCategoryHash = () => {
-  //   const hashMap: any = {};
-  //   categories.forEach(cat => {
-  //     const orderObj = sortOrder.find((order) => order.categoryId === cat._id)
-  //     if (orderObj) {
-  //       hashMap[cat._id] = {
-  //         name: cat.name,
-  //         order: orderObj.order
-  //       }
-  //     }
-  //   })
-  //   return hashMap;
-  // }
-
   const makeItems = (listItems: any) => {
-
     let items: any = listItems.map((item: any) => {
       let curMasteritem: any = masterList.find((ele) => ele._id === item.masterItemId);
       let curSortOrder: any = sortOrder.find((ele) => ele.categoryId === curMasteritem.categoryId);
@@ -77,10 +56,8 @@ console.log(categories);
   }
 
   const divideListByCategory = (curListItems: ICompleteItem[]) => {
-
     const divided: any = {};
     let divs: any = [];
-
     curListItems.forEach((listItem: ICompleteItem) => {
       if (!divided[listItem.categoryId]) {
         divided[listItem.categoryId] = [listItem];
@@ -89,30 +66,28 @@ console.log(categories);
       }
     })
 
-
     for (const key in divided) {
       const curCategories = categories.find((el) => el._id === key)
-      
       if (curCategories) {
-        console.log(curCategories.name);
+        // console.log(curCategories.name);
         divs.push(<ListGroup categoryName={curCategories.name} items={divided[key]} key={key} />)
       }
     }
-
     return divs;
-    // }
   }
 
   return (
     <div className="col-md overflow-auto bg-light" style={{ height: vh }}>
       <h5>Temp List Home</h5>
-      <div className="d-flex flex-wrap justify-content-center align-items-end mt-4">
-        {/* <div className="h2 pb-0 text-primary">{curList.name} </div>
-        <div className="h5 ml-4 pb-1"> ({moment(curList.created_at).format('MMM Do')})</div> */}
-      </div>
-      {/* { divideListByCategory()} */}
-
+      {currentList ?
+        <div className="d-flex flex-wrap justify-content-center align-items-end mt-4">
+          <div className="h2 pb-0 text-primary">{currentList.name} </div>
+          <div className="h5 ml-4 pb-1"> ({moment(currentList.dateCreated).format('MMM Do')})</div>
+          {divideListByCategory(makeItems(currentList.listItems))}
+        </div>
+      : null }
     </div>
   )
+
 }
 export default CurrentList;
