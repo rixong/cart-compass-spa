@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { RootState } from '../store';
 import { IListItem, IList, ISortOrder, ICompleteItem } from '../store/lists/types';
-
+import {IMasterListItem} from '../store/masterlist/types';
 import Alert from './Alert';
 import Collapse from './Collapse';
 // import MyLists from './MyLists';
@@ -19,36 +19,40 @@ const AddItems = () => {
   const selectLists = (state: RootState) => state.lists;
   const { lists, sortOrder } = useSelector(selectLists)
 
+
+  const selectMasterLists = (state: RootState) => state.masterList;
+  const { masterList } = useSelector(selectMasterLists)
+
   // if (lists && lists.length && categories.length) {
-  const curList = lists.find((list: IList) => list._id === system.curUser.currentList);
+  const curList = lists.find((list: IList) => list._id === curUser.currentList);
   // }
-
-  const queryDefault = { name: '', quantity: '', category: 0 }
-
+  const queryDefault = { name: '', quantity: '', category: '0' }
 
   const [queryTerm, setQueryTerm] = useState(queryDefault)
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<IMasterListItem[]>([]);
 
-  const onHandleChange = (e) => {
+  const onHandleChange = (e: any) => {
     // clearNotification()
-    let value = e.target.value
-    setQueryTerm({ ...queryTerm, [e.target.name]: value.toLowerCase() })
-    if (value !== '') {
-      setSearchResults(masterList.filter(item => item.name.includes(value)));
+    let nameValue: string = e.target.name
+    setQueryTerm({ ...queryTerm, [e.target.name]: nameValue.toLowerCase() })
+    if (nameValue !== '') {
+      setSearchResults(masterList.filter(item => item.name.includes(nameValue)));
     } else {
-      setSearchResults('');
+      setSearchResults([]);
     }
   }
 
-  const onSelectItem = (e) => {
+  const onSelectItem = (e: any) => {
     const item = masterList.find(item => item.name === e.target.textContent);
-    setQueryTerm({ ...queryTerm, name: item.name, category: item.category_id })
-    setSearchResults('');
+    if (item){
+      setQueryTerm({ ...queryTerm, name: item.name, category: item.categoryId })
+      setSearchResults([]);
+    }
   }
 
   const onClickSubmit = () => {   // DRY Fail!
 
-    if (queryTerm.category === 0) {
+    if (queryTerm.category === '0') {
       addNotification("Choose a category!");
       return;
     }
@@ -65,7 +69,7 @@ const AddItems = () => {
       name: trimmedName,
       category_id: queryTerm.category,
       quantity: queryTerm.quantity,
-    }, curUser.id, curList.id);
+    }, curUser._id, curList.id);
 
     setQueryTerm(queryDefault);
   }
