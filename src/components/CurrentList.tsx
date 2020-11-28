@@ -45,6 +45,7 @@ const CurrentList: React.FC = () => {
       if (curMasteritem && curSortOrder) {
         return {
           name: curMasteritem.name,
+          id: item._id,
           quantity: item.quantity,
           active: item.active,
           categoryId: curMasteritem.categoryId,
@@ -66,11 +67,11 @@ const CurrentList: React.FC = () => {
       }
     })
 
-    for (const key in divided) {
-      const curCategories = categories.find((el) => el._id === key)
+    for (const categoryKey in divided) {
+      const curCategories = categories.find((el) => el._id === categoryKey)
       if (curCategories) {
         // console.log(curCategories.name);
-        divs.push(<ListGroup categoryName={curCategories.name} items={divided[key]} key={key} />)
+        divs.push(<ListGroup categoryName={curCategories.name} items={divided[categoryKey]} key={categoryKey} />)
       }
     }
     return divs;
@@ -78,14 +79,13 @@ const CurrentList: React.FC = () => {
 
   return (
     <div className="col-md overflow-auto bg-light" style={{ height: vh }}>
-      <h5>Temp List Home</h5>
       {currentList ?
         <div className="d-flex flex-wrap justify-content-center align-items-end mt-4">
           <div className="h2 pb-0 text-primary">{currentList.name} </div>
           <div className="h5 ml-4 pb-1"> ({moment(currentList.dateCreated).format('MMM Do')})</div>
-          {divideListByCategory(makeItems(currentList.listItems))}
         </div>
-      : null }
+          : null }
+          {currentList ? divideListByCategory(makeItems(currentList.listItems)) : null}
     </div>
   )
 

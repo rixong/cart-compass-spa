@@ -28,6 +28,7 @@ export interface INewItem {
 
 export interface ICompleteItem {
   name: string;
+  id: string;
   quantity: string;
   active: boolean;
   categoryId: string;
