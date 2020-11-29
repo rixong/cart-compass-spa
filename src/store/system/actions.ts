@@ -100,19 +100,18 @@ export const doAutoLogin = (): AppThunk => async dispatch => {
 
 export const doLogoutUser = (): AppThunk => async dispatch => {
   try{
-    dispatch({
-      type: CLEARED_ALL_LISTS
-    })
+    await instance.get('/logout');
     dispatch({
       type: USER_CLEARED
     });
     dispatch({
+      type: CLEARED_ALL_LISTS
+    })
+    dispatch({
       type: CLEARED_MASTERLIST
     })
-    await instance.get('/logout');
   } catch(e){
     console.log("Error logging out.", e);
-    
   }
 }
 

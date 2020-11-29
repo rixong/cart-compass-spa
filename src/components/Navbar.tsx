@@ -1,19 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link , useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {doLogoutUser} from '../store/system/actions';
 import { RootState } from '../store';
 
 const Navbar = () => {
-
+  // const history = useHistory();
   const selectSystem = (state: RootState) => state.system;
   const system = useSelector(selectSystem);
 
   const dispatch =  useDispatch()
-  const onLogout = () => {
-    dispatch(doLogoutUser())
-    localStorage.removeItem('token')
+  const onLogout = async () => {
+    // await history.push('/login');
+    await dispatch(doLogoutUser());
+    localStorage.removeItem('token');
   }
 
   return (
@@ -35,7 +36,7 @@ const Navbar = () => {
             {/* <Link className="nav-link" to="/sort">Categories</Link> */}
           </li>
           <li className="nav-item">
-            {/* <Link className="nav-link" to="/edit">My Items</Link> */}
+            <Link className="nav-link" to="/edit">My Items</Link>
           </li>
           {/* <li className="nav-item">
             <Link className="nav-link" to="/mylists">My Lists</Link>
