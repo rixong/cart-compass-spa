@@ -19,7 +19,7 @@ export default function masterListReducer(
       return { ...state, masterList: state.masterList.concat(action.payload) }
     case CLEARED_MASTERLIST:
       return intitialState;
-    case REMOVED_FROM_MASTER_LIST:
+    case REMOVED_FROM_MASTER_LIST:      
       const idx = state.masterList.findIndex(item => action.payload === item._id)
       return {
         ...state, masterList:

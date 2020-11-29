@@ -88,12 +88,12 @@ export const doAddItemToCurrentList = (masterItemId: string, quantity: string): 
 }
 
 
-// export const doRemoveItemFromCurList = (itemId) => {
-//   return {
-//     type: 'REMOVED_ITEMS_FROM_CUR_LIST',
-//     payload: itemId
-//   }
-// }
+export const doRemoveItemFromCurList = (itemId: string, curList: string) => {
+  return {
+    type: 'REMOVED_ITEMS_FROM_CUR_LIST',
+    payload: {itemId, curList}
+  }
+}
 
 export const doChangeItemStatus = (itemId: string): AppThunk => async (dispatch, getState) => {
   try {    

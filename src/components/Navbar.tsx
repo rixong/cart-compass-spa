@@ -1,18 +1,16 @@
 import React from 'react';
-import { Link , useHistory} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {doLogoutUser} from '../store/system/actions';
 import { RootState } from '../store';
 
 const Navbar = () => {
-  // const history = useHistory();
   const selectSystem = (state: RootState) => state.system;
   const system = useSelector(selectSystem);
 
   const dispatch =  useDispatch()
   const onLogout = async () => {
-    // await history.push('/login');
     await dispatch(doLogoutUser());
     localStorage.removeItem('token');
   }

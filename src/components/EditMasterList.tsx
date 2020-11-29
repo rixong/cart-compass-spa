@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { XCircleFillIcon } from '@primer/octicons-react';
 
 import {RootState} from '../store';
 import { doRemoveFromMasterList } from '../store/masterlist/actions';
 
 const EditMasterList: React.FC = () => {
+
+  const dispatch = useDispatch();
 
   const selectCategories = (state: RootState) => state.categories;
   const { categories } = useSelector(selectCategories)
@@ -44,7 +46,7 @@ const EditMasterList: React.FC = () => {
                   type="button"
                   className="close"
                   aria-label="Delete"
-                  onClick={() => doRemoveFromMasterList(item._id)}
+                  onClick={() => dispatch(doRemoveFromMasterList(item._id))}
                 >
                   <XCircleFillIcon size={24} />
                 </button>
