@@ -7,7 +7,7 @@ import {
   ADDED_ITEM_TO_MASTERLIST,
   REMOVED_FROM_MASTER_LIST
 } from './types'
-import { doAddItemToCurrentList } from '../lists/actions';
+import { doAddItemToCurrentList, doRemoveItemFromAllLists } from '../lists/actions';
 import { INewItem } from '../lists/types';
 
 export const doAddItemToMasterList = (item: INewItem): AppThunk => async dispatch => {
@@ -40,6 +40,7 @@ export const doRemoveFromMasterList = (itemId: string): AppThunk => async dispat
     // dispatch(doRemoveItemFromCurList(itemId))
     console.log(response);
     
+    dispatch(doRemoveItemFromAllLists(itemId));
     dispatch({
       type: REMOVED_FROM_MASTER_LIST,
       payload: itemId

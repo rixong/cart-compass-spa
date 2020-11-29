@@ -2,7 +2,7 @@
 import {
   ListsActions,
   ListsState,
-  // IList,
+  IList,
   // IListItem,
   FETCHED_INITIAL_LISTS_AND_SORT_ORDER,
   ADDED_NEW_LIST,
@@ -11,6 +11,7 @@ import {
   // RETRIEVED_CURRENT_LIST_ITEMS,
   ADDED_ITEM_TO_CUR_LIST,
   CHANGED_ITEMS_STATUS,
+  REMOVED_ITEM_FROM_ALL_LISTS,
   // RETRIEVED_LIST_ITEMS,
   // REMOVED_ITEMS_FROM_CUR_LIST,
 } from './types';
@@ -46,6 +47,19 @@ export default function listReducer(
       currentList = { ...state.lists[idx] }
       currentList.listItems = action.payload.items
       return { ...state, lists: [...state.lists.slice(0, idx), currentList, ...state.lists.slice(idx + 1)] };
+
+    case REMOVED_ITEM_FROM_ALL_LISTS:
+      const lists = [...state.lists];
+      let newLists: IList[] = [];
+      lists.forEach ((list) => {
+        let curListItems = [...list.listItems]
+        curListItems = curListItems.filter((item) => {
+          return item.masterItemId !== action.payload;
+        });
+        list.listItems = curListItems;
+        newLists.concat(list);
+      })
+      return {...state, lists: newLists}
 
     case CHANGED_ITEMS_STATUS:
       let listIdx = state.lists.findIndex((list) => list._id === action.payload.curList);

@@ -5,9 +5,10 @@ import {
   // INewItem,
   ADDED_NEW_LIST,
   REMOVED_LIST,
+  REMOVED_ITEM_FROM_ALL_LISTS,
   // CLEARED_ALL_LISTS,
   CHANGED_ITEMS_STATUS
-  
+
 } from './types'
 // import { doAddItemToMasterList } from '../masterlist/actions';
 // import { IMasterListItem } from '../masterlist/types';
@@ -75,38 +76,44 @@ export const doAddItemToCurrentList = (masterItemId: string, quantity: string): 
     const curList: string = getState().system.curUser.currentList;
     const response = await instance.post('/lists/items', newCurrentListItem)
     console.log(response);
-      dispatch({
-        type: 'ADDED_ITEM_TO_CUR_LIST',
-        payload: {items: response.data, curList}
-      })
+    dispatch({
+      type: 'ADDED_ITEM_TO_CUR_LIST',
+      payload: { items: response.data, curList }
+    })
   }
   catch (e) {
     console.log(e);
-    
+
     // dispatch(addNotification(e.message))
   }
 }
 
-
 export const doRemoveItemFromCurList = (itemId: string, curList: string) => {
   return {
     type: 'REMOVED_ITEMS_FROM_CUR_LIST',
-    payload: {itemId, curList}
+    payload: { itemId, curList }
+  }
+}
+
+export const doRemoveItemFromAllLists = (itemId: string) => {
+  return {
+    type: REMOVED_ITEM_FROM_ALL_LISTS,
+    payload: itemId
   }
 }
 
 export const doChangeItemStatus = (itemId: string): AppThunk => async (dispatch, getState) => {
-  try {    
+  try {
     const response = await instance.patch(`/lists/items/${itemId}`)
     const curList: string = getState().system.curUser.currentList;
     dispatch({
       type: CHANGED_ITEMS_STATUS,
-      payload: {item: response.data, curList}
+      payload: { item: response.data, curList }
     })
   }
   catch (e) {
     console.log('Error', e);
-    
+
     // dispatch(addNotification(e.message))
   }
 }

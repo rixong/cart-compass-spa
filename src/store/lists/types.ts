@@ -46,6 +46,7 @@ export const REMOVED_LIST = 'REMOVED_LIST'
 export const CLEARED_ALL_LISTS = 'CLEARED_ALL_LISTS'
 // export const RETRIEVED_LIST_ITEMS = 'RETRIEVED_LIST_ITEMS'
 export const ADDED_ITEM_TO_CUR_LIST = 'ADDED_ITEM_TO_CUR_LIST'
+export const   REMOVED_ITEM_FROM_ALL_LISTS = 'REMOVED_ITEM_FROM_ALL_LISTS'
 export const REMOVED_ITEMS_FROM_CUR_LIST = 'REMOVED_ITEMS_FROM_CUR_LIST'
 export const CHANGED_ITEMS_STATUS = 'CHANGED_ITEMS_STATUS'
 
@@ -80,6 +81,11 @@ interface AddToCurrentListAction {
   payload: { items: IListItem[], curList: string }
 }
 
+interface RemoveFromAllListsAction {
+  type: typeof REMOVED_ITEM_FROM_ALL_LISTS
+  payload: string
+}
+
 interface RemoveFromCurrentListAction {
   type: typeof REMOVED_ITEMS_FROM_CUR_LIST
 }
@@ -91,4 +97,5 @@ interface ChangeItemStatusAction {
 
 export type ListsActions =
   FetchInitialDataAction | AddNewListAction | RemoveListAction | ClearedListsAction |
-  AddToCurrentListAction | RemoveFromCurrentListAction | ChangeItemStatusAction
+  AddToCurrentListAction | RemoveFromAllListsAction | RemoveFromCurrentListAction | 
+  ChangeItemStatusAction
