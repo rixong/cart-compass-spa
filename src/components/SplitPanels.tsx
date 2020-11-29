@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom'
 
-// import AddItems from './AddItems';
+import AddItems from './AddItems';
 // import EditMasterList from './EditMasterList';
 // import CategorySortOrder from './CategorySortOrder';
 
@@ -13,11 +13,11 @@ const SplitPanels = () => {
     <div className="row justify-content-center">
       <h4>from Splits</h4>
       <div className="col-md pb-5 left-column">
-        {/* <Switch>
+        <Switch>
           <Route path="/add" component={AddItems}></Route>
-          <Route path="/edit" component={EditMasterList}></Route>
-          <Route path="/sort" component={CategorySortOrder}></Route>
-        </Switch> */}
+          {/* <Route path="/edit" component={EditMasterList}></Route> */}
+          {/* <Route path="/sort" component={CategorySortOrder}></Route> */}
+        </Switch>
       </div>
       <CurrentList />
     </div>

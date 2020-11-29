@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from '../store';
 import { IListItem, IList, ISortOrder, ICompleteItem } from '../store/lists/types';
@@ -13,12 +13,16 @@ import { addNotification, clearNotification } from '../store/system/actions';
 
 const AddItems = () => {
 
+  const dispatch = useDispatch();
+
   const selectSystem = (state: RootState) => state.system;
   const {curUser, notification } = useSelector(selectSystem)
 
   const selectLists = (state: RootState) => state.lists;
   const { lists, sortOrder } = useSelector(selectLists)
 
+  const selectCategories = (state: RootState) => state.categories;
+  const { categories } = useSelector(selectCategories)
 
   const selectMasterLists = (state: RootState) => state.masterList;
   const { masterList } = useSelector(selectMasterLists)
@@ -33,7 +37,9 @@ const AddItems = () => {
 
   const onHandleChange = (e: any) => {
     // clearNotification()
-    let nameValue: string = e.target.name
+    // console.log(e.target.value);
+    
+    let nameValue: string = e.target.value
     setQueryTerm({ ...queryTerm, [e.target.name]: nameValue.toLowerCase() })
     if (nameValue !== '') {
       setSearchResults(masterList.filter(item => item.name.includes(nameValue)));
@@ -64,12 +70,12 @@ const AddItems = () => {
     }
 
     const trimmedName = queryTerm.name.trim().toLowerCase();
-
-    doAddItemToMasterList({
+    
+    dispatch(doAddItemToMasterList({
       name: trimmedName,
-      category_id: queryTerm.category,
+      categoryId: queryTerm.category,
       quantity: queryTerm.quantity,
-    }, curUser._id, curList.id);
+    }));
 
     setQueryTerm(queryDefault);
   }
@@ -79,7 +85,7 @@ const AddItems = () => {
       <Collapse />
 
       {notification.error ? <Alert /> : <p className="h4 text-warning text-center">&mdash;&mdash;</p>}
-      <div className="header">Add items to <span className="text-primary">{curList.name}</span></div>
+      <div className="header">Add items to <span className="text-primary">{curList?.name || 'Set a current list'}</span></div>
       <form>
         <div className="row mb-2">
           <div className="col-md-5 mb-3 px-1">
@@ -100,11 +106,11 @@ const AddItems = () => {
               {searchResults ?
                 searchResults.map((item) =>
                   <li
-                    key={item.id}
+                    key={item._id}
                     className="list-group-item py-1"
                     role="button"
                     onClick={(e) => onSelectItem(e)}
-                    data-id={item.id}
+                    data-id={item._id}
                   >{item.name}</li>)
                 : null}
             </ul>
@@ -131,7 +137,8 @@ const AddItems = () => {
               value={queryTerm.category}
             >
               <option value="0">Category...</option>
-              {categories.sort((a, b) => a.sort_order - b.sort_order).map(cat => <option value={cat.id} key={cat.id}>{cat.name}</option>)}
+                {categories.map(cat => <option value={cat._id} key={cat._id}>{cat.name}</option>)}
+              {/* {categories.sort((a, b) => a.sort_order - b.sort_order).map(cat => <option value={cat.id} key={cat.id}>{cat.name}</option>)} */}
             </select>
           </div>
         </div>

@@ -11,7 +11,7 @@ import { doAddItemToCurrentList } from '../lists/actions';
 import { INewItem } from '../lists/types';
 
 export const doAddItemToMasterList = (item: INewItem): AppThunk => async dispatch => {
-  try {
+  try {    
     // Check if item exists in masterlist. If not add... 
     const response = await instance.post('/items', item)
     console.log(response.data.message);

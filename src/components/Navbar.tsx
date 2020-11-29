@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {doLogoutUser} from '../store/system/actions';
@@ -29,7 +29,7 @@ const Navbar = () => {
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
           <li className="nav-item">
-            {/* <Link className="nav-link" to="/add">Add Items</Link> */}
+            <Link className="nav-link" to="/add">Add Items</Link>
           </li>
           <li className="nav-item">
             {/* <Link className="nav-link" to="/sort">Categories</Link> */}
