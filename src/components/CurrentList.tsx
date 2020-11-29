@@ -3,7 +3,7 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 
-import { IListItem, IList, ISortOrder, ICompleteItem } from '../store/lists/types';
+import { IList, ICompleteItem } from '../store/lists/types';
 
 // import { doGetCurrentListItems } from '../store/lists/actions';
 
@@ -39,6 +39,8 @@ const CurrentList: React.FC = () => {
   }, [lists, system.curUser.currentList, categories])
 
   const makeItems = (listItems: any) => {
+
+    // if (listItems.length && masterList.length) {
     let items: any = listItems.map((item: any) => {
       let curMasteritem: any = masterList.find((ele) => ele._id === item.masterItemId);
       let curSortOrder: any = sortOrder.find((ele) => ele.categoryId === curMasteritem.categoryId);
@@ -54,6 +56,7 @@ const CurrentList: React.FC = () => {
       }
     })
     return items.sort((a: any, b: any) => a.sortOrder - b.sortOrder);
+    // }
   }
 
   const divideListByCategory = (curListItems: ICompleteItem[]) => {
@@ -84,8 +87,8 @@ const CurrentList: React.FC = () => {
           <div className="h2 pb-0 text-primary">{currentList.name} </div>
           <div className="h5 ml-4 pb-1"> ({moment(currentList.dateCreated).format('MMM Do')})</div>
         </div>
-          : null }
-          {currentList ? divideListByCategory(makeItems(currentList.listItems)) : null}
+        : null}
+      {currentList ? divideListByCategory(makeItems(currentList.listItems)) : null}
     </div>
   )
 

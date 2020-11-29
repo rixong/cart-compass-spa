@@ -11,7 +11,6 @@ import CurrentList from './CurrentList';
 const SplitPanels = () => {
   return (
     <div className="row justify-content-center">
-      <h4>from Splits</h4>
       <div className="col-md pb-5 left-column">
         <Switch>
           <Route path="/add" component={AddItems}></Route>

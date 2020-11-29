@@ -72,14 +72,17 @@ export const doAddItemToCurrentList = (masterItemId: string, quantity: string): 
       active: true
     }
     // Add item to DB and local current lists
-    const response = await instance.post('/lists/items', newCurrentListItem)
     const curList: string = getState().system.curUser.currentList;
+    const response = await instance.post('/lists/items', newCurrentListItem)
+    console.log(response);
       dispatch({
         type: 'ADDED_ITEM_TO_CUR_LIST',
         payload: {items: response.data, curList}
       })
   }
   catch (e) {
+    console.log(e);
+    
     // dispatch(addNotification(e.message))
   }
 }

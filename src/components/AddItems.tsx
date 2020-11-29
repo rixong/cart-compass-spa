@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from '../store';
-import { IListItem, IList, ISortOrder, ICompleteItem } from '../store/lists/types';
+import { IList} from '../store/lists/types';
 import {IMasterListItem} from '../store/masterlist/types';
 import Alert from './Alert';
 import Collapse from './Collapse';

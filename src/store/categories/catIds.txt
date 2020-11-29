@@ -12,4 +12,3 @@
 "5fbb13947ad1bd44b1a4ddaa", name: "Alcohol"
 "5fbb13947ad1bd44b1a4ddab", name: "Pharmacy"
 "5fbb13947ad1bd44b1a4ddac", name: "Dry Goods"
-"5fbb13947ad1bd44b1a4ddad", name: "XXX"
