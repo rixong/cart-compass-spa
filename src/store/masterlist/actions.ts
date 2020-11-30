@@ -14,7 +14,6 @@ export const doAddItemToMasterList = (item: INewItem): AppThunk => async dispatc
   try {    
     // Check if item exists in masterlist. If not add... 
     const response = await instance.post('/items', item)
-    console.log(response.data.message);
     // Status 203 if already exists, 201 if newly created
     if (response.status === 201) {
       dispatch({
@@ -32,16 +31,10 @@ export const doAddItemToMasterList = (item: INewItem): AppThunk => async dispatc
 
 }
 
-export const doRemoveFromMasterList = (itemId: string): AppThunk => async dispatch => {
-  console.log('From Action');
-  
+export const doRemoveFromMasterList = (itemId: string): AppThunk => async dispatch => {  
   try {
     const response = await instance.delete(`/items/${itemId}`)  //Removes from master list and list_items
-    // dispatch(doRemoveItemFromCurList(itemId))
-    console.log(response);
-    
     dispatch(doRemoveItemFromAllLists(itemId));
-    
     dispatch({
       type: REMOVED_FROM_MASTER_LIST,
       payload: itemId

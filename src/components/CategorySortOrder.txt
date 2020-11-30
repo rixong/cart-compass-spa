@@ -1,12 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { sortableContainer, sortableElement } from 'react-sortable-hoc';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 import { ThreeBarsIcon } from '@primer/octicons-react';
 import {RootState} from '../store';
 
 import { doReorderCategories } from '../store/categories/actions';
+
+//https://github.com/clauderic/react-sortable-hoc/blob/master/examples/drag-handle.js
 
 const CategorySortOrder = () => {
 
@@ -18,13 +20,13 @@ const CategorySortOrder = () => {
   const selectCategories = (state: RootState) => state.categories;
   const { categories } = useSelector(selectCategories)
 
-  const SortableItem = sortableElement(({ value }) =>
+  const SortableItem = SortableElement(({ value }) =>
     <li className="list-group-item py-1 category-sort-display">
       <ThreeBarsIcon size={16} className="mr-3" />
       {value.name}
     </li>);
 
-  const SortableContainer = sortableContainer(({ children }) => {
+  const SortableList = SortableContainer(({ children }) => {
     return <ul className="list-group category-list">{children}</ul>;
   });
 

@@ -125,8 +125,7 @@ export const addCurrentUser = (user: IUser): SystemActionTypes => {
 export const doSetCurrentList = (listId: string): AppThunk => async dispatch => {
   try {
     const response = await instance.post(`/lists/current/${listId}`);
-    console.log(response);
-    if (response.status === 204) {
+    if (response.status === 200) {
       dispatch({
         type: SET_CURRENT_LIST,
         payload: listId,
