@@ -68,8 +68,7 @@ export default function listReducer(
       let itemIdx = items.findIndex((ele) => ele._id === action.payload.item._id)
       items = [...items.slice(0, itemIdx), action.payload.item, ...items.slice(itemIdx + 1)]
       currentList.listItems = items;
-      return { ...state, lists: [...state.lists.slice(0, idx), currentList, ...state.lists.slice(listIdx + 1)] };
-
+      return { ...state, lists: [...state.lists.slice(0, listIdx), currentList, ...state.lists.slice(listIdx + 1)] };
     // case 'REMOVED_ITEMS_FROM_CUR_LIST':
     //   let tempItem = [...state.curListItems].filter(item => item.item_id !== action.payload)
     //   return { ...state, curListItems: tempItem }

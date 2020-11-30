@@ -31,10 +31,6 @@ const CurrentList: React.FC = () => {
     if (lists && lists.length && categories.length) {
       const curList = lists.find((list: IList) => list._id === system.curUser.currentList);
       setCurrentList(curList);
-      // const curListItems: IListItem[] = curList.listItems;
-      // const items = makeItems(curListItems);
-      // console.log(items);
-      // console.log(divideListByCategory(items));
     }
   }, [lists, system.curUser.currentList, categories])
 

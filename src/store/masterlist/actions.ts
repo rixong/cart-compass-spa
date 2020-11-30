@@ -41,6 +41,7 @@ export const doRemoveFromMasterList = (itemId: string): AppThunk => async dispat
     console.log(response);
     
     dispatch(doRemoveItemFromAllLists(itemId));
+    
     dispatch({
       type: REMOVED_FROM_MASTER_LIST,
       payload: itemId

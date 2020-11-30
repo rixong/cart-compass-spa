@@ -42,12 +42,6 @@ export const doRemoveList = (listId: string): AppThunk => async dispatch => {
   }
 }
 
-// export const doClearLists = () => {
-//   return {
-//     type: CLEARED_ALL_LISTS
-//   }
-// }
-
 // CURRENT LIST_ITEM REQUESTS
 // export const doGetCurrentListItems = (list_id) => async dispatch => {
 //   try {

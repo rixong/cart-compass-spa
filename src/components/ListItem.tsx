@@ -1,21 +1,19 @@
 import React from 'react';
 import { ICompleteItem } from '../store/lists/types';
 
-// import {connect} from 'react-redux';
-// import {doChangeItemStatus} from '../actions';
+import {useDispatch} from 'react-redux';
+import {doChangeItemStatus} from '../store/lists/actions';
 
-
-// const ListItem = ({ item, doChangeItemStatus, masterList }) => {
 interface ListItemProps {
   item: ICompleteItem
 }
 
 const ListItem: React.FC<ListItemProps> = ({item}) => {
 
+  const dispatch = useDispatch();
+
   const onHandleClick = () => {
-    console.log("Clicked");
-    
-    // doChangeItemStatus(item);
+    dispatch(doChangeItemStatus(item.id));
   }
 
   // let name = masterList.find(el => item.item_id === el.id).name

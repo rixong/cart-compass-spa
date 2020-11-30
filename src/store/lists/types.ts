@@ -2,7 +2,7 @@ export interface IList {
   _id: string;
   userId: string;
   name: string;
-  dateCreated: Date;
+  dateCreated: string;
   sharedWith: [];
   listItems: IListItem[];
 }
