@@ -17,13 +17,13 @@ const CurrentList: React.FC = () => {
   const system = useSelector(selectSystem)
 
   const selectLists = (state: RootState) => state.lists;
-  const { lists, sortOrder } = useSelector(selectLists)
+  const { lists } = useSelector(selectLists)
 
   const selectMasterLists = (state: RootState) => state.masterList;
   const { masterList } = useSelector(selectMasterLists)
 
   const selectCategories = (state: RootState) => state.categories;
-  const { categories } = useSelector(selectCategories)
+  const { categories, sortOrder } = useSelector(selectCategories)
 
   const [currentList, setCurrentList] = useState<IList>();
 

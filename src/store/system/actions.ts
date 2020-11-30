@@ -15,6 +15,7 @@ import {
 
 import { FETCHED_INITIAL_LISTS_AND_SORT_ORDER, CLEARED_ALL_LISTS } from '../lists/types';
 import { doAddCategories } from '../categories/actions'
+import {ADD_SORT_ORDER} from '../categories/types'
 import { ADDED_ITEM_TO_MASTERLIST, CLEARED_MASTERLIST } from '../masterlist/types';
 import { AppThunk } from '../index';
 
@@ -46,12 +47,15 @@ export const doLogin = (logonInfo: ILogin): AppThunk => async dispatch => {
         type: FETCHED_INITIAL_LISTS_AND_SORT_ORDER,
         payload: {
           lists: response.data.user.lists,
-          sortOrder: response.data.user.sortOrder,
         },
       })
       dispatch({
         type: ADDED_ITEM_TO_MASTERLIST,
         payload: response.data.user.masterList,
+      })
+      dispatch({
+        type: ADD_SORT_ORDER,
+        payload: response.data.user.sortOrder
       })
       dispatch(doAddCategories());
     }
@@ -88,6 +92,10 @@ export const doAutoLogin = (): AppThunk => async dispatch => {
         type: ADDED_ITEM_TO_MASTERLIST,
         payload: response.data.user.masterList,
       })
+      dispatch({
+        type: ADD_SORT_ORDER,
+        payload: response.data.user.sortOrder
+      })
       dispatch(doAddCategories());
     }
   }
@@ -99,7 +107,7 @@ export const doAutoLogin = (): AppThunk => async dispatch => {
 
 
 export const doLogoutUser = (): AppThunk => async dispatch => {
-  try{
+  try {
     await instance.get('/logout');
     dispatch({
       type: USER_CLEARED
@@ -110,7 +118,7 @@ export const doLogoutUser = (): AppThunk => async dispatch => {
     dispatch({
       type: CLEARED_MASTERLIST
     })
-  } catch(e){
+  } catch (e) {
     console.log("Error logging out.", e);
   }
 }

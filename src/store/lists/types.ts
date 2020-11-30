@@ -14,11 +14,11 @@ export interface IListItem {
   active?: boolean;
 }
 
-export interface ISortOrder {
-  _id: string;
-  categoryId: string;
-  order: number
-}
+// export interface ISortOrder {
+//   _id: string;
+//   categoryId: string;
+//   order: number
+// }
 
 export interface INewItem {
   name: string;
@@ -37,7 +37,6 @@ export interface ICompleteItem {
 
 export type ListsState = {
   lists: IList[];
-  sortOrder: ISortOrder[];
 }
 
 export const FETCHED_INITIAL_LISTS_AND_SORT_ORDER = 'FETCHED_INITIAL_LISTS_AND_SORT_ORDER,'
@@ -54,7 +53,6 @@ interface FetchInitialDataAction {
   type: typeof FETCHED_INITIAL_LISTS_AND_SORT_ORDER,
   payload: {
     lists: IList[],
-    sortOrder: ISortOrder[]
   }
 }
 

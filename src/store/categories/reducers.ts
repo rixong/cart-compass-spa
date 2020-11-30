@@ -1,29 +1,27 @@
-import { 
+import {
   CategoriesState,
-  categoryActions, 
+  categoryActions,
   REORDERED_CATEGORIES,
-  ADD_CATEGORIES
+  ADD_CATEGORIES,
+  ADD_SORT_ORDER
 } from './types';
 
 const initialState: CategoriesState = {
-  categories: []
+  categories: [],
+  sortOrder: [],
 }
 
 export default function categoryReducer(
-  state = initialState, 
+  state = initialState,
   action: categoryActions
-  ): CategoriesState {
+): CategoriesState {
   switch (action.type) {
     case REORDERED_CATEGORIES:
-      // let reorder = action.payload.map((ele, idx) => {
-      //   let temp = [...state.categories].find(cat => cat._id === ele)
-      //   // temp.sort_order = idx;
-      //   return temp;
-      // })
-      // return { ...state, categories: reorder }
-      return state;
-      case ADD_CATEGORIES:        
-        return {...state, categories: action.payload}
+      return { ...state, sortOrder: action.payload }
+    case ADD_CATEGORIES:
+      return { ...state, categories: action.payload }
+    case ADD_SORT_ORDER:
+      return { ...state, sortOrder: action.payload }
     default:
       return state
   }

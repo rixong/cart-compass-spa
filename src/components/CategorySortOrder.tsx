@@ -1,34 +1,32 @@
-import React, { ReactComponentElement } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 import { ThreeBarsIcon } from '@primer/octicons-react';
 import {RootState} from '../store';
-import {ISortOrder} from '../store/lists/types';
+import {ISortOrder} from '../store/categories/types';
 
-import { doReorderCategories } from '../store/categories/actions';
+import { doReorderSortOrder } from '../store/categories/actions';
 
 //https://github.com/clauderic/react-sortable-hoc/blob/master/examples/drag-handle.js
 
 
 const CategorySortOrder = () => {
   
-  // const dispatch = useDispatch();
-
-  // const selectSystem = (state: RootState) => state.system;
-  // const {curUser, notification } = useSelector(selectSystem)
+  const dispatch = useDispatch();
 
   const selectCategories = (state: RootState) => state.categories;
-  const { categories } = useSelector(selectCategories)
+  const { categories, sortOrder } = useSelector(selectCategories)
 
-  const selectLists = (state: RootState) => state.lists;
-  const { lists, sortOrder } = useSelector(selectLists)
+  const categoryNameFromId = (id: string) => {
+    return categories.find((cat) => cat._id === id)?.name;
+  }
 
   const SortableItem = SortableElement(({ value }: {value:ISortOrder}) =>
     <li className="list-group-item py-1 category-sort-display">
       <ThreeBarsIcon size={16} className="mr-3" />
-      {value._id}
+      {categoryNameFromId(value.categoryId)}
     </li>);
 
   const SortableList = SortableContainer(({ children }: {children: {}[]}) => {
@@ -38,8 +36,14 @@ const CategorySortOrder = () => {
   const onSortEnd = ({ oldIndex, newIndex }: {oldIndex: number, newIndex: number}) => {
     // console.log(oldIndex, newIndex)
     const newOrder = arrayMove(sortOrder, oldIndex, newIndex)
+    const resetOrder = newOrder.map((ele, idx) => {
+      ele.order = idx
+      return ele;
+    })
+    // console.log(resetOrder);
     // const ids = newOrder.map(el => el.id)
-    // doReorderCategories(curUser.id, ids)
+    
+    dispatch(doReorderSortOrder(resetOrder));
   };
 
   return (

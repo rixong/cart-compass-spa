@@ -19,7 +19,7 @@ const AddItems = () => {
   const {curUser, notification } = useSelector(selectSystem)
 
   const selectLists = (state: RootState) => state.lists;
-  const { lists, sortOrder } = useSelector(selectLists)
+  const { lists } = useSelector(selectLists)
 
   const selectCategories = (state: RootState) => state.categories;
   const { categories } = useSelector(selectCategories)

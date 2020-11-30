@@ -4,16 +4,24 @@ export interface ICategory {
   sortOrder: number;
 }
 
+export interface ISortOrder {
+  _id: string;
+  categoryId: string;
+  order: number
+}
+
 export type CategoriesState = {
   categories: ICategory[];
+  sortOrder: ISortOrder[];
 }
 
 export const REORDERED_CATEGORIES = 'REORDERED_CATEGORIES';
 export const ADD_CATEGORIES = 'ADD_CATEGORIES';
+export const ADD_SORT_ORDER = 'ADD_SORT_ORDER';
 
 interface ReorderCategoriesAction {
   type: typeof REORDERED_CATEGORIES,
-  payload: ICategory[],
+  payload: ISortOrder[],
 }
 
 interface AddCategoriesAction {
@@ -21,4 +29,9 @@ interface AddCategoriesAction {
   payload: ICategory[],
 }
 
-export type categoryActions = ReorderCategoriesAction | AddCategoriesAction
+interface AddSortOrderAction {
+  type: typeof ADD_SORT_ORDER,
+  payload: ISortOrder[],
+}
+
+export type categoryActions = ReorderCategoriesAction | AddCategoriesAction | AddSortOrderAction

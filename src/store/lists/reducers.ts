@@ -17,8 +17,7 @@ import {
 } from './types';
 
 const intitalState: ListsState = {
-  lists: [],
-  sortOrder: [],
+  lists: []
 };
 
 export default function listReducer(
@@ -29,7 +28,7 @@ export default function listReducer(
   let currentList;
   switch (action.type) {
     case FETCHED_INITIAL_LISTS_AND_SORT_ORDER:
-      return {...state, lists: action.payload.lists, sortOrder: action.payload.sortOrder}
+      return {...state, lists: action.payload.lists }
     case ADDED_NEW_LIST:
       return { ...state, lists: state.lists.concat(action.payload) }
     case REMOVED_LIST:
