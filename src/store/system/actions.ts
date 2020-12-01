@@ -1,5 +1,6 @@
 
 import { instance } from '../../api/axios';
+
 import {
   IUser,
   ILogin,
@@ -10,7 +11,6 @@ import {
   FINISHED_LOADING,
   ADDED_NOTIFICATION,
   CLEARED_NOTIFICATION,
-  SystemActionTypes
 } from './types';
 
 import { FETCHED_INITIAL_LISTS, CLEARED_ALL_LISTS } from '../lists/types';
@@ -21,43 +21,19 @@ import { AppThunk } from '../index';
 
 // New User OR Login Existing User
 export const doLogin = (logonInfo: ILogin): AppThunk => async dispatch => {
-  console.log('From login action');
   let response
   try {
     if (logonInfo.passwordConfirmation) {
       // Create New User
       response = await instance.post(`/users`, logonInfo)
-      console.log('New', response)
+      
       // Login User
     } else {
       response = await instance.post(`/login`, logonInfo)
-      console.log('Login', response)
     }
+
     if (response.statusText === 'OK') {
-      localStorage.setItem('token', response.data.token)
-      const user: IUser = {
-        id: response.data.user._id,
-        name: response.data.user.name,
-        email: response.data.user.email,
-        currentList: response.data.user.currentList,
-        sharedWithMe: response.data.user.sharedWithMe
-      }
-      dispatch(addCurrentUser(user));
-      dispatch({
-        type: FETCHED_INITIAL_LISTS,
-        payload: {
-          lists: response.data.user.lists,
-        },
-      })
-      dispatch({
-        type: ADDED_ITEM_TO_MASTERLIST,
-        payload: response.data.user.masterList,
-      })
-      dispatch({
-        type: ADD_SORT_ORDER,
-        payload: response.data.user.sortOrder
-      })
-      dispatch(doAddCategories());
+      dispatch(intitializeUserSessionData(response));
     }
   } catch (e) {
     console.log('server error', e.message)
@@ -71,32 +47,7 @@ export const doAutoLogin = (): AppThunk => async dispatch => {
   dispatch({ type: STARTED_LOADING });
   try {
     const response = await instance.get('/profile');
-    console.log(response)
-    if (response.data.user) {
-      const user: IUser = {
-        id: response.data.user._id,
-        name: response.data.user.name,
-        email: response.data.user.email,
-        currentList: response.data.user.currentList,
-        sharedWithMe: response.data.user.sharedWithMe
-      }
-      dispatch(addCurrentUser(user));
-      dispatch({
-        type: FETCHED_INITIAL_LISTS,
-        payload: {
-          lists: response.data.user.lists
-        },
-      })
-      dispatch({
-        type: ADDED_ITEM_TO_MASTERLIST,
-        payload: response.data.user.masterList,
-      })
-      dispatch({
-        type: ADD_SORT_ORDER,
-        payload: response.data.user.sortOrder
-      })
-      dispatch(doAddCategories());
-    }
+    intitializeUserSessionData(response);
   }
   catch (e) {
     console.log('server error', e.message)
@@ -104,6 +55,40 @@ export const doAutoLogin = (): AppThunk => async dispatch => {
   dispatch({ type: FINISHED_LOADING });
 }
 
+const intitializeUserSessionData= (response: any): AppThunk => async dispatch  => {
+  console.log(response);
+  const {user, token} = response.data
+  console.log(user);
+  
+  localStorage.setItem('token', token)
+  const newUser: IUser = {
+    id: response.data.user._id,
+    name: response.data.user.name,
+    email: response.data.user.email,
+    currentList: response.data.user.currentList,
+    sharedWithMe: response.data.user.sharedWithMe
+  }
+  // addCurrentUser(user);
+  dispatch ({
+    type: ADDED_CURRENT_USER,
+    payload: newUser
+  })
+  dispatch({
+    type: FETCHED_INITIAL_LISTS,
+    payload: {
+      lists: user.lists,
+    },
+  })
+  dispatch({
+    type: ADDED_ITEM_TO_MASTERLIST,
+    payload: user.masterList,
+  })
+  dispatch({
+    type: ADD_SORT_ORDER,
+    payload: user.sortOrder
+  })
+  dispatch(doAddCategories());
+}
 
 export const doLogoutUser = (): AppThunk => async dispatch => {
   try {
@@ -122,12 +107,12 @@ export const doLogoutUser = (): AppThunk => async dispatch => {
   }
 }
 
-export const addCurrentUser = (user: IUser): SystemActionTypes => {
-  return {
-    type: ADDED_CURRENT_USER,
-    payload: user
-  }
-}
+// export const addCurrentUser = (user: IUser): SystemActionTypes => {
+//   return {
+//     type: ADDED_CURRENT_USER,
+//     payload: user
+//   }
+// }
 
 export const doSetCurrentList = (listId: string): AppThunk => async dispatch => {
   try {
