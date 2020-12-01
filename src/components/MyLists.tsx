@@ -19,13 +19,6 @@ const MyLists = () => {
   const selectLists = (state: RootState) => state.lists;
   const {lists} = useSelector(selectLists)
 
-  // useEffect(()=> {
-  //   console.log('Effect');
-
-  //   dispatch(doCreateNewList('Target'))
-  // }, [dispatch])
-
-  // const sortedLists = [...lists].sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated));
   const sortedLists: IList[] = [...lists].sort((a, b) => b.dateCreated.localeCompare(a.dateCreated));
   const [queryTerm, setQueryTerm] = useState<string>('');
 
@@ -38,22 +31,22 @@ const MyLists = () => {
     if (!queryTerm.trim()) {
       addNotification('Enter a name for the list.')
     } else {
-      doCreateNewList(queryTerm)
+      dispatch(doCreateNewList(queryTerm));
       setQueryTerm('')
     }
   }
 
   const onSelectList = (listId: string) => {
-    clearNotification()
+    clearNotification();
     dispatch(doSetCurrentList(listId));
   }
 
   const onClickDeleteList = (e :React.FormEvent, id: string) => {
-    e.stopPropagation()
+    e.stopPropagation();
     if (id === curUser.currentList) {
-      addNotification('You can not delete the current list. Select another before deleting this list.')
+      addNotification('You can not delete the current list. Select another before deleting this list.');
     } else {
-      doRemoveList(id)
+      dispatch(doRemoveList(id));
     }
   }
 

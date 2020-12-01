@@ -2,20 +2,13 @@ import { instance } from '../../api/axios';
 import { AppThunk } from '../index';
 import {
   IListItem,
-  // INewItem,
   ADDED_NEW_LIST,
   REMOVED_LIST,
   REMOVED_ITEM_FROM_ALL_LISTS,
-  // CLEARED_ALL_LISTS,
   CHANGED_ITEMS_STATUS
-
 } from './types'
-// import { doAddItemToMasterList } from '../masterlist/actions';
-// import { IMasterListItem } from '../masterlist/types';
 
 export const doCreateNewList = (name: string): AppThunk => async dispatch => {
-  console.log('Create List');
-
   try {
     const response = (await instance.post('/lists', { name })).data
     console.log(response);
@@ -69,7 +62,6 @@ export const doAddItemToCurrentList = (masterItemId: string, quantity: string): 
     // Add item to DB and local current lists
     const curList: string = getState().system.curUser.currentList;
     const response = await instance.post('/lists/items', newCurrentListItem)
-    console.log(response);
     dispatch({
       type: 'ADDED_ITEM_TO_CUR_LIST',
       payload: { items: response.data, curList }

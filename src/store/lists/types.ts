@@ -39,7 +39,7 @@ export type ListsState = {
   lists: IList[];
 }
 
-export const FETCHED_INITIAL_LISTS_AND_SORT_ORDER = 'FETCHED_INITIAL_LISTS_AND_SORT_ORDER,'
+export const FETCHED_INITIAL_LISTS = 'FETCHED_INITIAL_LISTS,'
 export const ADDED_NEW_LIST = 'ADDED_NEW_LIST'
 export const REMOVED_LIST = 'REMOVED_LIST'
 export const CLEARED_ALL_LISTS = 'CLEARED_ALL_LISTS'
@@ -50,7 +50,7 @@ export const REMOVED_ITEMS_FROM_CUR_LIST = 'REMOVED_ITEMS_FROM_CUR_LIST'
 export const CHANGED_ITEMS_STATUS = 'CHANGED_ITEMS_STATUS'
 
 interface FetchInitialDataAction {
-  type: typeof FETCHED_INITIAL_LISTS_AND_SORT_ORDER,
+  type: typeof FETCHED_INITIAL_LISTS,
   payload: {
     lists: IList[],
   }

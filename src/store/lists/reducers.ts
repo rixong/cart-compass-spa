@@ -4,7 +4,7 @@ import {
   ListsState,
   IList,
   // IListItem,
-  FETCHED_INITIAL_LISTS_AND_SORT_ORDER,
+  FETCHED_INITIAL_LISTS,
   ADDED_NEW_LIST,
   REMOVED_LIST,
   CLEARED_ALL_LISTS,
@@ -27,7 +27,7 @@ export default function listReducer(
   let idx;
   let currentList;
   switch (action.type) {
-    case FETCHED_INITIAL_LISTS_AND_SORT_ORDER:
+    case FETCHED_INITIAL_LISTS:
       return {...state, lists: action.payload.lists }
     case ADDED_NEW_LIST:
       return { ...state, lists: state.lists.concat(action.payload) }
@@ -56,7 +56,7 @@ export default function listReducer(
           return item.masterItemId !== action.payload;
         });
         list.listItems = curListItems;
-        newLists.concat(list);
+        newLists.push(list);
       })
       return {...state, lists: newLists}
 

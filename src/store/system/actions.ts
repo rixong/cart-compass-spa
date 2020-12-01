@@ -13,7 +13,7 @@ import {
   SystemActionTypes
 } from './types';
 
-import { FETCHED_INITIAL_LISTS_AND_SORT_ORDER, CLEARED_ALL_LISTS } from '../lists/types';
+import { FETCHED_INITIAL_LISTS, CLEARED_ALL_LISTS } from '../lists/types';
 import { doAddCategories } from '../categories/actions'
 import {ADD_SORT_ORDER} from '../categories/types'
 import { ADDED_ITEM_TO_MASTERLIST, CLEARED_MASTERLIST } from '../masterlist/types';
@@ -44,7 +44,7 @@ export const doLogin = (logonInfo: ILogin): AppThunk => async dispatch => {
       }
       dispatch(addCurrentUser(user));
       dispatch({
-        type: FETCHED_INITIAL_LISTS_AND_SORT_ORDER,
+        type: FETCHED_INITIAL_LISTS,
         payload: {
           lists: response.data.user.lists,
         },
@@ -82,10 +82,9 @@ export const doAutoLogin = (): AppThunk => async dispatch => {
       }
       dispatch(addCurrentUser(user));
       dispatch({
-        type: FETCHED_INITIAL_LISTS_AND_SORT_ORDER,
+        type: FETCHED_INITIAL_LISTS,
         payload: {
-          lists: response.data.user.lists,
-          sortOrder: response.data.user.sortOrder,
+          lists: response.data.user.lists
         },
       })
       dispatch({

@@ -33,7 +33,7 @@ export const doAddItemToMasterList = (item: INewItem): AppThunk => async dispatc
 
 export const doRemoveFromMasterList = (itemId: string): AppThunk => async dispatch => {  
   try {
-    const response = await instance.delete(`/items/${itemId}`)  //Removes from master list and list_items
+    await instance.delete(`/items/${itemId}`)  //Removes from master list and list_items
     dispatch(doRemoveItemFromAllLists(itemId));
     dispatch({
       type: REMOVED_FROM_MASTER_LIST,

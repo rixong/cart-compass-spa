@@ -18,7 +18,7 @@ export const doAddCategories = (): AppThunk => async dispatch => {
   }
 }
 
-export const doAddSortOrder = (sortOrder: ISortOrder) => {
+export const doAddSortOrder = (sortOrder: ISortOrder[]) => {
   return {
     type: ADD_SORT_ORDER,
     payload: sortOrder
@@ -26,9 +26,7 @@ export const doAddSortOrder = (sortOrder: ISortOrder) => {
 }
 
 export const doReorderSortOrder = (newOrder: ISortOrder[]): AppThunk => async dispatch => {
-  console.log('from action', newOrder)
-  // await instance.post('/categories', { order: newOrder.join(',') })
-  await instance.post('/categories', { newOrder })
+  await instance.post('/categories', [ ...newOrder ])
   dispatch({
     type: REORDERED_CATEGORIES,
     payload: newOrder
