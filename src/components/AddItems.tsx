@@ -6,7 +6,6 @@ import { IList} from '../store/lists/types';
 import {IMasterListItem} from '../store/masterlist/types';
 import Alert from './Alert';
 import Collapse from './Collapse';
-// import MyLists from './MyLists';
 
 import { doAddItemToMasterList, } from '../store/masterlist/actions';
 import { addNotification, clearNotification } from '../store/system/actions';
@@ -22,7 +21,7 @@ const AddItems = () => {
   const { lists } = useSelector(selectLists)
 
   const selectCategories = (state: RootState) => state.categories;
-  const { categories } = useSelector(selectCategories)
+  const { categories, sortOrder } = useSelector(selectCategories)
 
   const selectMasterLists = (state: RootState) => state.masterList;
   const { masterList } = useSelector(selectMasterLists)
@@ -138,7 +137,13 @@ const AddItems = () => {
             >
               <option value="0">Category...</option>
                 {categories.map(cat => <option value={cat._id} key={cat._id}>{cat.name}</option>)}
-              {/* {categories.sort((a, b) => a.sort_order - b.sort_order).map(cat => <option value={cat.id} key={cat.id}>{cat.name}</option>)} */}
+              {/* {
+                sortOrder.map(sort => 
+                  <option
+                  value={sort.categoryId} 
+                  key={sort._id}>
+                    {categories.find((cat) => cat._id === sort.categoryId)!.name}
+                  </option>)} */}
             </select>
           </div>
         </div>
