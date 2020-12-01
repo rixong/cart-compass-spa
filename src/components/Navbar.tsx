@@ -12,7 +12,6 @@ const Navbar = () => {
   const dispatch =  useDispatch()
   const onLogout = async () => {
     await dispatch(doLogoutUser());
-    localStorage.removeItem('token');
   }
 
   return (

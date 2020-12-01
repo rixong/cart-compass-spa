@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { RootState } from '../store';
-import { doAutoLogin } from '../store/system/actions';
+import { doAutoLogin,  } from '../store/system/actions';
+import { doAddCategories} from '../store/categories/actions';
 
 import Navbar from './Navbar';
 import Login from './Login';
@@ -21,6 +22,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     // console.log(localStorage.getItem('token'), system.curUser.id);
+    console.log('From App');
     
     if (localStorage.getItem('token') && !system.curUser.id) {
       dispatch(doAutoLogin());
@@ -32,7 +34,8 @@ const App: React.FC = () => {
       {!system.curUser.id && !localStorage.getItem('token') ? <Login /> :
         <div className="container shadow bg-dark">
           <Navbar />
-          {!system.curUser.id || system.loading ?
+          {/* {!system.curUser.id || system.loading ? */}
+          {system.loading ?
             <Spinner />
             :
             <Switch>

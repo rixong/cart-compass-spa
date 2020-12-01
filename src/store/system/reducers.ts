@@ -33,7 +33,7 @@ export default function systemReducer(
   switch (action.type) {
     case ADDED_CURRENT_USER:
       return {
-        ...state, curUser: action.payload, loading: false
+        ...state, curUser: action.payload
       }
     case USER_CLEARED:
       return initialState

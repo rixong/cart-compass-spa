@@ -136,13 +136,13 @@ const AddItems = () => {
               value={queryTerm.category}
             >
               <option value="0">Category...</option>
-                {/* {categories.map(cat => <option value={cat._id} key={cat._id}>{cat.name}</option>)} */}
-              { sortOrder.map(sort => 
+                {categories.map(cat => <option value={cat._id} key={cat._id}>{cat.name}</option>)}
+              {/* { sortOrder.map(sort => 
                   <option
                   value={sort.categoryId}
                   key={sort._id}>
                     {categories.find((cat) => cat._id === sort.categoryId)!.name}
-                  </option>)}
+                  </option>)} */}
             </select>
           </div>
         </div>

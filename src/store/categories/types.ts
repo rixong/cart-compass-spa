@@ -18,6 +18,7 @@ export type CategoriesState = {
 export const REORDERED_CATEGORIES = 'REORDERED_CATEGORIES';
 export const ADD_CATEGORIES = 'ADD_CATEGORIES';
 export const ADD_SORT_ORDER = 'ADD_SORT_ORDER';
+export const CLEAR_SORT_ORDER = 'CLEAR_SORT_ORDER';
 
 interface ReorderCategoriesAction {
   type: typeof REORDERED_CATEGORIES,
@@ -34,4 +35,9 @@ interface AddSortOrderAction {
   payload: ISortOrder[],
 }
 
-export type categoryActions = ReorderCategoriesAction | AddCategoriesAction | AddSortOrderAction
+interface ClearAllAction {
+  type: typeof CLEAR_SORT_ORDER,
+}
+
+export type categoryActions = ReorderCategoriesAction | AddCategoriesAction 
+| AddSortOrderAction | ClearAllAction

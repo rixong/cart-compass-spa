@@ -15,12 +15,13 @@ import {
 
 import { FETCHED_INITIAL_LISTS, CLEARED_ALL_LISTS } from '../lists/types';
 import { doAddCategories } from '../categories/actions'
-import {ADD_SORT_ORDER} from '../categories/types'
+import {ADD_SORT_ORDER, CLEAR_SORT_ORDER} from '../categories/types'
 import { ADDED_ITEM_TO_MASTERLIST, CLEARED_MASTERLIST } from '../masterlist/types';
 import { AppThunk } from '../index';
 
 // New User OR Login Existing User
 export const doLogin = (logonInfo: ILogin): AppThunk => async dispatch => {
+  dispatch({ type: STARTED_LOADING });
   let response
   try {
     if (logonInfo.passwordConfirmation) {
@@ -33,7 +34,9 @@ export const doLogin = (logonInfo: ILogin): AppThunk => async dispatch => {
     }
 
     if (response.statusText === 'OK') {
-      dispatch(intitializeUserSessionData(response));
+      localStorage.setItem('token', response.data.token)
+      await dispatch(doAddCategories());
+      await dispatch(intitializeUserSessionData(response));
     }
   } catch (e) {
     console.log('server error', e.message)
@@ -44,10 +47,12 @@ export const doLogin = (logonInfo: ILogin): AppThunk => async dispatch => {
 //Profile - Renew session
 // Token is included in header as Axios interceptor (see API/axios.ts).
 export const doAutoLogin = (): AppThunk => async dispatch => {
+  
   dispatch({ type: STARTED_LOADING });
   try {
     const response = await instance.get('/profile');
-    intitializeUserSessionData(response);
+    await dispatch(doAddCategories())
+    await dispatch(intitializeUserSessionData(response));
   }
   catch (e) {
     console.log('server error', e.message)
@@ -56,11 +61,9 @@ export const doAutoLogin = (): AppThunk => async dispatch => {
 }
 
 const intitializeUserSessionData= (response: any): AppThunk => async dispatch  => {
-  console.log(response);
-  const {user, token} = response.data
-  console.log(user);
-  
-  localStorage.setItem('token', token)
+
+  const {user} = response.data
+  // console.log(user);
   const newUser: IUser = {
     id: response.data.user._id,
     name: response.data.user.name,
@@ -68,7 +71,6 @@ const intitializeUserSessionData= (response: any): AppThunk => async dispatch  =
     currentList: response.data.user.currentList,
     sharedWithMe: response.data.user.sharedWithMe
   }
-  // addCurrentUser(user);
   dispatch ({
     type: ADDED_CURRENT_USER,
     payload: newUser
@@ -87,12 +89,12 @@ const intitializeUserSessionData= (response: any): AppThunk => async dispatch  =
     type: ADD_SORT_ORDER,
     payload: user.sortOrder
   })
-  dispatch(doAddCategories());
 }
 
 export const doLogoutUser = (): AppThunk => async dispatch => {
   try {
     await instance.get('/logout');
+    localStorage.removeItem('token');
     dispatch({
       type: USER_CLEARED
     });
@@ -102,6 +104,10 @@ export const doLogoutUser = (): AppThunk => async dispatch => {
     dispatch({
       type: CLEARED_MASTERLIST
     })
+    dispatch({
+      type: CLEAR_SORT_ORDER
+    })
+    
   } catch (e) {
     console.log("Error logging out.", e);
   }

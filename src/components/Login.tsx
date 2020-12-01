@@ -48,7 +48,6 @@ const Login: React.FC = () => {
       setPasswordError('Please enter a valid password')
     }
     else {
-      console.log('submit')
       dispatch(doLogin(inputText))
       setInputText(inputTextDefault)
       return <Redirect to="/" />

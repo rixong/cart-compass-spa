@@ -3,7 +3,8 @@ import {
   categoryActions,
   REORDERED_CATEGORIES,
   ADD_CATEGORIES,
-  ADD_SORT_ORDER
+  ADD_SORT_ORDER,
+  CLEAR_SORT_ORDER
 } from './types';
 
 const initialState: CategoriesState = {
@@ -22,6 +23,8 @@ export default function categoryReducer(
       return { ...state, categories: action.payload }
     case ADD_SORT_ORDER:
       return { ...state, sortOrder: action.payload }
+    case CLEAR_SORT_ORDER:
+      return initialState;
     default:
       return state
   }
