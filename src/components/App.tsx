@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { RootState } from '../store';
 import { doAutoLogin,  } from '../store/system/actions';
-import { doAddCategories} from '../store/categories/actions';
 
 import Navbar from './Navbar';
 import Login from './Login';

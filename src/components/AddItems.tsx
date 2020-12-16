@@ -4,11 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store';
 import { IList} from '../store/lists/types';
 import {IMasterListItem} from '../store/masterlist/types';
-import Alert from './Alert';
-import Collapse from './Collapse';
-
 import { doAddItemToMasterList, } from '../store/masterlist/actions';
 import { addNotification, clearNotification } from '../store/system/actions';
+
+import Alert from './Alert';
+import Collapse from './Collapse';
+import MyLists from './MyLists';
 
 const AddItems = () => {
 
@@ -81,7 +82,6 @@ const AddItems = () => {
 
   return (
     <React.Fragment>
-      <Collapse />
 
       {notification.error ? <Alert /> : <p className="h4 text-warning text-center">&mdash;&mdash;</p>}
       <div className="header">Add items to <span className="text-primary">{curList?.name || 'Set a current list'}</span></div>
@@ -136,13 +136,13 @@ const AddItems = () => {
               value={queryTerm.category}
             >
               <option value="0">Category...</option>
-                {categories.map(cat => <option value={cat._id} key={cat._id}>{cat.name}</option>)}
-              {/* { sortOrder.map(sort => 
+                {/* {categories.map(cat => <option value={cat._id} key={cat._id}>{cat.name}</option>)} */}
+              { sortOrder.map(sort => 
                   <option
                   value={sort.categoryId}
                   key={sort._id}>
                     {categories.find((cat) => cat._id === sort.categoryId)!.name}
-                  </option>)} */}
+                  </option>)}
             </select>
           </div>
         </div>
@@ -157,6 +157,7 @@ const AddItems = () => {
         </div>
 
       </form>
+      <MyLists />
     </React.Fragment>
   )
 }

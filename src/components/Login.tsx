@@ -31,7 +31,6 @@ const Login: React.FC = () => {
   ]
 
   const onHandleChange = (e: React.FormEvent<HTMLInputElement>) => {
-
     setPasswordError('');
     setEmailError('');
     setInputText({ ...inputText, [e.currentTarget.name]: e.currentTarget.value })
