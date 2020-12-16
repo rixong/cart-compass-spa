@@ -144,7 +144,6 @@ export const addNotification = (message: string) => {
 
 export const clearNotification = () => {
   return {
-    type: CLEARED_NOTIFICATION,
-    payload: { error: false, message: '' }
+    type: CLEARED_NOTIFICATION
   }
 }

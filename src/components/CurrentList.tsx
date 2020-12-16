@@ -50,6 +50,7 @@ const CurrentList: React.FC = () => {
           sortOrder: curSortOrder.order,
         }
       }
+      return null
     })
     return items.sort((a: any, b: any) => a.sortOrder - b.sortOrder);
     // }

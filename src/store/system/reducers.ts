@@ -7,7 +7,7 @@ import {
   STARTED_LOADING,
   FINISHED_LOADING,
   ADDED_NOTIFICATION,
-  CLEARED_NOTIFICATION
+  CLEARED_NOTIFICATION,
 } from './types'
 
 const initialState: SystemState = {
@@ -44,7 +44,7 @@ export default function systemReducer(
     case ADDED_NOTIFICATION:
       return { ...state, notification: action.payload }
     case CLEARED_NOTIFICATION:
-      return { ...state, notification: action.payload }
+      return { ...state, notification: {error: false, message: ''} }
     case STARTED_LOADING:
       return { ...state, loading: true }
     case FINISHED_LOADING:
