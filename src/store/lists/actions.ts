@@ -7,11 +7,12 @@ import {
   REMOVED_ITEM_FROM_ALL_LISTS,
   CHANGED_ITEMS_STATUS
 } from './types'
+import {addNotification} from '../system/actions';
 
 export const doCreateNewList = (name: string): AppThunk => async dispatch => {
   try {
     const response = (await instance.post('/lists', { name })).data
-    console.log(response);
+    // console.log(response);
     dispatch({
       type: ADDED_NEW_LIST,
       payload: response,
@@ -62,6 +63,9 @@ export const doAddItemToCurrentList = (masterItemId: string, quantity: string): 
     // Add item to DB and local current lists
     const curList: string = getState().system.curUser.currentList;
     const response = await instance.post('/lists/items', newCurrentListItem)
+    if(response.data.error){
+      return dispatch(addNotification(response.data.error))
+    }
     dispatch({
       type: 'ADDED_ITEM_TO_CUR_LIST',
       payload: { items: response.data, curList }
@@ -69,8 +73,7 @@ export const doAddItemToCurrentList = (masterItemId: string, quantity: string): 
   }
   catch (e) {
     console.log(e);
-
-    // dispatch(addNotification(e.message))
+    dispatch(addNotification(e.message))
   }
 }
 

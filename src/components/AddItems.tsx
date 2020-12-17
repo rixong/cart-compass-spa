@@ -83,7 +83,6 @@ const AddItems = () => {
   return (
     <React.Fragment>
 
-      {notification.isError ? <Alert /> : <p className="h4 text-warning text-center">&mdash;&mdash;</p>}
       <div className="header">Add items to <span className="text-primary">{curList?.name || 'Set a current list'}</span></div>
       <form>
         <div className="row mb-2">
@@ -95,7 +94,7 @@ const AddItems = () => {
               placeholder="Add a new item..."
               value={queryTerm.name}
               onChange={(e) => onHandleChange(e)}
-              onFocus={() => clearNotification()}
+              onFocus={() => dispatch(clearNotification())}
               name="name"
               aria-label="enter item name"
               required
@@ -157,6 +156,8 @@ const AddItems = () => {
         </div>
 
       </form>
+      {notification.isError ? <Alert /> : <p className="h4 text-warning text-center">&mdash;&mdash;</p>}
+
       <MyLists />
     </React.Fragment>
   )
