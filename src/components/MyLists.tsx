@@ -54,7 +54,7 @@ const MyLists = () => {
 
   return (
     <React.Fragment>
-
+      <div className="header">My Lists</div>
       <ul className="list-group">
         {sortedLists.map(list =>
           (<li
@@ -85,7 +85,8 @@ const MyLists = () => {
       <hr></hr>
 
       {/* <div className="h4 text-center">Make a new list</div> */}
-      <form>
+      <form className="w-75">
+        <label className="pl-3">Make a new List:</label>
         <div className="input-group">
           <input
             className="form-control"
@@ -103,7 +104,7 @@ const MyLists = () => {
           className="btn btn-outline-primary btn-lg w-100 mt-3"
           onClick={(e) => onHandleSubmit(e)}
         >
-          Make a new list
+          Submit
         </button>
       </form>
 

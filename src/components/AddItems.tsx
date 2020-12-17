@@ -156,9 +156,7 @@ const AddItems = () => {
         </div>
 
       </form>
-      {notification.isError ? <Alert /> : <p className="h4 text-warning text-center">&mdash;&mdash;</p>}
-
-      <MyLists />
+      {notification.isError ? <Alert /> : <p className="h4 text-warning text-center"></p>}
     </React.Fragment>
   )
 }

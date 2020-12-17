@@ -26,17 +26,17 @@ const Navbar = () => {
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
-          <li className="nav-item">
+          <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
             <Link className="nav-link" to="/add">Add Items</Link>
           </li>
-          <li className="nav-item">
+          <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+            <Link className="nav-link" to="/mylists">My Lists</Link>
+          </li>
+          <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
             <Link className="nav-link" to="/sort">Categories</Link>
           </li>
-          <li className="nav-item">
+          <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
             <Link className="nav-link" to="/edit">My Items</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/mylists">My Lists</Link>
           </li>
           <li className="nav-item ">
         <div className="nav-link" role='button' onClick={onLogout}>Logout {system.curUser.name}</div>
