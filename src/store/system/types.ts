@@ -14,7 +14,7 @@ export interface ILogin {
 }
 
 export interface INotification {
-  error: boolean;
+  isError: boolean;
   message: string;
 }
 
@@ -59,7 +59,7 @@ interface FinishLoadingAction {
 
 interface AddNotificationAction {
   type: typeof ADDED_NOTIFICATION;
-  payload: INotification;
+  payload: string;
 }
 
 interface ClearNotificationAction {

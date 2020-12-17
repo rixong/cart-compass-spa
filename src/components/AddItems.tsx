@@ -8,7 +8,7 @@ import { doAddItemToMasterList, } from '../store/masterlist/actions';
 import { addNotification, clearNotification } from '../store/system/actions';
 
 import Alert from './Alert';
-import Collapse from './Collapse';
+// import Collapse from './Collapse';
 import MyLists from './MyLists';
 
 const AddItems = () => {
@@ -83,7 +83,7 @@ const AddItems = () => {
   return (
     <React.Fragment>
 
-      {notification.error ? <Alert /> : <p className="h4 text-warning text-center">&mdash;&mdash;</p>}
+      {notification.isError ? <Alert /> : <p className="h4 text-warning text-center">&mdash;&mdash;</p>}
       <div className="header">Add items to <span className="text-primary">{curList?.name || 'Set a current list'}</span></div>
       <form>
         <div className="row mb-2">

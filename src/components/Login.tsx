@@ -76,7 +76,7 @@ const Login: React.FC = () => {
             placeholder="Email"
             value={inputText.email}
             onChange={onHandleChange}
-            onFocus={() => clearNotification()}
+            onFocus={() => dispatch(clearNotification())}
           ></input>
           <div
             className={
@@ -145,7 +145,7 @@ const Login: React.FC = () => {
           <button className="btn btn-primary btn-lg mt-3 w-100" type="submit" onClick={onHandleSubmit}>Continue</button>
         </div>
       </form>
-      { system.notification.error ? <Alert/> : null }
+      { system.notification.isError ? <Alert/> : null }
           { system.loading ? <Spinner/> : null }
 
       <div className="login-switch d-block">

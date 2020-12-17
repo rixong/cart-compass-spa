@@ -19,7 +19,7 @@ const initialState: SystemState = {
     sharedWithMe: [],
   },
   notification: {
-    error: false,
+    isError: false,
     message: ''
   },
   loading: false,
@@ -42,9 +42,10 @@ export default function systemReducer(
       tempUser.currentList = action.payload
       return { ...state, curUser: tempUser }
     case ADDED_NOTIFICATION:
-      return { ...state, notification: action.payload }
+      const newNotification = {isError: true, message: action.payload }
+      return { ...state, notification: newNotification }
     case CLEARED_NOTIFICATION:
-      return { ...state, notification: {error: false, message: ''} }
+      return { ...state, notification: {isError: false, message: ''} }
     case STARTED_LOADING:
       return { ...state, loading: true }
     case FINISHED_LOADING:

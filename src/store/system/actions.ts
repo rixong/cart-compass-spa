@@ -35,11 +35,17 @@ export const doLogin = (logonInfo: ILogin): AppThunk => async dispatch => {
 
     if (response.statusText === 'OK') {
       localStorage.setItem('token', response.data.token)
-      await dispatch(doAddCategories());
-      await dispatch(intitializeUserSessionData(response));
-    }
+      dispatch(doAddCategories());
+      dispatch(intitializeUserSessionData(response));
+    } 
+    // else {
+    //   console.log(response);
+      
+    //   dispatch (addNotification('Not a valid login'))
+    // }
   } catch (e) {
     console.log('server error', e.message)
+    dispatch (addNotification('Not a valid login'))
   }
   dispatch({ type: FINISHED_LOADING });
 }
@@ -138,7 +144,7 @@ export const doSetCurrentList = (listId: string): AppThunk => async dispatch => 
 export const addNotification = (message: string) => {
   return {
     type: ADDED_NOTIFICATION,
-    payload: { error: true, message }
+    payload: message
   }
 }
 
