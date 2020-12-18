@@ -43,8 +43,8 @@ export const doLogin = (logonInfo: ILogin): AppThunk => async (dispatch) => {
       await dispatch(intitializeUserSessionData(response));
     }
   } catch (e) {
-    console.log("server error", e);
-    dispatch(addNotification("Invald login"));
+    console.log("server error", e.response.data.error);
+    dispatch(addNotification(e.response.data.error));
   }
   dispatch({ type: FINISHED_LOADING });
 };

@@ -8,8 +8,6 @@ import { doAddItemToMasterList, } from '../store/masterlist/actions';
 import { addNotification, clearNotification } from '../store/system/actions';
 
 import Alert from './Alert';
-// import Collapse from './Collapse';
-import MyLists from './MyLists';
 
 const AddItems = () => {
 
@@ -36,7 +34,7 @@ const AddItems = () => {
   const [searchResults, setSearchResults] = useState<IMasterListItem[]>([]);
 
   const onHandleChange = (e: any) => {
-    // clearNotification()
+    dispatch(clearNotification());
     // console.log(e.target.value);
     
     let nameValue: string = e.target.value
@@ -59,12 +57,12 @@ const AddItems = () => {
   const onClickSubmit = () => {   // DRY Fail!
 
     if (queryTerm.category === '0') {
-      addNotification("Choose a category!");
+      dispatch(addNotification("Choose a category!"));
       return;
     }
 
     if (!queryTerm.name.trim()) {
-      addNotification('Enter an item!');
+      dispatch(addNotification('Enter an item!'));
       setQueryTerm(queryDefault);
       return;
     }

@@ -6,7 +6,7 @@ import {RootState} from '../store';
 import { ILogin } from '../store/system/types';
 
 // import { doLogin, clearNotification, addNotification } from '../store/system/actions'
-import { doLogin, clearNotification } from '../store/system/actions'
+import { doLogin, clearNotification, addNotification } from '../store/system/actions'
 
 import Alert from './Alert';
 import Spinner from './Spinner';
@@ -45,10 +45,12 @@ const Login: React.FC = () => {
     }
     else if (inputText.password.trim() === '') {
       setPasswordError('Please enter a valid password')
+    } else if (inputText.name === '' && isNewUser) {
+      dispatch(addNotification('Name required'))
     }
     else {
       dispatch(doLogin(inputText))
-      setInputText(inputTextDefault)
+      // setInputText(inputTextDefault)
       return <Redirect to="/" />
     }
   }
@@ -99,7 +101,7 @@ const Login: React.FC = () => {
             placeholder="Password"
             value={inputText.password}
             onChange={onHandleChange}
-            onFocus={() => clearNotification()}
+            onFocus={() => dispatch(clearNotification())}
           ></input>
 
           <div
@@ -125,7 +127,7 @@ const Login: React.FC = () => {
                 placeholder="Confirm password"
                 value={inputText.passwordConfirmation}
                 onChange={onHandleChange}
-                onFocus={() => clearNotification()}
+                onFocus={() => dispatch(clearNotification())}
               ></input>
 
               <input
@@ -136,21 +138,29 @@ const Login: React.FC = () => {
                 placeholder="Your name"
                 value={inputText.name}
                 onChange={onHandleChange}
-                onFocus={() => clearNotification()}
+                onFocus={() => dispatch(clearNotification())}
               ></input>
             </div>
-
             : null
           }
-          <button className="btn btn-primary btn-lg mt-3 w-100" type="submit" onClick={onHandleSubmit}>Continue</button>
+          {
+            system.notification.isError ? 
+            <Alert/> :
+            <button className="btn btn-primary btn-lg mt-3 w-100" type="submit" onClick={onHandleSubmit}>Continue</button>
+          }
         </div>
       </form>
-      { system.notification.isError ? <Alert/> : null }
           { system.loading ? <Spinner/> : null }
 
       <div className="login-switch d-block">
         <p className="text-center">{isNewUser ? message[1] : message[0]}</p>
-        <div className="text-center text-primary h5" onClick={() => setIsNewUser(!isNewUser)} role="button">
+        <div 
+          className="text-center text-primary h5" 
+          onClick={() => {
+            setIsNewUser(!isNewUser);
+            setInputText((prevState) => ({...prevState, passwordConfirmation: ''}));
+          }} 
+          role="button">
           {!isNewUser ? 'Create account' : 'Login'}
         </div>
       </div>
