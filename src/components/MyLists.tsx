@@ -29,7 +29,7 @@ const MyLists = () => {
   const onHandleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!queryTerm.trim()) {
-      addNotification('Enter a name for the list.')
+      addNotification('Enter a name for this list.')
     } else {
       dispatch(doCreateNewList(queryTerm));
       setQueryTerm('')
@@ -56,7 +56,7 @@ const MyLists = () => {
 
   return (
     <React.Fragment>
-      <div className="header">My Lists</div>
+      <div className="header">My lists</div>
       <div className="row justify-content-center">
         <ul className="list-group">
           {sortedLists.map(list =>
