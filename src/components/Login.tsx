@@ -146,7 +146,12 @@ const Login: React.FC = () => {
           {
             system.notification.isError ? 
             <Alert/> :
-            <button className="btn btn-primary btn-lg mt-3 w-100" type="submit" onClick={onHandleSubmit}>Continue</button>
+            <button 
+              className="btn btn-primary btn-lg mt-3 w-100 rounded-pill" 
+              type="submit" 
+              onClick={onHandleSubmit}>
+                CONTINUE
+              </button>
           }
         </div>
       </form>

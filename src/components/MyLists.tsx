@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import { XCircleFillIcon } from '@primer/octicons-react'
+import { XCircleFillIcon, CheckCircleIcon } from '@primer/octicons-react'
 
 import { RootState } from '../store';
-import { doSetCurrentList, addNotification, clearNotification} from '../store/system/actions'
+import { doSetCurrentList, addNotification, clearNotification } from '../store/system/actions'
 import { doCreateNewList, doRemoveList } from '../store/lists/actions';
 import { IList } from '../store/lists/types';
 
@@ -14,10 +14,10 @@ const MyLists = () => {
   const dispatch = useDispatch();
 
   const selectSystem = (state: RootState) => state.system;
-  const {curUser} = useSelector(selectSystem);
+  const { curUser } = useSelector(selectSystem);
 
   const selectLists = (state: RootState) => state.lists;
-  const {lists} = useSelector(selectLists)
+  const { lists } = useSelector(selectLists)
 
   const sortedLists: IList[] = [...lists].sort((a, b) => b.dateCreated.localeCompare(a.dateCreated));
   const [queryTerm, setQueryTerm] = useState<string>('');
@@ -38,10 +38,12 @@ const MyLists = () => {
 
   const onSelectList = (listId: string) => {
     clearNotification();
-    dispatch(doSetCurrentList(listId));
+    if(listId !== curUser.currentList){
+      dispatch(doSetCurrentList(listId));
+    }
   }
 
-  const onClickDeleteList = (e :React.FormEvent, id: string) => {
+  const onClickDeleteList = (e: React.FormEvent, id: string) => {
     e.stopPropagation();
     if (id === curUser.currentList) {
       addNotification('You can not delete the current list. Select another before deleting this list.');
@@ -50,13 +52,14 @@ const MyLists = () => {
     }
   }
 
-  const defaultClass = "list-group-item d-flex justify-content-between pl-0 mb-2 rounded shadow"
+  const defaultClass = "list-group-item d-flex justify-content-between pl-0 mb-2 rounded"
 
   return (
     <React.Fragment>
       <div className="header">My Lists</div>
-      <ul className="list-group">
-        {sortedLists.map(list =>
+      <div className="row justify-content-center">
+        <ul className="list-group">
+          {sortedLists.map(list =>
           (<li
             className={`${defaultClass} ${list._id === curUser.currentList ? 'bg-dark text-info' : 'text-primary'}`}
             key={list._id}
@@ -66,8 +69,9 @@ const MyLists = () => {
             <div className="col-10">
               <strong>{list.name}</strong> - {moment(list.dateCreated).format('ddd, MMM Do')}
             </div>
-            {list._id === curUser.currentList ? null :
-              <div className="col-2">
+            <div className="col-2">
+              {list._id === curUser.currentList ?
+                <CheckCircleIcon size={24} /> :
                 <button
                   type="button"
                   className="close"
@@ -76,17 +80,18 @@ const MyLists = () => {
                 >
                   <XCircleFillIcon size={24} />
                 </button>
-              </div>
-            }
+              }
+            </div>
           </li>)
-        )}
-      </ul>
+          )}
+        </ul>
+      </div>
 
       <hr></hr>
 
-      {/* <div className="h4 text-center">Make a new list</div> */}
+      <div className="h4 text-center">Make a new list</div>
       <form className="w-75">
-        <label className="pl-3">Make a new List:</label>
+        <label className="ml-1 mb-1">List name</label>
         <div className="input-group">
           <input
             className="form-control"
@@ -101,7 +106,7 @@ const MyLists = () => {
           ></input>
         </div>
         <button
-          className="btn btn-outline-primary btn-lg w-100 mt-3"
+          className="btn btn-primary btn-lg w-100 rounded-pill mt-3"
           onClick={(e) => onHandleSubmit(e)}
         >
           Submit

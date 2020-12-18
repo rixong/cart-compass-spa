@@ -10,7 +10,7 @@ const Alert: React.FC = () => {
   const system = useSelector(selectSystem)
 
   return (
-    <div className="alert alert-warning m-4 text-center" role="alert">
+    <div className="alert alert-warning my-4 text-center" role="alert">
       {system.notification.message}
     </div>
   )
