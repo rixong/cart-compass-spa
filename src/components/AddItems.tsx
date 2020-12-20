@@ -129,7 +129,7 @@ const AddItems = () => {
         </div>
 
         <div className="form-group mt-15">
-          <label className="ml-1 mb-1" htmlFor="category-select">Category</label>
+          <label className="ml-1 mb-1" htmlFor="category-select">Select category</label>
           <select
             className="form-control w-100"
             onChange={(e) => onHandleChange(e)}
@@ -137,7 +137,7 @@ const AddItems = () => {
             id="category-select"
             value={queryTerm.category}
           >
-            <option value="0">Category...</option>
+            <option value="0">Category</option>
             {sortOrder.map(sort =>
               <option
                 value={sort.categoryId}

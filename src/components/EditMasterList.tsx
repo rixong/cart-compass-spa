@@ -29,18 +29,30 @@ const EditMasterList: React.FC = () => {
     <React.Fragment>
       <div className="header">Edit master list</div>
       <div className="h5 text-center">Deleting items here will delete item from ALL of your lists!</div>
-      <div className="row justify-content-center">
-        <div className="d-flex justify-content-between rounded mt-3">
-          <div className="py-2 px-5 hover-btn" role="button" onClick={() => setSortType('name')}>NAME</div>
-          <div className="py-2 px-5 hover-btn"  role="button" onClick={() => setSortType('category')}>CATEGORY</div>
+      <div className="justify-content-center">
+        <div className="row">
+          <div className="py-2 px-5 mr-4 hover-btn rounded-pill" role="button" onClick={() => setSortType('name')}>By NAME</div>
+          <div className="py-2 px-5 hover-btn rounded-pill" role="button" onClick={() => setSortType('category')}>By CATEGORY</div>
         </div>
-        <div className=" pl-0 mt-3 " >
+        <div className="ul list-group pl-0 mt-3 " >
           {sort().map((item) => (
-            <div
-              className=" d-flex justify-content-between pl-0 py-1 mb-2 rounded shadow"
+            <li
+              className="list-group-item justify-content-between pl-0 py-1 mb-2 w-50 rounded shadow"
               key={item._id}>
-              <div className="ml-3">{item.name.split(' ').map(ele => ele.slice(0,1).toUpperCase() + ele.slice(1).toLowerCase()).join(' ')}</div>
-              <div className="">{categories.length ? (categories.find(category => category._id === item.categoryId))!.name : null }</div>
+              <div className="ml-3">
+                {item.name.split(' ')
+                .map(ele => ele.slice(0,1)
+                .toUpperCase() + ele.slice(1)
+                .toLowerCase())
+                .join(' ')
+                }</div>
+              <div className="">
+                {categories.length ? 
+                (categories.find(category => category._id === item.categoryId))!
+                .name :
+                null
+                }
+              </div>
               <div className="">
                 <button
                   type="button"
@@ -51,7 +63,7 @@ const EditMasterList: React.FC = () => {
                   <XCircleFillIcon size={24} />
                 </button>
               </div>
-            </div>)
+            </li>)
           )}
         </div>
       </div>

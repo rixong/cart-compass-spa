@@ -1,3 +1,10 @@
+/* 
+green - 87bf57
+ligth blue - 3ab7fb
+salmon - f57565
+yellow - fcca65
+*/
+
 html {
   background-color: rgb(191, 191, 191);
 }
@@ -51,12 +58,18 @@ html {
 }
 
 .hover-btn {
-  /* background-color: darkolivegreen; */
+  background-color: rgb(134, 184, 189);
+  border: solid 1px black;
 }
 
 .hover-btn:hover {
-  /* background-color: brown; */
-  font-size: 1.2em;
+  background-color: rgb(100, 180, 187);
+}
+.hover-btn:active {
+  background-color: rgb(67, 121, 126);
+}
+.hover-btn:visited {
+  background-color: rgb(53, 121, 128);
 }
 
 .category-sort-display {
