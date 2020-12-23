@@ -6,7 +6,7 @@ import {RootState} from '../store';
 import { ILogin } from '../store/system/types';
 
 // import { doLogin, clearNotification, addNotification } from '../store/system/actions'
-import { doLogin, clearNotification, addNotification } from '../store/system/actions'
+import { doLogin, clearNotification } from '../store/system/actions'
 
 import Alert from './Alert';
 import Spinner from './Spinner';
@@ -38,19 +38,16 @@ const Login: React.FC = () => {
 
   const onHandleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const expression = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    let validEmail = expression.test(inputText.email.toLowerCase());
-    if (!validEmail) {
-      setEmailError('Please enter a valid email')
-    }
-    else if (inputText.password.trim() === '') {
+    // const expression = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    // let validEmail = expression.test(inputText.email.toLowerCase());
+    // if (!validEmail) {
+    //   setEmailError('Please enter a valid email')
+    // }
+    if (inputText.password.trim() === '') {
       setPasswordError('Please enter a valid password')
-    } else if (inputText.name === '' && isNewUser) {
-      dispatch(addNotification('Name required'))
     }
     else {
       dispatch(doLogin(inputText))
-      // setInputText(inputTextDefault)
       return <Redirect to="/" />
     }
   }
