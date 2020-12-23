@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { XCircleFillIcon, XCircleIcon } from '@primer/octicons-react';
+import { XCircleIcon } from '@primer/octicons-react';
 
 import { RootState } from '../store';
 import { doRemoveFromMasterList } from '../store/masterlist/actions';

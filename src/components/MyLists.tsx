@@ -56,7 +56,7 @@ const MyLists = () => {
 
   return (
     <React.Fragment>
-      <div className="header">My lists</div>
+      <div className="header"> lists</div>
       <div className="row justify-content-center">
         <ul className="list-group">
           {sortedLists.map(list =>
