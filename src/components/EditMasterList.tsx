@@ -28,31 +28,19 @@ const EditMasterList: React.FC = () => {
   return (
     <React.Fragment>
       <div className="header">Edit master list</div>
-      <div className="h6 text-center">Deleting items here will delete item from ALL of your lists!</div>
-      {/* <div className="justify-content-center"> */}
       <div className="d-flex justify-content-around mb-5">
-        <div className="py-2 px-5 hover-btn rounded-pill" role="button" onClick={() => setSortType('name')}>By NAME</div>
-        <div className="py-2 px-5 hover-btn rounded-pill" role="button" onClick={() => setSortType('category')}>By CATEGORY</div>
+        <div className="py-2 px-4 hover-btn rounded-pill" role="button" onClick={() => setSortType('name')}>By NAME</div>
+        <div className="py-2 px-4 hover-btn rounded-pill" role="button" onClick={() => setSortType('category')}>By CATEGORY</div>
       </div>
+      <div className="h6 text-center text-warning">Deleting items here will delete item from ALL of your lists!</div>
 
-      <div className="row bg-light rounded py-1 w-75 shadow-sm">
-        <div className="col-4">cabbage</div>
-        <div className="col-4 text-info">Produce</div>
-        <div className="col-1"><XCircleIcon size={16}>
-        </XCircleIcon>
-        </div>
-      </div>
-
-
-
-
-      <ul className="list-group pl-0 mt-3 " >
+      <div className="row mt-3 justify-content-center">
         {sort().map((item) => (
           <div
             className="row bg-light rounded py-1 mb-1 w-75 shadow-sm"
             key={item._id}
           >
-            <div className="col-6">{item.name}</div>
+            <div className="col-5">{item.name}</div>
             <div className="col-5 text-info">
               {categories.length ?
                 (categories.find(category => category._id === item.categoryId))!
@@ -71,39 +59,9 @@ const EditMasterList: React.FC = () => {
               </button>
             </div>
           </div>
-
-          // <li
-          //   className="list-group-item justify-content-between pl-0 py-1 mb-2 w-100 rounded shadow"
-          //   key={item._id}>
-          //   <div className="ml-3">
-          //     {item.name.split(' ')
-          //       .map(ele => ele.slice(0, 1)
-          //         .toUpperCase() + ele.slice(1)
-          //           .toLowerCase())
-          //       .join(' ')
-          //     }</div>
-          //   <div className="">
-          //     {categories.length ?
-          //       (categories.find(category => category._id === item.categoryId))!
-          //         .name :
-          //       null
-          //     }
-          //   </div>
-          //   <div className="">
-          //     <button
-          //       type="button"
-          //       className="close"
-          //       aria-label="Delete"
-          //       onClick={() => dispatch(doRemoveFromMasterList(item._id))}
-          //     >
-          //       <XCircleFillIcon size={24} />
-          //     </button>
-          //   </div>
-          // </li>
         )
-        )}
-      </ul>
-      {/* </div> */}
+        )}     
+      </div>
     </React.Fragment>
   )
 }
