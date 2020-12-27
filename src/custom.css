@@ -1,6 +1,6 @@
 /* 
 green - 87bf57
-ligth blue - 3ab7fb
+light blue - 3ab7fb
 salmon - f57565
 yellow - fcca65
 */
@@ -14,12 +14,13 @@ html {
 }
 
 .left-column {
-  background-color: rgb(210, 210, 210);
+  background-color: rgb(230, 229, 229);
 }
 
 .header {
   font-size: 2.5em;
   font-weight: 300;
+  color: #f57565;
   margin: 10px 0;
   text-align: center;
 }
@@ -58,8 +59,8 @@ html {
 }
 
 .hover-btn {
-  background-color: rgb(134, 184, 189);
-  border: solid 1px black;
+  background-color: #3ab7fb;
+  color: white;
 }
 
 .hover-btn:hover {

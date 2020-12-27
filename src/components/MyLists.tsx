@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import { XCircleFillIcon, CheckCircleIcon } from '@primer/octicons-react'
+import { XCircleIcon, CheckCircleIcon } from '@primer/octicons-react'
 
 import { RootState } from '../store';
 import { doSetCurrentList, addNotification, clearNotification } from '../store/system/actions'
@@ -29,7 +29,7 @@ const MyLists = () => {
   const onHandleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!queryTerm.trim()) {
-      addNotification('Enter a name for this list.')
+      addNotification('Enter a name for this list')
     } else {
       dispatch(doCreateNewList(queryTerm));
       setQueryTerm('')
@@ -56,7 +56,7 @@ const MyLists = () => {
 
   return (
     <React.Fragment>
-      <div className="header"> lists</div>
+      <div className="header">Your lists</div>
       <div className="row justify-content-center">
         <ul className="list-group">
           {sortedLists.map(list =>
@@ -67,7 +67,7 @@ const MyLists = () => {
             onClick={() => onSelectList(list._id)}
           >
             <div className="col-10">
-              <strong>{list.name}</strong> - {moment(list.dateCreated).format('ddd, MMM Do')}
+              <strong>{list.name}</strong> - {moment(list.dateCreated).format('ddd, MMM D')}
             </div>
             <div className="col-2">
               {list._id === curUser.currentList ?
@@ -78,7 +78,7 @@ const MyLists = () => {
                   aria-label="Delete"
                   onClick={(e) => onClickDeleteList(e, list._id)}
                 >
-                  <XCircleFillIcon size={24} />
+                  <XCircleIcon size={24} />
                 </button>
               }
             </div>
@@ -90,7 +90,7 @@ const MyLists = () => {
       <hr></hr>
 
       <div className="h4 text-center">Make a new list</div>
-      <form className="w-75">
+      <form className="w-100">
         <label className="ml-1 mb-1">List name</label>
         <div className="input-group">
           <input
@@ -109,7 +109,7 @@ const MyLists = () => {
           className="btn btn-primary btn-lg w-100 rounded-pill mt-3"
           onClick={(e) => onHandleSubmit(e)}
         >
-          Submit
+          ADD THE LIST
         </button>
       </form>
 

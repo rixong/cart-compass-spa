@@ -27,7 +27,7 @@ const EditMasterList: React.FC = () => {
 
   return (
     <React.Fragment>
-      <div className="header">Edit master list</div>
+      <div className="header">Edit your master list</div>
       <div className="d-flex justify-content-around mb-5">
         <div className="py-2 px-4 hover-btn rounded-pill" role="button" onClick={() => setSortType('name')}>By NAME</div>
         <div className="py-2 px-4 hover-btn rounded-pill" role="button" onClick={() => setSortType('category')}>By CATEGORY</div>

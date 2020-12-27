@@ -89,7 +89,7 @@ const AddItems = () => {
         <div className="form-group mt-15" >
           <label className="ml-1 mb-1" htmlFor="name-input">Item name</label>
           <input
-            className="form-control w-100"
+            className="form-control"
             type="text"
             id="name-input"
             placeholder="carrots"

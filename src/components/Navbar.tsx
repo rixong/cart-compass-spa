@@ -30,15 +30,15 @@ const Navbar = () => {
             <Link className="nav-link" to="/add">Add Items</Link>
           </li>
           <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-            <Link className="nav-link" to="/mylists">My Lists</Link>
+            <Link className="nav-link" to="/mylists">Lists</Link>
           </li>
           <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
             <Link className="nav-link" to="/sort">Categories</Link>
           </li>
           <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-            <Link className="nav-link" to="/edit">My Items</Link>
+            <Link className="nav-link" to="/edit">Items</Link>
           </li>
-          <li className="nav-item ">
+          <li className="nav-item ml-5">
         <div className="nav-link" role='button' onClick={onLogout}>Logout {system.curUser.name}</div>
           </li>
         </ul>

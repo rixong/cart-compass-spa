@@ -80,9 +80,9 @@ const CurrentList: React.FC = () => {
   return (
     <div className="col-md overflow-auto bg-light" style={{ height: vh }}>
       {currentList ?
-        <div className="d-flex flex-wrap justify-content-center align-items-end mt-4">
-          <div className="h2 pb-0 text-primary">{currentList.name} </div>
-          <div className="h5 ml-4 pb-1"> ({moment(currentList.dateCreated).format('MMM Do')})</div>
+        <div className="display-block justify-content-center">
+          <div className="row h2 text-primary">{currentList.name} </div>
+          <div className="row h6"> {moment(currentList.dateCreated).format('dddd, MMMM D')}</div>
         </div>
         : null}
       {currentList ? divideListByCategory(makeItems(currentList.listItems)) : null}
