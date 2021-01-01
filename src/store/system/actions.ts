@@ -12,7 +12,8 @@ import {
   CLEARED_NOTIFICATION,
 } from "./types";
 
-import { FETCHED_INITIAL_LISTS, CLEARED_ALL_LISTS } from "../lists/types";
+import { CLEARED_ALL_LISTS } from "../lists/types";
+import {doFetchUsersLists, doFetchCurrentListItems} from "../lists/actions";
 import { doAddCategories } from "../categories/actions";
 import { ADD_SORT_ORDER, CLEAR_SORT_ORDER } from "../categories/types";
 import {
@@ -80,12 +81,6 @@ const intitializeUserSessionData = (response: any): AppThunk => async (
     payload: newUser,
   });
   dispatch({
-    type: FETCHED_INITIAL_LISTS,
-    payload: {
-      lists: user.lists,
-    },
-  });
-  dispatch({
     type: ADDED_ITEM_TO_MASTERLIST,
     payload: user.masterList,
   });
@@ -93,6 +88,8 @@ const intitializeUserSessionData = (response: any): AppThunk => async (
     type: ADD_SORT_ORDER,
     payload: user.sortOrder,
   });
+  dispatch(doFetchUsersLists());
+  dispatch(doFetchCurrentListItems(response.data.user.currentList));
 };
 
 export const doLogoutUser = (): AppThunk => async (dispatch) => {

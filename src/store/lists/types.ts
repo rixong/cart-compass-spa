@@ -4,7 +4,6 @@ export interface IList {
   name: string;
   dateCreated: string;
   sharedWith: [];
-  listItems: IListItem[];
 }
 
 export interface IListItem {

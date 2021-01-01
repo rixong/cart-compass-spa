@@ -5,7 +5,7 @@ import { RootState } from '../store';
 
 import { IList, ICompleteItem } from '../store/lists/types';
 
-// import { doGetCurrentListItems } from '../store/lists/actions';
+// import { doFetchCurrentListItems } from '../store/lists/actions';
 
 import ListGroup from './ListGroup'
 
@@ -17,7 +17,7 @@ const CurrentList: React.FC = () => {
   const system = useSelector(selectSystem)
 
   const selectLists = (state: RootState) => state.lists;
-  const { lists } = useSelector(selectLists)
+  const { lists, curListItems } = useSelector(selectLists)
 
   const selectMasterLists = (state: RootState) => state.masterList;
   const { masterList } = useSelector(selectMasterLists)
@@ -85,7 +85,7 @@ const CurrentList: React.FC = () => {
           <div className="row h6"> {moment(currentList.dateCreated).format('dddd, MMMM D')}</div>
         </div>
         : null}
-      {currentList ? divideListByCategory(makeItems(currentList.listItems)) : null}
+      {currentList ? divideListByCategory(makeItems(curListItems)) : null}
     </div>
   )
 
