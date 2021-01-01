@@ -48,28 +48,29 @@ export default function listReducer(
       // return { ...state, lists: [...state.lists.slice(0, idx), currentList, ...state.lists.slice(idx + 1)] };
       return { ...state, curListItems: state.curListItems.concat(action.payload.item)}
       
-    case REMOVED_ITEM_FROM_ALL_LISTS:
-      const lists = [...state.lists];
-      let newLists: IList[] = [];
-      lists.forEach ((list) => {
-        let curListItems = [...list.listItems]
-        curListItems = curListItems.filter((item) => {
-          return item.masterItemId !== action.payload;
-        });
-        list.listItems = curListItems;
-        newLists.push(list);
-      })
-      return {...state, lists: newLists}
+    // case REMOVED_ITEM_FROM_ALL_LISTS:
+    //   const lists = [...state.lists];
+    //   let newLists: IList[] = [];
+    //   lists.forEach ((list) => {
+    //     let curListItems = [...list.listItems]
+    //     curListItems = curListItems.filter((item) => {
+    //       return item.masterItemId !== action.payload;
+    //     });
+    //     list.listItems = curListItems;
+    //     newLists.push(list);
+    //   })
+    //   return {...state, lists: newLists}
 
     case CHANGED_ITEMS_STATUS:
-      let listIdx = state.lists.findIndex((list) => list._id === action.payload.curList);
-      currentList = { ...state.lists[listIdx] }
-      let items = [...currentList.listItems];
+      // let listIdx = state.lists.findIndex((list) => list._id === action.payload.curList);
+      let items = { ...state.curListItems }
+      // let items = [...currentList.listItems];
       let itemIdx = items.findIndex((ele) => ele._id === action.payload.item._id)
       items = [...items.slice(0, itemIdx), action.payload.item, ...items.slice(itemIdx + 1)]
-      currentList.listItems = items;
-      return { ...state, lists: [...state.lists.slice(0, listIdx), currentList, ...state.lists.slice(listIdx + 1)] };
-    // case 'REMOVED_ITEMS_FROM_CUR_LIST':
+      // currentList.listItems = items;
+      return { ...state, curListItems: items };
+    
+      // case 'REMOVED_ITEMS_FROM_CUR_LIST':
     //   let tempItem = [...state.curListItems].filter(item => item.item_id !== action.payload)
     //   return { ...state, curListItems: tempItem }
 
