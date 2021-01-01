@@ -4,8 +4,9 @@ import {
   IListItem,
   ADDED_NEW_LIST,
   REMOVED_LIST,
+  FETCHED_CURRENT_LIST_ITEMS,
   REMOVED_ITEM_FROM_ALL_LISTS,
-  CHANGED_ITEMS_STATUS
+  CHANGED_ITEMS_STATUS,
 } from './types'
 import {addNotification} from '../system/actions';
 
@@ -37,18 +38,19 @@ export const doRemoveList = (listId: string): AppThunk => async dispatch => {
 }
 
 // CURRENT LIST_ITEM REQUESTS
-// export const doGetCurrentListItems = (list_id) => async dispatch => {
-//   try {
-//     const response = (await axios.get(`/lists/current/${list_id}`)).data
-//     dispatch({
-//       type: 'RETRIEVED_LIST_ITEMS',
-//       payload: response
-//     })
-//   }
-//   catch (e) {
-//     console.log('server error', e.message)
-//   }
-// }
+export const doFetchCurrentListItems = (listId: string): AppThunk => async dispatch => {
+  try {
+    const response = await instance.get(`/lists/current/`)
+    console.log(response.data);
+    dispatch({
+      type: FETCHED_CURRENT_LIST_ITEMS,
+      payload: response.data
+    })
+  }
+  catch (e) {
+    console.log('server error', e.message)
+  }
+}
 
 export const doAddItemToCurrentList = (masterItemId: string, quantity: string): AppThunk => async (dispatch, getState) => {
   try {
@@ -60,12 +62,12 @@ export const doAddItemToCurrentList = (masterItemId: string, quantity: string): 
     active: true
   }
   // Add item to DB and local current lists
-  const curList: string = getState().system.curUser.currentList;
+  // const curList: string = getState().system.curUser.currentList;
   const response = await instance.post('/lists/items', newCurrentListItem)
   // console.log(response);
     dispatch({
       type: 'ADDED_ITEM_TO_CUR_LIST',
-      payload: { items: response.data, curList }
+      payload: { item: response.data }
     })
   }
   catch (e) {

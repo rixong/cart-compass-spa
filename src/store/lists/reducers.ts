@@ -8,7 +8,7 @@ import {
   ADDED_NEW_LIST,
   REMOVED_LIST,
   CLEARED_ALL_LISTS,
-  // RETRIEVED_CURRENT_LIST_ITEMS,
+  FETCHED_CURRENT_LIST_ITEMS,
   ADDED_ITEM_TO_CUR_LIST,
   CHANGED_ITEMS_STATUS,
   REMOVED_ITEM_FROM_ALL_LISTS,
@@ -17,7 +17,8 @@ import {
 } from './types';
 
 const intitalState: ListsState = {
-  lists: []
+  lists: [],
+  curListItems: []
 };
 
 export default function listReducer(
@@ -37,16 +38,16 @@ export default function listReducer(
     case CLEARED_ALL_LISTS:
       return intitalState
     
-    // case RETRIEVED_CURRENT_LIST_ITEMS:
-    //   let currentList = state.lists.find((list) => list._id === action.payload.currentListId)
-    //   return { ...state, curListItems: action.payload.cuurentListId }
+    case FETCHED_CURRENT_LIST_ITEMS:
+      return { ...state, curListItems: action.payload.items }
 
     case ADDED_ITEM_TO_CUR_LIST:
-      idx = state.lists.findIndex((list) => list._id === action.payload.curList);
-      currentList = { ...state.lists[idx] }
-      currentList.listItems = action.payload.items
-      return { ...state, lists: [...state.lists.slice(0, idx), currentList, ...state.lists.slice(idx + 1)] };
-
+      // idx = state.lists.findIndex((list) => list._id === action.payload.curList);
+      // currentList = { ...state.lists[idx] }
+      // listItems = action.payload.items
+      // return { ...state, lists: [...state.lists.slice(0, idx), currentList, ...state.lists.slice(idx + 1)] };
+      return { ...state, curListItems: state.curListItems.concat(action.payload.item)}
+      
     case REMOVED_ITEM_FROM_ALL_LISTS:
       const lists = [...state.lists];
       let newLists: IList[] = [];

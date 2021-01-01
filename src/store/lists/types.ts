@@ -14,12 +14,6 @@ export interface IListItem {
   active?: boolean;
 }
 
-// export interface ISortOrder {
-//   _id: string;
-//   categoryId: string;
-//   order: number
-// }
-
 export interface INewItem {
   name: string;
   categoryId: string;
@@ -37,15 +31,16 @@ export interface ICompleteItem {
 
 export type ListsState = {
   lists: IList[];
+  curListItems: IListItem[];
 }
 
 export const FETCHED_INITIAL_LISTS = 'FETCHED_INITIAL_LISTS,'
 export const ADDED_NEW_LIST = 'ADDED_NEW_LIST'
 export const REMOVED_LIST = 'REMOVED_LIST'
 export const CLEARED_ALL_LISTS = 'CLEARED_ALL_LISTS'
-// export const RETRIEVED_LIST_ITEMS = 'RETRIEVED_LIST_ITEMS'
+export const FETCHED_CURRENT_LIST_ITEMS = 'FETCHED_CURRENT_LIST_ITEMS'
 export const ADDED_ITEM_TO_CUR_LIST = 'ADDED_ITEM_TO_CUR_LIST'
-export const   REMOVED_ITEM_FROM_ALL_LISTS = 'REMOVED_ITEM_FROM_ALL_LISTS'
+export const REMOVED_ITEM_FROM_ALL_LISTS = 'REMOVED_ITEM_FROM_ALL_LISTS'
 export const REMOVED_ITEMS_FROM_CUR_LIST = 'REMOVED_ITEMS_FROM_CUR_LIST'
 export const CHANGED_ITEMS_STATUS = 'CHANGED_ITEMS_STATUS'
 
@@ -70,13 +65,14 @@ interface ClearedListsAction {
   type: typeof CLEARED_ALL_LISTS
 }
 
-// interface RetreiveListItemsAction {
-//   type: typeof RETRIEVED_LIST_ITEMS
-// }
+interface FetchCurrentListItemsAction {
+  type: typeof FETCHED_CURRENT_LIST_ITEMS
+  payload: { items: IListItem[] }
+}
 
 interface AddToCurrentListAction {
   type: typeof ADDED_ITEM_TO_CUR_LIST
-  payload: { items: IListItem[], curList: string }
+  payload: { item: IListItem }
 }
 
 interface RemoveFromAllListsAction {
@@ -96,4 +92,4 @@ interface ChangeItemStatusAction {
 export type ListsActions =
   FetchInitialDataAction | AddNewListAction | RemoveListAction | ClearedListsAction |
   AddToCurrentListAction | RemoveFromAllListsAction | RemoveFromCurrentListAction | 
-  ChangeItemStatusAction
+  ChangeItemStatusAction | FetchCurrentListItemsAction
