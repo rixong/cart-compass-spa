@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import MyLists from './MyLists';
+import MyLists from './Lists';
 import { ChevronDownIcon, ChevronUpIcon } from '@primer/octicons-react'
 
 const Collapse = () => {

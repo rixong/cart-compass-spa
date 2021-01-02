@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom'
 
-import CurrentList from './CurrentList';
+import CurrentList from './ItemsList';
 import AddItems from './AddItems';
 import EditMasterList from './EditMasterList';
-import MyLists from './MyLists';
+import MyLists from './Lists';
 import CategorySortOrder from './CategorySortOrder';
 
 

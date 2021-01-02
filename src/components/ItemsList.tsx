@@ -7,9 +7,9 @@ import { IList, ICompleteItem } from '../store/lists/types';
 
 // import { doFetchCurrentListItems } from '../store/lists/actions';
 
-import ListGroup from './ListGroup'
+import ListGroup from './ItemsGroup'
 
-const CurrentList: React.FC = () => {
+const ItemsList: React.FC = () => {
 
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
 
@@ -93,4 +93,4 @@ const CurrentList: React.FC = () => {
   )
 
 }
-export default CurrentList;
+export default ItemsList;

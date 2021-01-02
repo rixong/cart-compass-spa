@@ -8,7 +8,7 @@ interface ListItemProps {
   item: ICompleteItem
 }
 
-const ListItem: React.FC<ListItemProps> = ({item}) => {
+const Item: React.FC<ListItemProps> = ({item}) => {
 
   const dispatch = useDispatch();
 
@@ -35,4 +35,4 @@ const ListItem: React.FC<ListItemProps> = ({item}) => {
   )
 }
 
-export default ListItem;
+export default Item;

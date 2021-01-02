@@ -10,7 +10,7 @@ import Login from './Login';
 import Spinner from './Spinner';
 import Footer from './Footer';
 import SplitPanels from './SplitPanels'
-import ListHome from './ListHome'
+import ListHome from './ItemsHome'
 
 const App: React.FC = () => {
 

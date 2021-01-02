@@ -38,7 +38,7 @@ const MyLists = () => {
 
   const onSelectList = (listId: string) => {
     clearNotification();
-    if(listId !== curUser.currentList){
+    if (listId !== curUser.currentList) {
       dispatch(doSetCurrentList(listId));
     }
   }
@@ -86,6 +86,7 @@ const MyLists = () => {
           )}
         </ul>
       </div>
+      <div className="header">Shared lists</div>
 
       <hr></hr>
 

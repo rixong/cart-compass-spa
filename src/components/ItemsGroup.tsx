@@ -1,6 +1,6 @@
 import React from 'react';
 // import { connect } from 'react-redux';
-import ListItem from './ListItem' ;
+import Item from './Item' ;
 import {ICompleteItem} from '../store/lists/types';
 
 interface ListGroupProps {
@@ -13,7 +13,7 @@ const ListGroup: React.FC<ListGroupProps> = ({categoryName, items}) => {
     <div className="mb-3" >
       <div className="text-light bg-dark h5 pl-4  mb-1 rounded">{categoryName}</div>
       <ul className="list-group">
-        {items.map(item => <ListItem item={item} key={item.id} />)}
+        {items.map(item => <Item item={item} key={item.id} />)}
       </ul>
     </div>
   )
