@@ -34,7 +34,7 @@ const AddItems = () => {
   const [searchResults, setSearchResults] = useState<IMasterListItem[]>([]);
 
   const onHandleChange = (e: any) => {
-    dispatch(clearNotification());
+    // dispatch(clearNotification());
     // console.log(e.target.value);
 
     let nameValue: string = e.target.value

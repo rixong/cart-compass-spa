@@ -89,7 +89,7 @@ const intitializeUserSessionData = (response: any): AppThunk => async (
     payload: user.sortOrder,
   });
   dispatch(doFetchUsersLists());
-  dispatch(doFetchCurrentListItems(response.data.user.currentList));
+  dispatch(doFetchCurrentListItems());
 };
 
 export const doLogoutUser = (): AppThunk => async (dispatch) => {
@@ -120,9 +120,7 @@ export const doLogoutUser = (): AppThunk => async (dispatch) => {
 //   }
 // }
 
-export const doSetCurrentList = (listId: string): AppThunk => async (
-  dispatch
-) => {
+export const doSetCurrentList = (listId: string): AppThunk => async ( dispatch, getState ) => {
   try {
     const response = await instance.post(`/lists/current/${listId}`);
     if (response.status === 200) {
@@ -130,6 +128,9 @@ export const doSetCurrentList = (listId: string): AppThunk => async (
         type: SET_CURRENT_LIST,
         payload: listId,
       });
+      dispatch(doFetchCurrentListItems())
+      const curList = getState().lists.lists.find(list => list._id === listId)
+      console.log(curList);
     }
   } catch (e) {
     console.log("server error", e.message);

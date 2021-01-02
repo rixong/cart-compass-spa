@@ -7,10 +7,11 @@ export interface IList {
 }
 
 export interface IListItem {
-  _id: string;
-  masterItemId: string;
+  _id?: string;
+  name: string;
   quantity: string;
-  active?: boolean;
+  categoryId: string;
+  isActive?: boolean;
 }
 
 export interface INewItem {
@@ -23,7 +24,7 @@ export interface ICompleteItem {
   name: string;
   id: string;
   quantity: string;
-  active: boolean;
+  isActive: boolean;
   categoryId: string;
   sortOrder: number;
 }

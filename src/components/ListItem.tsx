@@ -13,7 +13,7 @@ const ListItem: React.FC<ListItemProps> = ({item}) => {
   const dispatch = useDispatch();
 
   const onHandleClick = () => {
-    dispatch(doChangeItemStatus(item.id));
+    dispatch(doChangeItemStatus(item.name));
   }
 
   // let name = masterList.find(el => item.item_id === el.id).name
@@ -21,7 +21,7 @@ const ListItem: React.FC<ListItemProps> = ({item}) => {
   // console.log(name)
 
   const nameClassDefault = 'row'
-  const nameClassFinal = item.active ?
+  const nameClassFinal = item.isActive ?
     `${nameClassDefault} text-dark`
     : `${nameClassDefault} strike`
 

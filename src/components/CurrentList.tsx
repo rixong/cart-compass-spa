@@ -19,8 +19,8 @@ const CurrentList: React.FC = () => {
   const selectLists = (state: RootState) => state.lists;
   const { lists, curListItems } = useSelector(selectLists)
 
-  const selectMasterLists = (state: RootState) => state.masterList;
-  const { masterList } = useSelector(selectMasterLists)
+  // const selectMasterLists = (state: RootState) => state.masterList;
+  // const { masterList } = useSelector(selectMasterLists)
 
   const selectCategories = (state: RootState) => state.categories;
   const { categories, sortOrder } = useSelector(selectCategories)
@@ -35,31 +35,34 @@ const CurrentList: React.FC = () => {
   }, [lists, system.curUser.currentList, categories])
 
   const makeItems = (listItems: any) => {
+    // console.log(listItems);
 
     // if (listItems.length && masterList.length) {
-    let items: any = listItems.map((item: any) => {
-      let curMasteritem: any = masterList.find((ele) => ele._id === item.masterItemId);
-      let curSortOrder: any = sortOrder.find((ele) => ele.categoryId === curMasteritem.categoryId);
-      if (curMasteritem && curSortOrder) {
-        return {
-          name: curMasteritem.name,
-          id: item._id,
-          quantity: item.quantity,
-          active: item.active,
-          categoryId: curMasteritem.categoryId,
-          sortOrder: curSortOrder.order,
+    if ( listItems.length ) {
+      let items: any = listItems.map((item: any) => {
+        // let curMasteritem: any = masterList.find((ele) => ele._id === item.masterItemId);
+        let curSortOrder: any = sortOrder.find((ele) => ele.categoryId === item.categoryId);
+        // if (curMasteritem && curSortOrder) {
+        if (curSortOrder) {
+          return {
+            name: item.name,
+            id: item._id,
+            quantity: item.quantity,
+            active: item.active,
+            categoryId: item.categoryId,
+            sortOrder: curSortOrder.order,
+          }
         }
-      }
-      return null
-    })
-    return items.sort((a: any, b: any) => a.sortOrder - b.sortOrder);
-    // }
+        return null
+      })
+      return items.sort((a: any, b: any) => a.sortOrder - b.sortOrder);
+    }
   }
 
-  const divideListByCategory = (curListItems: ICompleteItem[]) => {
+  const divideListByCategory = (curItems: ICompleteItem[]) => {
     const divided: any = {};
     let divs: any = [];
-    curListItems.forEach((listItem: ICompleteItem) => {
+    curItems.forEach((listItem: ICompleteItem) => {
       if (!divided[listItem.categoryId]) {
         divided[listItem.categoryId] = [listItem];
       } else {
@@ -85,7 +88,7 @@ const CurrentList: React.FC = () => {
           <div className="row h6"> {moment(currentList.dateCreated).format('dddd, MMMM D')}</div>
         </div>
         : null}
-      {currentList ? divideListByCategory(makeItems(curListItems)) : null}
+      {curListItems.length ? divideListByCategory(makeItems(curListItems)) : null}
     </div>
   )
 

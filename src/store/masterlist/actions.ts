@@ -7,7 +7,7 @@ import {
   ADDED_ITEM_TO_MASTERLIST,
   REMOVED_FROM_MASTER_LIST
 } from './types'
-import { doAddItemToCurrentList, doRemoveItemFromAllLists } from '../lists/actions';
+import { doAddItemToCurrentList } from '../lists/actions';
 import { INewItem } from '../lists/types';
 
 export const doAddItemToMasterList = (item: INewItem): AppThunk => async dispatch => {
@@ -22,7 +22,7 @@ export const doAddItemToMasterList = (item: INewItem): AppThunk => async dispatc
       })
     }
     // ... then send item to add to current list (lists/actions)
-    dispatch(doAddItemToCurrentList(response.data.item._id, item.quantity))
+    dispatch(doAddItemToCurrentList(item.name, item.quantity, item.categoryId))
   }
   catch (e) {
     console.log(e);
@@ -34,7 +34,7 @@ export const doAddItemToMasterList = (item: INewItem): AppThunk => async dispatc
 export const doRemoveFromMasterList = (itemId: string): AppThunk => async dispatch => {  
   try {
     await instance.delete(`/items/${itemId}`)  //Removes from master list and list_items
-    dispatch(doRemoveItemFromAllLists(itemId));
+    // dispatch(doRemoveItemFromAllLists(itemId));
     dispatch({
       type: REMOVED_FROM_MASTER_LIST,
       payload: itemId

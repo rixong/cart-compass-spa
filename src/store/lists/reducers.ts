@@ -2,7 +2,7 @@
 import {
   ListsActions,
   ListsState,
-  IList,
+  // IList,
   // IListItem,
   FETCHED_INITIAL_LISTS,
   ADDED_NEW_LIST,
@@ -11,7 +11,7 @@ import {
   FETCHED_CURRENT_LIST_ITEMS,
   ADDED_ITEM_TO_CUR_LIST,
   CHANGED_ITEMS_STATUS,
-  REMOVED_ITEM_FROM_ALL_LISTS,
+  // REMOVED_ITEM_FROM_ALL_LISTS,
   // RETRIEVED_LIST_ITEMS,
   // REMOVED_ITEMS_FROM_CUR_LIST,
 } from './types';
@@ -26,7 +26,6 @@ export default function listReducer(
   action: ListsActions
 ): ListsState {
   let idx;
-  let currentList;
   switch (action.type) {
     case FETCHED_INITIAL_LISTS:
       return {...state, lists: action.payload.lists }
@@ -63,9 +62,9 @@ export default function listReducer(
 
     case CHANGED_ITEMS_STATUS:
       // let listIdx = state.lists.findIndex((list) => list._id === action.payload.curList);
-      let items = { ...state.curListItems }
+      let items = [ ...state.curListItems ];
       // let items = [...currentList.listItems];
-      let itemIdx = items.findIndex((ele) => ele._id === action.payload.item._id)
+      let itemIdx = items.findIndex((ele) => ele.name === action.payload.item.name)
       items = [...items.slice(0, itemIdx), action.payload.item, ...items.slice(itemIdx + 1)]
       // currentList.listItems = items;
       return { ...state, curListItems: items };
