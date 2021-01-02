@@ -129,8 +129,8 @@ export const doSetCurrentList = (listId: string): AppThunk => async ( dispatch, 
         payload: listId,
       });
       dispatch(doFetchCurrentListItems())
-      const curList = getState().lists.lists.find(list => list._id === listId)
-      console.log(curList);
+      // const curList = getState().lists.lists.find(list => list._id === listId)
+      // console.log(curList);
     }
   } catch (e) {
     console.log("server error", e.message);

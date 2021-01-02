@@ -6,16 +6,14 @@ import {
   REMOVED_LIST,
   FETCHED_INITIAL_LISTS,
   FETCHED_CURRENT_LIST_ITEMS,
-  // REMOVED_ITEM_FROM_ALL_LISTS,
   CHANGED_ITEMS_STATUS,
 } from "./types";
+
 import { addNotification } from "../system/actions";
 
 export const doFetchUsersLists = (): AppThunk => async (dispatch) => {
   try {
     const response = (await instance.get("/lists")).data;
-    // console.log(response);
-
     dispatch({
       type: FETCHED_INITIAL_LISTS,
       payload: { lists: response },

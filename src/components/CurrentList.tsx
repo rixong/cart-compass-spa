@@ -48,7 +48,7 @@ const CurrentList: React.FC = () => {
             name: item.name,
             id: item._id,
             quantity: item.quantity,
-            active: item.active,
+            isActive: item.isActive,
             categoryId: item.categoryId,
             sortOrder: curSortOrder.order,
           }

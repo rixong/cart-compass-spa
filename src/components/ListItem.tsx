@@ -1,7 +1,7 @@
 import React from 'react';
-import { ICompleteItem } from '../store/lists/types';
-
 import {useDispatch} from 'react-redux';
+
+import { ICompleteItem } from '../store/lists/types';
 import {doChangeItemStatus} from '../store/lists/actions';
 
 interface ListItemProps {
@@ -12,7 +12,7 @@ const ListItem: React.FC<ListItemProps> = ({item}) => {
 
   const dispatch = useDispatch();
 
-  const onHandleClick = () => {
+  const onHandleClick = () => {    
     dispatch(doChangeItemStatus(item.name));
   }
 
