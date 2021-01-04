@@ -8,6 +8,7 @@ import { RootState } from '../store';
 import { doSetCurrentList, addNotification, clearNotification } from '../store/system/actions'
 import { doCreateNewList, doRemoveList } from '../store/lists/actions';
 import { IList } from '../store/lists/types';
+import MyList from './MyList';
 
 const MyLists = () => {
 
@@ -19,7 +20,14 @@ const MyLists = () => {
   const selectLists = (state: RootState) => state.lists;
   const { lists } = useSelector(selectLists)
 
-  const sortedLists: IList[] = [...lists].sort((a, b) => b.dateCreated.localeCompare(a.dateCreated));
+  const myLists: IList[] = [...lists]
+    .filter((list) => list.userId === curUser.id)
+    .sort((a, b) => b.dateCreated.localeCompare(a.dateCreated));
+  
+  const sharedLists: IList[] = [...lists]
+    .filter((list) => list.userId !== curUser.id)
+    .sort((a, b) => b.dateCreated.localeCompare(a.dateCreated));
+  
   const [queryTerm, setQueryTerm] = useState<string>('');
 
   const onHandleChange = (e: any) => {
@@ -36,21 +44,21 @@ const MyLists = () => {
     }
   }
 
-  const onSelectList = (listId: string) => {
-    clearNotification();
-    if (listId !== curUser.currentList) {
-      dispatch(doSetCurrentList(listId));
-    }
-  }
+  // const onSelectList = (listId: string) => {
+  //   clearNotification();
+  //   if (listId !== curUser.currentList) {
+  //     dispatch(doSetCurrentList(listId));
+  //   }
+  // }
 
-  const onClickDeleteList = (e: React.FormEvent, id: string) => {
-    e.stopPropagation();
-    if (id === curUser.currentList) {
-      addNotification('You can not delete the current list. Select another before deleting this list.');
-    } else {
-      dispatch(doRemoveList(id));
-    }
-  }
+  // const onClickDeleteList = (e: React.FormEvent, id: string) => {
+  //   e.stopPropagation();
+  //   if (id === curUser.currentList) {
+  //     addNotification('You can not delete the current list. Select another before deleting this list.');
+  //   } else {
+  //     dispatch(doRemoveList(id));
+  //   }
+  // }
 
   const defaultClass = "list-group-item d-flex justify-content-between pl-0 mb-2 rounded"
 
@@ -59,35 +67,17 @@ const MyLists = () => {
       <div className="header">Your lists</div>
       <div className="row justify-content-center">
         <ul className="list-group">
-          {sortedLists.map(list =>
-          (<li
-            className={`${defaultClass} ${list._id === curUser.currentList ? 'bg-dark text-info' : 'text-primary'}`}
-            key={list._id}
-            role="button"
-            onClick={() => onSelectList(list._id)}
-          >
-            <div className="col-10">
-              <strong>{list.name}</strong> - {moment(list.dateCreated).format('ddd, MMM D')}
-            </div>
-            <div className="col-2">
-              {list._id === curUser.currentList ?
-                <CheckCircleIcon size={24} /> :
-                <button
-                  type="button"
-                  className="close"
-                  aria-label="Delete"
-                  onClick={(e) => onClickDeleteList(e, list._id)}
-                >
-                  <XCircleIcon size={24} />
-                </button>
-              }
-            </div>
-          </li>)
+          {myLists.map(list =>
+            <MyList list={list}/>
           )}
         </ul>
       </div>
       <div className="header">Shared lists</div>
-
+      <ul className="list-group">
+          {sharedLists.map(list =>
+            <MyList list={list}/>
+          )}
+        </ul>
       <hr></hr>
 
       <div className="h4 text-center">Make a new list</div>

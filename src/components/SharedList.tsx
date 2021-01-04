@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '../store';
@@ -9,21 +9,15 @@ import { doSetCurrentList, addNotification, clearNotification } from '../store/s
 import { doRemoveList } from '../store/lists/actions';
 import { IList } from '../store/lists/types';
 
-interface MyListProps {
+interface SharedListProps {
   list: IList
 }
 
-const MyList: React.FC<MyListProps> = ({ list }) => {
+const SharedList: React.FC<SharedListProps> = ({ list }) => {
   const dispatch = useDispatch();
 
   const selectSystem = (state: RootState) => state.system;
   const { curUser } = useSelector(selectSystem);
-
-  const [emailInput, setEmailInput] = useState<string>('');
-
-  const onHandleChange = (e: any) => {
-    setEmailInput(e.target.value)
-  }
 
   const onSelectList = (listId: string) => {
     clearNotification();
@@ -66,23 +60,8 @@ const MyList: React.FC<MyListProps> = ({ list }) => {
           </button>
         }
       </div>
-      <div className="input-group mb-3">
-        <input 
-          type="text" 
-          className="form-control" 
-          placeholder="email" 
-          aria-label="email" 
-          aria-describedby="basic-addon2"
-          value={emailInput}
-          onChange={(e) => onHandleChange(e)}
-        >
-          <div className="input-group-append">
-            <button className="btn btn-outline-secondary" type="button">Button</button>
-          </div>
-        </input>
-      </div>
     </li>
   )
 }
 
-export default MyList
+export default SharedList
